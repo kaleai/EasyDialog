@@ -1,0 +1,51 @@
+<resources>
+
+
+    <style name="DialogTheme">
+        <item name="android:colorBackground">@color/background_floating_material_light</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowTitleStyle">@style/RtlOverlay.DialogWindowTitle.AppCompat</item>
+        <item name="android:windowTitleBackgroundStyle">@style/Base.DialogWindowTitleBackground.AppCompat</item>
+        <item name="android:windowBackground">@drawable/abc_dialog_material_background_light</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">true</item>
+
+        <item name="listPreferredItemPaddingLeft">24dip</item>
+        <item name="listPreferredItemPaddingRight">24dip</item>
+
+        <item name="android:listDivider">@null</item>
+
+        <item name="windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
+        <item name="windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
+    </style>
+
+    <style name="AlertDialog" parent="Base.AlertDialog.AppCompat">
+        <!-- AlertController.class - line:168 -->
+        <!-- dialog的主体布局文件，里面包含了title，message等控件 -->
+        <item name="android:layout">@layout/custom_dialog_alert_material</item>
+        <!-- dialog中的列表布局文件，其实就是listview -->
+        <item name="listLayout">@layout/custom_dialog_select_material</item>
+        <!-- dialog中列表的item的布局 -->
+        <item name="listItemLayout">@layout/custom_dialog_select_item_material</item>
+        <!-- 多选的item的布局 -->
+        <item name="multiChoiceItemLayout">@layout/custom_dialog_select_multichoice_material</item>
+        <!-- 单选的item的布局 -->
+        <item name="singleChoiceItemLayout">@layout/custom_dialog_select_singlechoice_material</item>
+    </style>
+
+    <style name="ProgressDialog">
+        <!-- 横向的进度条布局 -->
+        <item name="horizontalProgressLayout">@layout/custom_dialog_progress_horizontal_material</item>
+        <!-- 圆形进度条布局 -->
+        <item name="progressLayout">@layout/custom_dialog_progress</item>
+    </style>
+
+</resources>
