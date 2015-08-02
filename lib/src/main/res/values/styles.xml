@@ -1,7 +1,6 @@
 <resources>
 
-
-    <style name="DialogTheme">
+    <style name="Theme.Dialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:colorBackground">@color/background_floating_material_light</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
 
@@ -32,7 +31,7 @@
         <!-- dialog的主体布局文件，里面包含了title，message等控件 -->
         <item name="android:layout">@layout/custom_dialog_alert_material</item>
         <!-- dialog中的列表布局文件，其实就是listview -->
-        <item name="listLayout">@layout/custom_dialog_select_material</item>
+        <item name="listLayout">@layout/custom_dialog_list_material</item>
         <!-- dialog中列表的item的布局 -->
         <item name="listItemLayout">@layout/custom_dialog_select_item_material</item>
         <!-- 多选的item的布局 -->

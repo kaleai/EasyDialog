@@ -4,8 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-
-import kale.ui.view.ProgressDialog;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,9 +27,16 @@ public class MainActivity extends AppCompatActivity {
                 }).create();
 
         dialog.show();
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                Toast.makeText(MainActivity.this, "dimiss", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
 
 
-        ProgressDialog.show(this, "title", "test message");
+        // ProgressDialog.show(this, "title", "test message");
     }
    
 }

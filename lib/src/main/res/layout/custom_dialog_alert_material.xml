@@ -12,7 +12,7 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
---><!-- 自定义alert Dialog的布局文件，在应用的主体中定义即可 -->
+-->
 
 <LinearLayout
     android:id="@+id/parentPanel"
@@ -95,7 +95,7 @@
                     android:paddingTop="@dimen/abc_dialog_padding_top_material"
                     tools:text="message"
                     />
-                <!-- 如果没有button，那么就显示这个view。用来做留白 -->
+                <!-- 濡傛灉娌℃湁button锛岄偅涔堝氨鏄剧ず杩欎釜view銆傜敤鏉ュ仛鐣欑櫧 -->
                 <View
                     android:id="@+id/textSpacerNoButtons"
                     android:layout_width="0dp"
@@ -114,7 +114,7 @@
         android:layout_weight="1"
         android:minHeight="48dp"
         >
-        <!-- 自定义dialog布局的父控件 -->
+        <!-- 鑷畾涔塪ialog甯冨眬鐨勭埗鎺т欢 -->
         <FrameLayout
             android:id="@+id/custom"
             android:layout_width="match_parent"

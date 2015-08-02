@@ -20,7 +20,7 @@
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/abc_dialog_padding_top_material"
     android:paddingRight="?attr/dialogPreferredPadding"
-    android:paddingLeft="?android:attr/dialogPreferredPadding"
+    android:paddingLeft="?attr/dialogPreferredPadding"
     android:paddingTop="@dimen/abc_dialog_padding_top_material"
     >
 

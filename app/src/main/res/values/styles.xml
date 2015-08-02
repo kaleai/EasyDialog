@@ -3,8 +3,18 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+
+        <item name="dialogTheme">@style/Theme.Dialog</item>
+        <item name="alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert</item>
         <item name="alertDialogStyle">@style/AlertDialog</item>
         <item name="progressDialogStyle">@style/ProgressDialog</item>
+
+        <item name="dialogPreferredPadding">@dimen/abc_dialog_padding_material</item>
+        <item name="alertDialogCenterButtons">false</item>
+        <item name="textColorAlertDialogListItem">@color/abc_primary_text_material_light</item>
+        <!-- dialog中listView的divider -->
+        <item name="listDividerAlertDialog">@null</item>
+        
     </style>
 
 </resources>

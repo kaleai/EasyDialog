@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="ProgressDialog">
         <attr name="progressDialogStyle" format="reference" />
+        
         <attr name="horizontalProgressLayout" format="reference" />
         <attr name="progressLayout" format="reference" />
     </declare-styleable>
