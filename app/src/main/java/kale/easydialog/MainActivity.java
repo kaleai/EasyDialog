@@ -6,6 +6,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import kale.ui.view.ProgressDialog;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).create();
 
-        dialog.show();
+        //dialog.show();
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
@@ -35,8 +37,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        // ProgressDialog.show(this, "title", "test message");
+        ProgressDialog pd = new ProgressDialog(this);
+        pd.setTitle("title");
+        pd.show();
+        
+        //ProgressDialog.show(this, "title", "test message");
     }
    
 }

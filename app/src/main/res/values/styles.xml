@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
 
         <item name="dialogTheme">@style/Theme.Dialog</item>
-        <item name="alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert</item>
+        <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
         <item name="alertDialogStyle">@style/AlertDialog</item>
         <item name="progressDialogStyle">@style/ProgressDialog</item>
 
