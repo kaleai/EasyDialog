@@ -1,11 +1,11 @@
 # EasyDialog
-Ìá¹©×Ô¶¨Òådialog styleµÄ¿â£¬·Ç×Ô¶¨Òåview£¬´¿¾»Ô­Éú!   
+æä¾›è‡ªå®šä¹‰dialog styleçš„åº“ï¼Œéè‡ªå®šä¹‰viewï¼Œçº¯å‡€åŸç”Ÿ!   
 
-### ¼ò½é  
-Ô­ÉúÌá¹©µÄdialog²»·ûºÏÉè¼Æ¸ø³öµÄ±ê×¼£¬ÎÒÃÇÒ»°ãÇé¿öÏÂÊÇÈ¥Í¨¹ı×Ô¶¨ÒåviewÈ»ºóÈû¸ødialog¡£µ«·ÖÎöºó·¢ÏÖÕâÖÖ·½Ê½ÓĞµã¹ıÁË£¬ÆäÊµÎÒÃÇÖ»ĞèÒªÍ¨¹ıstyleÎÄ¼şÀ´Ìæ»»dialogÄ¬ÈÏµÄ²¼¾ÖÎªÎÒÃÇ×Ô¶¨ÒåµÄ²¼¾Ö¾Í¿ÉÒÔÁË¡£ÕâÑùµÄ·½Ê½¼È²»ÓÃ¸Ä±ädialogµÄÊ¹ÓÃ·½Ê½£¬Ò²²»ÓÃĞ´¶àÓà´úÂë£¬Ö»ĞèÒª¸ü¸ÄÑùÊ½¾ÍÄÜÂú×ãĞèÇó¡£ÕâÆäÊµÒ²ÊÇandroidµÄÉè¼ÆË¼Ïë£¬¹Ù·½Ò»°ã¶¼»á°ÑÊôĞÔÖµ±©Â¶³öÀ´£¬ÎÒÃÇ×öSDKµÄÊ±ºòÒ²Ó¦¸Ã×ñÑ­ÕâÖÖ±ê×¼¡£ÈÃÏÔÊ¾ºÍÂß¼­·Ö¿ª£¬ÏÔÊ¾µÄÄÚÈİÓÖ¿ÉÒÔ½»¸østyle¶¨Òå¡£
+### ç®€ä»‹  
+åŸç”Ÿæä¾›çš„dialogä¸ç¬¦åˆè®¾è®¡ç»™å‡ºçš„æ ‡å‡†ï¼Œæˆ‘ä»¬ä¸€èˆ¬æƒ…å†µä¸‹æ˜¯å»é€šè¿‡è‡ªå®šä¹‰viewç„¶åå¡ç»™dialogã€‚ä½†åˆ†æåå‘ç°è¿™ç§æ–¹å¼æœ‰ç‚¹è¿‡äº†ï¼Œå…¶å®æˆ‘ä»¬åªéœ€è¦é€šè¿‡styleæ–‡ä»¶æ¥æ›¿æ¢dialogé»˜è®¤çš„å¸ƒå±€ä¸ºæˆ‘ä»¬è‡ªå®šä¹‰çš„å¸ƒå±€å°±å¯ä»¥äº†ã€‚è¿™æ ·çš„æ–¹å¼æ—¢ä¸ç”¨æ”¹å˜dialogçš„ä½¿ç”¨æ–¹å¼ï¼Œä¹Ÿä¸ç”¨å†™å¤šä½™ä»£ç ï¼Œåªéœ€è¦æ›´æ”¹æ ·å¼å°±èƒ½æ»¡è¶³éœ€æ±‚ã€‚è¿™å…¶å®ä¹Ÿæ˜¯androidçš„è®¾è®¡æ€æƒ³ï¼Œå®˜æ–¹ä¸€èˆ¬éƒ½ä¼šæŠŠå±æ€§å€¼æš´éœ²å‡ºæ¥ï¼Œæˆ‘ä»¬åšSDKçš„æ—¶å€™ä¹Ÿåº”è¯¥éµå¾ªè¿™ç§æ ‡å‡†ã€‚è®©æ˜¾ç¤ºå’Œé€»è¾‘åˆ†å¼€ï¼Œæ˜¾ç¤ºçš„å†…å®¹åˆå¯ä»¥äº¤ç»™styleå®šä¹‰ã€‚
 
-### Ìí¼ÓÒÀÀµ
-1.Ìí¼ÓJitPack²Ö¿â
+### æ·»åŠ ä¾èµ–
+1.æ·»åŠ JitPackä»“åº“
   
 ```  
 repositories {
@@ -16,43 +16,43 @@ repositories {
 ```   
 ```  
 dependencies {
-		compile 'com.github.tianzhijiexian:»¹Ã»×öºÃ'
+		compile 'com.github.tianzhijiexian:è¿˜æ²¡åšå¥½'
 }    
 ```   
-### Ê¹ÓÃ·½Ê½   
-**ÔÚÖ÷ÌâÖĞÉèÖÃÄ¬ÈÏÑùÊ½£¨Ò»´ÎÉèÖÃ¾Í¸ã¶¨£©**  
+### ä½¿ç”¨æ–¹å¼   
+**åœ¨ä¸»é¢˜ä¸­è®¾ç½®é»˜è®¤æ ·å¼ï¼ˆä¸€æ¬¡è®¾ç½®å°±æå®šï¼‰**  
 ```XML  
 <resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        
+
         <item name="dialogTheme">@style/Theme.Dialog</item>
-        <item name="alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert</item>
+        <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
         <item name="alertDialogStyle">@style/AlertDialog</item>
         <item name="progressDialogStyle">@style/ProgressDialog</item>
 
         <item name="dialogPreferredPadding">@dimen/abc_dialog_padding_material</item>
         <item name="alertDialogCenterButtons">false</item>
         <item name="textColorAlertDialogListItem">@color/abc_primary_text_material_light</item>
-        <!-- dialogÖĞlistViewµÄdivider -->
+        <!-- dialogä¸­listViewçš„divider -->
         <item name="listDividerAlertDialog">@null</item>
         
     </style>
 
-</resources>  
+</resources> 
 ```  
-¾ÍÊÇÕâÃ´¼òµ¥£¬Ò»ÇĞ¶¼¸ã¶¨ÁË£¡   
-ÎÒÃÇÔÚ´úÂëÖĞÖ±½ÓÓÃ¶Ô»°¿ò¾Í¿ÉÒÔÁË£¬¶Ô»°¿òµÄÊ¹ÓÃ·½Ê½ºÍÖ®Ç°Ã»ÓĞÈÎºÎÇø±ğ£º  
+å°±æ˜¯è¿™ä¹ˆç®€å•ï¼Œä¸€åˆ‡éƒ½æå®šäº†ï¼   
+æˆ‘ä»¬åœ¨ä»£ç ä¸­ç›´æ¥ç”¨å¯¹è¯æ¡†å°±å¯ä»¥äº†ï¼Œå¯¹è¯æ¡†çš„ä½¿ç”¨æ–¹å¼å’Œä¹‹å‰æ²¡æœ‰ä»»ä½•åŒºåˆ«ï¼š  
 ```JAVA  
 AlertDialog dialog = new AlertDialog.Builder(this)
                 //.setIconAttribute(android.R.attr.alertDialogIcon)
                 .setTitle("title")
-                //.setMessage("message") // Èç¹ûÊÇÁĞ±í¾Í²»ÒªÉèÖÃmessageÁË£¬·ñÔò»á³öÎÊÌâ
-                .setPositiveButton("ºÃ", null)
-                .setNeutralButton("ÖĞ", null)
-                .setNegativeButton("²î", null)
+                //.setMessage("message") // å¦‚æœæ˜¯åˆ—è¡¨å°±ä¸è¦è®¾ç½®messageäº†ï¼Œå¦åˆ™ä¼šå‡ºé—®é¢˜
+                .setPositiveButton("å¥½", null)
+                .setNeutralButton("ä¸­", null)
+                .setNegativeButton("å·®", null)
                 .setItems(new String[]{"android","ios","wp"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -72,24 +72,27 @@ AlertDialog dialog = new AlertDialog.Builder(this)
         // ProgressDialog.show(this, "title", "test message");  
 ```   
 
-### ¶¨ÖÆ  
-ÎÒÃÇ²ÉÓÃÔ­ÉúµÄÑùÊ½¿Ï¶¨²»ÄÜÂú×ãÎÒÃÇµÄĞèÇó£¬ÎÒÏÖÔÚ¾ÍÀ´¿´¿´ÈçºÎ×ö×Ô¼ºµÄstyle°É¡£  
+### å®šåˆ¶  
+æˆ‘ä»¬é‡‡ç”¨åŸç”Ÿçš„æ ·å¼è‚¯å®šä¸èƒ½æ»¡è¶³æˆ‘ä»¬çš„éœ€æ±‚ï¼Œæˆ‘ç°åœ¨å°±æ¥çœ‹çœ‹å¦‚ä½•åšè‡ªå·±çš„styleå§ã€‚  
 ```XML   
 <resources>
 
     <style name="Theme.Dialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:colorBackground">@color/background_floating_material_light</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowFrame">@null</item><!--è¾¹æ¡†-->
+        <item name="android:windowIsFloating">true</item><!--æ˜¯å¦æµ®ç°åœ¨activityä¹‹ä¸Š-->
+        <item name="android:windowIsTranslucent">true</item> <!-- æ˜¯å¦é€æ˜ -->
+        <item name="android:windowNoTitle">true</item><!--é™¤å»title-->
+        <item name="android:windowContentOverlay">@null</item> <!-- å¯¹è¯æ¡†æ˜¯å¦æœ‰é®ç›– -->
+        <item name="android:backgroundDimEnabled">true</item><!-- å¯¹è¯æ¡†å‡ºç°æ—¶èƒŒæ™¯æ˜¯å¦å˜æš— -->
+        
+        <item name="android:colorBackground">@color/background_floating_material_light</item><!-- èƒŒæ™¯é¢œè‰²ï¼Œå› ä¸ºwindowBackgroundä¸­çš„èƒŒæ™¯å·²ç»å†™æ­»äº†ï¼Œæ‰€ä»¥è¿™é‡Œçš„è®¾ç½®æ— æ•ˆ -->
+        <item name="android:colorBackgroundCacheHint">@null</item><!-- ç€è‰²ç¼“å­˜ï¼ˆä¸€èˆ¬ä¸ç”¨ï¼‰-->
 
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowTitleStyle">@style/RtlOverlay.DialogWindowTitle.AppCompat</item>
+        <item name="android:windowTitleStyle">@style/RtlOverlay.DialogWindowTitle.AppCompat</item><!-- æ ‡é¢˜çš„å­—ä½“æ ·å¼ -->
         <item name="android:windowTitleBackgroundStyle">@style/Base.DialogWindowTitleBackground.AppCompat</item>
-        <item name="android:windowBackground">@drawable/abc_dialog_material_background_light</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
-        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:windowBackground">@drawable/abc_dialog_material_background_light</item><!--å¯¹è¯æ¡†èƒŒæ™¯(é‡è¦)-->
+        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item><!-- åŠ¨ç”» -->
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item><!-- è¾“å…¥æ³•å¼¹å‡ºæ—¶è‡ªé€‚åº” -->
 
         <item name="windowActionBar">false</item>
         <item name="windowActionModeOverlay">true</item>
@@ -98,40 +101,43 @@ AlertDialog dialog = new AlertDialog.Builder(this)
         <item name="listPreferredItemPaddingRight">24dip</item>
 
         <item name="android:listDivider">@null</item>
+    </style>
 
+    <style name="Theme.Dialog.Alert">
         <item name="windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
         <item name="windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
     </style>
-
+    
     <style name="AlertDialog" parent="Base.AlertDialog.AppCompat">
         <!-- AlertController.class - line:168 -->
-        <!-- dialogµÄÖ÷Ìå²¼¾ÖÎÄ¼ş£¬ÀïÃæ°üº¬ÁËtitle£¬messageµÈ¿Ø¼ş -->
+        <!-- dialogçš„ä¸»ä½“å¸ƒå±€æ–‡ä»¶ï¼Œé‡Œé¢åŒ…å«äº†titleï¼Œmessageç­‰æ§ä»¶ -->
         <item name="android:layout">@layout/custom_dialog_alert_material</item>
-        <!-- dialogÖĞµÄÁĞ±í²¼¾ÖÎÄ¼ş£¬ÆäÊµ¾ÍÊÇlistview -->
+        <!-- dialogä¸­çš„åˆ—è¡¨å¸ƒå±€æ–‡ä»¶ï¼Œå…¶å®å°±æ˜¯listView -->
         <item name="listLayout">@layout/custom_dialog_list_material</item>
-        <!-- dialogÖĞÁĞ±íµÄitemµÄ²¼¾Ö -->
+        <!-- dialogä¸­åˆ—è¡¨çš„itemçš„å¸ƒå±€ -->
         <item name="listItemLayout">@layout/custom_dialog_select_item_material</item>
-        <!-- ¶àÑ¡µÄitemµÄ²¼¾Ö -->
+        <!-- å¤šé€‰çš„itemçš„å¸ƒå±€ -->
         <item name="multiChoiceItemLayout">@layout/custom_dialog_select_multichoice_material</item>
-        <!-- µ¥Ñ¡µÄitemµÄ²¼¾Ö -->
+        <!-- å•é€‰çš„itemçš„å¸ƒå±€ -->
         <item name="singleChoiceItemLayout">@layout/custom_dialog_select_singlechoice_material</item>
     </style>
 
     <style name="ProgressDialog">
-        <!-- ºáÏòµÄ½ø¶ÈÌõ²¼¾Ö -->
+        <!-- æ¨ªå‘çš„è¿›åº¦æ¡å¸ƒå±€ -->
         <item name="horizontalProgressLayout">@layout/custom_dialog_progress_horizontal_material</item>
-        <!-- Ô²ĞÎ½ø¶ÈÌõ²¼¾Ö -->
+        <!-- åœ†å½¢è¿›åº¦æ¡å¸ƒå±€ -->
         <item name="progressLayout">@layout/custom_dialog_progress</item>
     </style>
 
 </resources>
 
+
 ```   
-Ö»Òª°ÑÉÏÃæµÄÄÚÈİ¸´ÖÆµ½×Ô¼ºÏîÄ¿µÄstyleÖĞ£¬È»ºóÈ¥²Î¿¼ÀïÃælayoutÎÄ¼ş£¬×îºóÌæ»»×Ô¼ºµÄlayoutÎÄ¼ş¾ÍĞĞ¡£ÍêÈ«ÊÇÕÕÃ¨»­»¢£¬Ã»ÓĞÈÎºÎ¼¼ÊõÄÑ¶È£¡
+åªè¦æŠŠä¸Šé¢çš„å†…å®¹å¤åˆ¶åˆ°è‡ªå·±é¡¹ç›®çš„styleä¸­ï¼Œç„¶åå»å‚è€ƒé‡Œé¢layoutæ–‡ä»¶ï¼Œæœ€åæ›¿æ¢è‡ªå·±çš„layoutæ–‡ä»¶å°±è¡Œã€‚å®Œå…¨æ˜¯ç…§çŒ«ç”»è™ï¼Œæ²¡æœ‰ä»»ä½•æŠ€æœ¯éš¾åº¦ï¼
 
 
 
-### ¿ª·¢Õß
+### å¼€å‘è€…
 ![](https://avatars3.githubusercontent.com/u/9552155?v=3&s=460)
 
 Jack Tony: <developer_kale@.com>  
