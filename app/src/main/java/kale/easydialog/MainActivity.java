@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         simpleDialogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SimpleDialog dialog = new SimpleDialog();
+                SimpleDialog dialog = new DemoSimpleDialog();
                 dialog.setCancelable(true);
                 dialog.setTitle("Title");
                 dialog.setMessage("Message");
@@ -184,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 }).start();
             }
         });
+        
     }
 
 }

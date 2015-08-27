@@ -95,7 +95,6 @@
                     android:paddingTop="@dimen/abc_dialog_padding_top_material"
                     tools:text="message"
                     />
-                <!-- 濡傛灉娌℃湁button锛岄偅涔堝氨鏄剧ず杩欎釜view銆傜敤鏉ュ仛鐣欑櫧 -->
                 <View
                     android:id="@+id/textSpacerNoButtons"
                     android:layout_width="0dp"
@@ -114,7 +113,7 @@
         android:layout_weight="1"
         android:minHeight="48dp"
         >
-        <!-- 鑷畾涔塪ialog甯冨眬鐨勭埗鎺т欢 -->
+      
         <FrameLayout
             android:id="@+id/custom"
             android:layout_width="match_parent"
