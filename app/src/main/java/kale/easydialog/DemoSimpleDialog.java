@@ -14,6 +14,7 @@ public class DemoSimpleDialog extends SimpleDialog {
     public void onStart() {
         super.onStart();
 
+        // 在onStart中找到控件并进行设置
         TextView tv = (TextView) getDialog().findViewById(R.id.alertTitle);
         tv.setBackgroundColor(0xffff0000);
     }

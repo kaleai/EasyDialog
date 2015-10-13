@@ -3,52 +3,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
     >
 
-
-    <Button
-        android:id="@+id/simple_dialog_btn"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="简单提示框"
-        />
+        android:orientation="vertical"
+        android:visibility="visible"
+        >
 
-    <Button
-        android:id="@+id/single_dialog_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="单选对话框"
-        />
+        <Button
+            android:id="@+id/simple_dialog_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="简单提示框"
+            />
 
-    <Button
-        android:id="@+id/multi_dialog_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="多选对话框"
-        />
+        <Button
+            android:id="@+id/single_dialog_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="单选对话框"
+            />
 
-    <Button
-        android:id="@+id/simple_pg_dialog_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="圆形进度条"
-        />
+        <Button
+            android:id="@+id/multi_dialog_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="多选对话框"
+            />
 
-    <Button
-        android:id="@+id/simple_pg_h_dialog_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="横向有刻度进度条"
-        />
+        <Button
+            android:id="@+id/simple_pg_dialog_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="圆形进度条"
+            />
 
+        <Button
+            android:id="@+id/simple_pg_h_dialog_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="横向有刻度进度条"
+            />
+
+    </LinearLayout>
+    
+   
 </LinearLayout>

@@ -1,79 +1,80 @@
 package kale.ui.view;
 
-
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.content.DialogInterface.OnDismissListener;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnClickListener;
 
+import kale.ui.view.DialogInterface.OnCancelListener;
+import kale.ui.view.DialogInterface.OnDismissListener;
 
 /**
  * @author Jack Tony
- * @date 2015/8/11
+ * @date 2015/10/12
  */
-abstract class BaseEasyDialog extends DialogFragment {
+public abstract class BaseEasyDialog extends DialogFragment {
 
-    protected AlertDialog.Builder builder;
+    private AlertDialog.Builder builder;
 
-    private String mTitle;
+    private CharSequence mTitle;
     
-    private String mPositiveText;
+    private static final String KEY_TITLE = "KEY_TITLE";
 
-    private OnClickListener mPositiveListener;
-
-    private String mNegativeText;
-    
-    private OnClickListener mNegativeListener;
-    
     private OnDismissListener mOnDismissListener;
-    
+
+    private static final String KEY_DISMISS_LISTENER = "KEY_DISMISS_LISTENER";
+
     private OnCancelListener mOnCancelListener;
 
+    private static final String KEY_CANCEL_LISTENER = "KEY_CANCEL_LISTENER";
+
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        builder = new AlertDialog.Builder(getActivity());
     }
 
+    protected abstract @NonNull AlertDialog.Builder initBuilder();
+
+    @CallSuper
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreateDialog(savedInstanceState);
+        Bundle bundle;
+        if ((bundle = getArguments()) != null) {
+            mTitle = bundle.getCharSequence(KEY_TITLE);
+            mOnDismissListener = (OnDismissListener) bundle.getSerializable(KEY_DISMISS_LISTENER);
+            mOnCancelListener = (OnCancelListener) bundle.getSerializable(KEY_CANCEL_LISTENER);
+            onRestoreInstanceState(savedInstanceState);
+        }
+        builder = initBuilder();
         if (mTitle != null){
             builder.setTitle(mTitle);
         }
-        if (mPositiveText != null && mPositiveListener != null) {
-            builder.setPositiveButton(mPositiveText, mPositiveListener);
-        }
-        if (mNegativeText != null && mNegativeListener != null) {
-            builder.setNegativeButton(mNegativeText, mNegativeListener);
-        }
-        return initBuilder(builder).create();
+        setBuilder(builder, savedInstanceState);
+        return builder.create();
     }
 
-    protected abstract AlertDialog.Builder initBuilder(AlertDialog.Builder builder);
+    protected abstract void onRestoreInstanceState(@NonNull Bundle savedInstanceState);
 
+/*    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_TITLE, mTitle);
+        outState.putSerializable(KEY_DISMISS_LISTENER, mOnDismissListener);
+        outState.putSerializable(KEY_CANCEL_LISTENER, mOnCancelListener);
+    }*/
 
-    public void setPositiveListener(String positiveText, DialogInterface.OnClickListener listener) {
-        mPositiveText = positiveText; 
-        mPositiveListener = listener;
-    }
+    protected abstract void setBuilder(AlertDialog.Builder builder, Bundle savedInstanceState);
 
-    public void setNegativeListener(String negativeText, DialogInterface.OnClickListener listener) {
-        mNegativeText = negativeText;
-        mNegativeListener = listener;
-    }
-
-    public void setOnDismissListener(@NonNull DialogInterface.OnDismissListener dimissListener) {
+    public void setOnDismissListener(@NonNull OnDismissListener dimissListener) {
         mOnDismissListener = dimissListener;
     }
 
-    public void setOnCancelListener(@NonNull DialogInterface.OnCancelListener onCancelListener) {
+    public void setOnCancelListener(@NonNull OnCancelListener onCancelListener) {
         mOnCancelListener = onCancelListener;
     }
 
@@ -91,6 +92,29 @@ abstract class BaseEasyDialog extends DialogFragment {
         if (mOnCancelListener != null) {
             mOnCancelListener.onCancel(dialog);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        
+        builder = null;
+        
+        mTitle = null;
+        mOnDismissListener = null;
+        mOnCancelListener = null;
+    }
+
+    public CharSequence getTitle() {
+        return mTitle;
+    }
+
+    public OnDismissListener getOnDismissListener() {
+        return mOnDismissListener;
+    }
+
+    public OnCancelListener getOnCancelListener() {
+        return mOnCancelListener;
     }
 
     public void setTitle(String title) {

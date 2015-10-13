@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/lib/src/main/res/layout/custom_dialog_alert_material.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/lib/src/main/res/layout/custom_dialog_select_item_material.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/lib/src/main/res/layout/custom_dialog_select_multichoice_material.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/lib/src/main/res/layout/custom_dialog_select_singlechoice_material.xml" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
