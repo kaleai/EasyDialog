@@ -69,11 +69,6 @@ public class ProgressDialog extends BaseEasyDialog {
             return this;
         }
 
-        public Builder setProgressStyle(int style) {
-           
-            return this;
-        }
-
         /**
          * Change the format of the small text showing current and maximum units
          * of progress.  The default is "%1d/%2d".
