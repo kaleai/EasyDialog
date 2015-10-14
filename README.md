@@ -52,142 +52,142 @@ dependencies {
 ![](./demo/simple.png)  
 
 ```JAVA  
-	 SimpleDialog.Builder builder = new SimpleDialog.Builder();
-        builder.setTitle("Title");
-        builder.setMessage("Message");
+SimpleDialog.Builder builder = new SimpleDialog.Builder();
+builder.setTitle("Title");
+builder.setMessage("Message");
 
-        // 监听是否取消显示了对话框，触发：onCancel - > onDismiss
-        builder.setOnCancelListener(new OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                Log.d(TAG, "onCancel");
-            }
-        });
-        // 监听对话框关闭
-        builder.setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                Log.d(TAG, "onDismiss");
-            }
-        });
-        
-        // 设置中立的按钮
-        builder.setNeutralButton("know", null);
-        
-       // 设置确定按钮
-        builder.setPositiveButton("ok", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Log.d(TAG, "onClick ok");
-            }
-        });
+// 监听是否取消显示了对话框，触发：onCancel - > onDismiss
+builder.setOnCancelListener(new OnCancelListener() {
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        Log.d(TAG, "onCancel");
+    }
+});
+// 监听对话框关闭
+builder.setOnDismissListener(new OnDismissListener() {
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        Log.d(TAG, "onDismiss");
+    }
+});
 
-        // 设置取消按钮
-        builder.setNegativeButton("cancel", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Log.d(TAG, "onClick cancel");
-                dialog.dismiss();
-            }
-        });
+// 设置中立的按钮
+builder.setNeutralButton("know", null);
 
-        SimpleDialog dialog = builder.create();
-        dialog.setCancelable(true); // 点击屏幕对话框外就关闭
-        dialog.show(getSupportFragmentManager(), TAG);
+// 设置确定按钮
+builder.setPositiveButton("ok", new OnClickListener() {
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        Log.d(TAG, "onClick ok");
+    }
+});
+
+// 设置取消按钮
+builder.setNegativeButton("cancel", new OnClickListener() {
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        Log.d(TAG, "onClick cancel");
+        dialog.dismiss();
+    }
+});
+
+SimpleDialog dialog = builder.create();
+dialog.setCancelable(true); // 点击屏幕对话框外就关闭
+dialog.show(getSupportFragmentManager(), TAG);
 ```    
 **2. 单选对话框**   
 ![](./demo/singleChoice.png)  
 
 ```JAVA
-	 SingleChoiceDialog.Builder builder = new SingleChoiceDialog.Builder();
-        builder.setTitle("Single Choice Dialog");
-        // 设置单选列表的数据
-        builder.setData(new String[]{"Android", "ios", "wp"}, 1);
-        // 设置监听器
-        builder.setOnItemSelectedListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(DialogInterface dialog, int position, long id) {
-                Log.d(TAG, "onItemClick pos = " + position);
-                dialog.dismiss();
-            }
-        });
-        SingleChoiceDialog dialog = builder.create();
-        dialog.setCancelable(false);
-        dialog.show(getSupportFragmentManager(), TAG);  
+SingleChoiceDialog.Builder builder = new SingleChoiceDialog.Builder();
+builder.setTitle("Single Choice Dialog");
+// 设置单选列表的数据
+builder.setData(new String[]{"Android", "ios", "wp"}, 1);
+// 设置监听器
+builder.setOnItemSelectedListener(new OnItemClickListener() {
+    @Override
+    public void onItemClick(DialogInterface dialog, int position, long id) {
+        Log.d(TAG, "onItemClick pos = " + position);
+        dialog.dismiss();
+    }
+});
+SingleChoiceDialog dialog = builder.create();
+dialog.setCancelable(false);
+dialog.show(getSupportFragmentManager(), TAG);  
 ```  
 **3. 多选对话框**   
 ![](./demo/multiChoice.png)    
 
 ```JAVA
-        MultiChoiceDialog.Builder builder = new MultiChoiceDialog.Builder();
-        // 设置数据和默认选中的选项
-        builder.setData(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true});
-        // 设置监听器
-        builder.setOnMultiChoiceClickListener(new OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                Log.d(TAG, "onClick pos = " + which + " , isChecked = " + isChecked);
-            }
-        });
-        builder.create().show(getSupportFragmentManager(), TAG);
+MultiChoiceDialog.Builder builder = new MultiChoiceDialog.Builder();
+// 设置数据和默认选中的选项
+builder.setData(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true});
+// 设置监听器
+builder.setOnMultiChoiceClickListener(new OnMultiChoiceClickListener() {
+    @Override
+    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+        Log.d(TAG, "onClick pos = " + which + " , isChecked = " + isChecked);
+    }
+});
+builder.create().show(getSupportFragmentManager(), TAG);
 ```  
 **4. 圆形对话框**   
 ![](./demo/circular.png)   
 
 ```JAVA
-	 ProgressDialog.Builder builder = new ProgressDialog.Builder(true);
-        builder.setTitle("圆形进度条");
-        builder.setMessage("test message");
+ProgressDialog.Builder builder = new ProgressDialog.Builder(true);
+builder.setTitle("圆形进度条");
+builder.setMessage("test message");
 
-        // 点击空白处，点击返回键都会触发onCancel->onDismiss
-        builder.setOnCancelListener(new OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface builder) {
-                Log.d(TAG, "onCancel");
-            }
-        });
-        builder.setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface builder) {
-                Log.d(TAG, "onDismiss");
-            }
-        });
-        ProgressDialog dialog = builder.create();
-        dialog.setCancelable(true);
-        dialog.show(getSupportFragmentManager(), TAG);
+// 点击空白处，点击返回键都会触发onCancel->onDismiss
+builder.setOnCancelListener(new OnCancelListener() {
+    @Override
+    public void onCancel(DialogInterface builder) {
+        Log.d(TAG, "onCancel");
+    }
+});
+builder.setOnDismissListener(new OnDismissListener() {
+    @Override
+    public void onDismiss(DialogInterface builder) {
+        Log.d(TAG, "onDismiss");
+    }
+});
+ProgressDialog dialog = builder.create();
+dialog.setCancelable(true);
+dialog.show(getSupportFragmentManager(), TAG);
 ```  
 **5. 横向有进度条的对话框**   
 ![](./demo/progress.png)   
 
 ```JAVA
-	 ProgressDialog.Builder builder = new ProgressDialog.Builder(false);
-        builder.setTitle("横向进度条");
-        builder.setMax(100);
-        builder.setIndeterminate(false);//设置不显示明确的进度
-        builder.setProgress(40);
+ProgressDialog.Builder builder = new ProgressDialog.Builder(false);
+builder.setTitle("横向进度条");
+builder.setMax(100);
+builder.setIndeterminate(false);//设置不显示明确的进度
+builder.setProgress(40);
 
-        final ProgressDialog dialog = builder.create();
+final ProgressDialog dialog = builder.create();
 
-        dialog.show(getSupportFragmentManager(), TAG);
+dialog.show(getSupportFragmentManager(), TAG);
 
-        //启动线程，模拟一个耗时的操作
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int Progress = 0;
-                while (Progress < 100) {
-                    try {
-                        Thread.sleep(100);
-                        Progress++;
-                        // dialog.setProgress(Progress);
-                        dialog.incrementProgressBy(1);// 进度条一次加1
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                dialog.dismiss();// 完成后消失
+//启动线程，模拟一个耗时的操作
+new Thread(new Runnable() {
+    @Override
+    public void run() {
+        int Progress = 0;
+        while (Progress < 100) {
+            try {
+                Thread.sleep(100);
+                Progress++;
+                // dialog.setProgress(Progress);
+                dialog.incrementProgressBy(1);// 进度条一次加1
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        }).start();
+        }
+        dialog.dismiss();// 完成后消失
+    }
+}).start();
 ```
 
 ### 定制  
