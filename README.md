@@ -17,7 +17,7 @@ repositories {
 2.在用到的项目中添加依赖
 ```  
 dependencies {
-		compile 'com.github.tianzhijiexian:UIBlock:1.0'
+	compile 'com.github.tianzhijiexian:EasyDialog:1.0'
 }    
 ```   
 
