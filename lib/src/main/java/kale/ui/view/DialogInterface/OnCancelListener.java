@@ -1,15 +1,24 @@
 package kale.ui.view.DialogInterface;
 
 import android.content.DialogInterface;
-
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * @author Jack Tony
  * @date 2015/10/10
  */
-public interface OnCancelListener extends Serializable ,DialogInterface.OnCancelListener{
+public abstract class OnCancelListener implements Parcelable ,DialogInterface.OnCancelListener{
 
-    public void onCancel(DialogInterface dialog);
+    public abstract void onCancel(DialogInterface dialog);
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
 }

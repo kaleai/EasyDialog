@@ -29,15 +29,14 @@ public class MultiChoiceDialog extends BaseEasyAlertDialog {
         }
 
         public Builder setOnMultiChoiceClickListener(OnMultiChoiceClickListener listener) {
-            bundle.putSerializable(KEY_MULTI_CHOICE_LISTENER, listener);
+            bundle.putParcelable(KEY_MULTI_CHOICE_LISTENER, listener);
             return this;
         }
 
+        @NonNull
         @Override
-        public MultiChoiceDialog create() {
-            MultiChoiceDialog dialog = new MultiChoiceDialog();
-            dialog.setArguments(bundle);
-            return dialog;
+        protected BaseEasyDialog createDialog() {
+            return new MultiChoiceDialog();
         }
     }
 
@@ -46,8 +45,8 @@ public class MultiChoiceDialog extends BaseEasyAlertDialog {
         if (arguments != null) {
             String[] itemStrArr = arguments.getStringArray(KEY_ITEM_STR_ARR);
             boolean[] defaultChoiceArr = arguments.getBooleanArray(KEY_DEFAULT_CHOICE_ARR);
-            final OnMultiChoiceClickListener  mListener = (OnMultiChoiceClickListener) arguments.getSerializable(KEY_MULTI_CHOICE_LISTENER);
-            
+            final OnMultiChoiceClickListener mListener = arguments.getParcelable(KEY_MULTI_CHOICE_LISTENER);
+
             if (itemStrArr == null) {
                 throw new IllegalArgumentException("Item's String Array is null!");
             }
@@ -62,5 +61,5 @@ public class MultiChoiceDialog extends BaseEasyAlertDialog {
             });
         }
     }
-    
+
 }

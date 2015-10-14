@@ -21,11 +21,10 @@ public class SimpleDialog extends BaseEasyAlertDialog {
             return Builder.this;
         }
 
+        @NonNull
         @Override
-        public SimpleDialog create() {
-            SimpleDialog dialog = new SimpleDialog();
-            dialog.setArguments(bundle);
-            return dialog;
+        protected BaseEasyDialog createDialog() {
+            return new SimpleDialog();
         }
     }
 

@@ -30,15 +30,14 @@ public class SingleChoiceDialog extends BaseEasyAlertDialog {
         }
 
         public Builder setOnItemSelectedListener(OnItemClickListener listener) {
-            bundle.putSerializable(KEY_ITEM_CLICK_LISTENER, listener);
+            bundle.putParcelable(KEY_ITEM_CLICK_LISTENER, listener);
             return this;
         }
 
+        @NonNull
         @Override
-        public SingleChoiceDialog create() {
-            SingleChoiceDialog dialog = new SingleChoiceDialog();
-            dialog.setArguments(bundle);
-            return dialog;
+        protected BaseEasyDialog createDialog() {
+            return new SingleChoiceDialog();
         }
     }
 
@@ -53,7 +52,7 @@ public class SingleChoiceDialog extends BaseEasyAlertDialog {
         if (arguments != null) {
             String[] itemStrArr = arguments.getStringArray(KEY_ITEM_STR_ARR);
             int defaultChoiceIndex = arguments.getInt(KEY_DEFAULT_CHOICE_ARR, 0);
-            final OnItemClickListener mListener = (OnItemClickListener) arguments.getSerializable(KEY_ITEM_CLICK_LISTENER);
+            final OnItemClickListener mListener = arguments.getParcelable(KEY_ITEM_CLICK_LISTENER);
             
             if (itemStrArr == null) {
                 throw new IllegalArgumentException("Item's String Array is null!");

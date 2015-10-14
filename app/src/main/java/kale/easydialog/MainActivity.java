@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         simpleDialogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //new Dial().show(getSupportFragmentManager(), "dd");
                 setSimpleDialog();
             }
         });
@@ -96,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setSimpleDialog() {
-        SimpleDialog.Builder builder = new SimpleDialog.Builder();
+        SimpleDialog.Builder builder = new DemoSimpleDialog.Builder();
         builder.setTitle("Title");
         builder.setMessage("Message");
 
@@ -173,14 +172,14 @@ public class MainActivity extends AppCompatActivity {
         builder.setMessage("test message");
         builder.setIndeterminate(true);//设置不显示明确的进度
         // builder.setIndeterminate(false);// 设置显示明确的进度
-
         // 点击空白处，点击返回键都会触发onCancel->onDismiss
         builder.setOnCancelListener(new OnCancelListener() {
             @Override
-            public void onCancel(DialogInterface builder) {
+            public void onCancel(DialogInterface dialog) {
                 Log.d(TAG, "onCancel");
             }
         });
+
         builder.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface builder) {

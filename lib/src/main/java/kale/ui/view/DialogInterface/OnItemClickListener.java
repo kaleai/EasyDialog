@@ -1,14 +1,14 @@
 package kale.ui.view.DialogInterface;
 
 import android.content.DialogInterface;
-
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * @author Jack Tony
  * @date 2015/10/10
  */
-public interface OnItemClickListener extends Serializable{
+public abstract class OnItemClickListener implements Parcelable {
 
     /**
      * Callback method to be invoked when an item in this AdapterView has
@@ -20,5 +20,15 @@ public interface OnItemClickListener extends Serializable{
      * @param position The position of the view in the adapter.
      * @param id The row id of the item that was clicked.
      */
-    void onItemClick(DialogInterface dialog, int position, long id);
+    public abstract void onItemClick(DialogInterface dialog, int position, long id);
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
 }

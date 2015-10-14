@@ -1,14 +1,23 @@
 package kale.ui.view.DialogInterface;
 
 import android.content.DialogInterface;
-
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * @author Jack Tony
  * @date 2015/10/10
  */
-public interface OnClickListener extends Serializable, DialogInterface.OnClickListener {
+public abstract class OnClickListener implements DialogInterface.OnClickListener, Parcelable {
 
-    public void onClick(DialogInterface dialog, int which);
+    public abstract void onClick(DialogInterface dialog, int which);
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 }

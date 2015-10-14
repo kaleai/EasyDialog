@@ -41,17 +41,22 @@ public abstract class BaseEasyDialog extends DialogFragment {
         }
 
         public Builder setOnDismissListener(OnDismissListener listener) {
-            bundle.putSerializable(KEY_DISMISS_LISTENER, listener);
+            bundle.putParcelable(KEY_DISMISS_LISTENER, listener);
             return this;
         }
 
         public Builder setOnCancelListener(OnCancelListener listener) {
-            bundle.putSerializable(KEY_CANCEL_LISTENER, listener);
+            bundle.putParcelable(KEY_CANCEL_LISTENER, listener);
             return this;
         }
 
-        public abstract BaseEasyDialog create();
+        public <T extends BaseEasyDialog> T create() {
+            T dialog = (T) createDialog();
+            dialog.setArguments(bundle);
+            return dialog;
+        }
         
+        protected abstract @NonNull BaseEasyDialog createDialog();
     }
 
 
@@ -66,8 +71,8 @@ public abstract class BaseEasyDialog extends DialogFragment {
         Bundle bundle;
         if ((bundle = getArguments()) != null) {
             mTitle = bundle.getCharSequence(KEY_TITLE);
-            mOnDismissListener = (OnDismissListener) bundle.getSerializable(KEY_DISMISS_LISTENER);
-            mOnCancelListener = (OnCancelListener) bundle.getSerializable(KEY_CANCEL_LISTENER);
+            mOnDismissListener = bundle.getParcelable(KEY_DISMISS_LISTENER);
+            mOnCancelListener = bundle.getParcelable(KEY_CANCEL_LISTENER);
             onRestoreInstanceState(savedInstanceState);
         }
 
@@ -84,15 +89,6 @@ public abstract class BaseEasyDialog extends DialogFragment {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
 
     }
-
-/*    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(KEY_TITLE, mTitle);
-        outState.putSerializable(KEY_DISMISS_LISTENER, mOnDismissListener);
-        outState.putSerializable(KEY_CANCEL_LISTENER, mOnCancelListener);
-    }*/
-
 
     @Override
     public void onDismiss(DialogInterface dialog) {

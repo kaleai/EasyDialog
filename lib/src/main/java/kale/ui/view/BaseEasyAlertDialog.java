@@ -27,7 +27,6 @@ public abstract class BaseEasyAlertDialog extends BaseEasyDialog {
 
     private static final String KEY_NEGATIVE_LISTENER = "KEY_NEGATIVE_LISTENER";
 
-
     @NonNull
     @Override
     protected AlertDialog.Builder initBuilder() {
@@ -38,19 +37,19 @@ public abstract class BaseEasyAlertDialog extends BaseEasyDialog {
 
         public Builder setPositiveButton(CharSequence positiveText, OnClickListener listener) {
             bundle.putCharSequence(KEY_POSITIVE_TEXT, positiveText);
-            bundle.putSerializable(KEY_POSITIVE_LISTENER, listener);
+            bundle.putParcelable(KEY_POSITIVE_LISTENER, listener);
             return this;
         }
 
         public Builder setNeutralButton(CharSequence neutralText, OnClickListener listener) {
             bundle.putCharSequence(KEY_NEUTRAL_TEXT, neutralText);
-            bundle.putSerializable(KEY_NEUTRAL_LISTENER, listener);
+            bundle.putParcelable(KEY_NEUTRAL_LISTENER, listener);
             return this;
         }
 
         public Builder setNegativeButton(CharSequence negativeText, OnClickListener listener) {
             bundle.putCharSequence(KEY_NEGATIVE_TEXT, negativeText);
-            bundle.putSerializable(KEY_NEGATIVE_LISTENER, listener);
+            bundle.putParcelable(KEY_NEGATIVE_LISTENER, listener);
             return this;
         }
 
@@ -60,11 +59,11 @@ public abstract class BaseEasyAlertDialog extends BaseEasyDialog {
     protected void setBuilder(AlertDialog.Builder builder, @Nullable Bundle arguments) {
         if (arguments != null) {
             CharSequence positiveText = arguments.getCharSequence(KEY_POSITIVE_TEXT);
-            OnClickListener positiveListener = (OnClickListener) arguments.getSerializable(KEY_POSITIVE_LISTENER);
+            OnClickListener positiveListener = arguments.getParcelable(KEY_POSITIVE_LISTENER);
             CharSequence neutralText = arguments.getCharSequence(KEY_NEUTRAL_TEXT);
-            OnClickListener neutralListener = (OnClickListener) arguments.getSerializable(KEY_NEUTRAL_LISTENER);
+            OnClickListener neutralListener = arguments.getParcelable(KEY_NEUTRAL_LISTENER);
             CharSequence negativeText = arguments.getCharSequence(KEY_NEGATIVE_TEXT);
-            OnClickListener negativeListener = (OnClickListener) arguments.getSerializable(KEY_NEGATIVE_LISTENER);
+            OnClickListener negativeListener = arguments.getParcelable(KEY_NEGATIVE_LISTENER);
 
             if (positiveText != null) {
                 builder.setPositiveButton(positiveText, positiveListener);

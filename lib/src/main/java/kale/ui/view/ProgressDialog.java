@@ -38,7 +38,7 @@ public class ProgressDialog extends BaseEasyDialog {
         return new AlertDialog.Builder(getActivity());
     }
 
-    public static class Builder extends BaseEasyDialog.Builder {
+    public static class Builder extends BaseEasyDialog.Builder{
 
         public Builder(boolean isCircular) {
             bundle.putInt(KEY_PROGRESS_STYLE, isCircular ? PDialog.STYLE_SPINNER : PDialog.STYLE_HORIZONTAL);
@@ -97,11 +97,11 @@ public class ProgressDialog extends BaseEasyDialog {
             return this;
         }
 
+
+        @NonNull
         @Override
-        public ProgressDialog create() {
-            ProgressDialog dialog = new ProgressDialog();
-            dialog.setArguments(bundle);
-            return dialog;
+        protected BaseEasyDialog createDialog() {
+            return new ProgressDialog();
         }
     }
     

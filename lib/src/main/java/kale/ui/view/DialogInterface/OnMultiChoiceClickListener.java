@@ -1,14 +1,14 @@
 package kale.ui.view.DialogInterface;
 
 import android.content.DialogInterface;
-
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * @author Jack Tony
  * @date 2015/10/10
  */
-public interface OnMultiChoiceClickListener extends Serializable {
+public abstract class OnMultiChoiceClickListener implements Parcelable {
 
     /**
      * This method will be invoked when an item in the dialog is clicked.
@@ -17,6 +17,15 @@ public interface OnMultiChoiceClickListener extends Serializable {
      * @param which     The position of the item in the list that was clicked.
      * @param isChecked True if the click checked the item, else false.
      */
-    public void onClick(DialogInterface dialog, int which, boolean isChecked);
+    public abstract void onClick(DialogInterface dialog, int which, boolean isChecked);
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
 }
