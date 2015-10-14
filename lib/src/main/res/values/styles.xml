@@ -26,13 +26,14 @@
         <item name="android:listDivider">@null</item>
     </style>
 
-    <style name="Theme.Dialog.Alert">
+    <style name="Theme.Dialog.Alert" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
         <item name="windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
     </style>
     
     <style name="AlertDialog" parent="Base.AlertDialog.AppCompat">
         <!-- AlertController.class - line:168 -->
+        
         <!-- dialog的主体布局文件，里面包含了title，message等控件 -->
         <item name="android:layout">@layout/custom_dialog_alert_material</item>
         <!-- dialog中的列表布局文件，其实就是listView -->

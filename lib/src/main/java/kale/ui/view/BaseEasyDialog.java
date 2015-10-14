@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
@@ -17,10 +18,8 @@ import kale.ui.view.DialogInterface.OnDismissListener;
  */
 public abstract class BaseEasyDialog extends DialogFragment {
 
-    private AlertDialog.Builder builder;
-
     private CharSequence mTitle;
-    
+
     private static final String KEY_TITLE = "KEY_TITLE";
 
     private OnDismissListener mOnDismissListener;
@@ -31,13 +30,34 @@ public abstract class BaseEasyDialog extends DialogFragment {
 
     private static final String KEY_CANCEL_LISTENER = "KEY_CANCEL_LISTENER";
 
-    
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+    protected abstract static class Builder {
+
+        protected Bundle bundle = new Bundle();
+
+        public Builder setTitle(CharSequence title) {
+            bundle.putCharSequence(KEY_TITLE, title);
+            return this;
+        }
+
+        public Builder setOnDismissListener(OnDismissListener listener) {
+            bundle.putSerializable(KEY_DISMISS_LISTENER, listener);
+            return this;
+        }
+
+        public Builder setOnCancelListener(OnCancelListener listener) {
+            bundle.putSerializable(KEY_CANCEL_LISTENER, listener);
+            return this;
+        }
+
+        public abstract BaseEasyDialog create();
+        
     }
 
-    protected abstract @NonNull AlertDialog.Builder initBuilder();
+
+    protected abstract
+    @NonNull
+    AlertDialog.Builder initBuilder();
 
     @CallSuper
     @NonNull
@@ -50,15 +70,20 @@ public abstract class BaseEasyDialog extends DialogFragment {
             mOnCancelListener = (OnCancelListener) bundle.getSerializable(KEY_CANCEL_LISTENER);
             onRestoreInstanceState(savedInstanceState);
         }
-        builder = initBuilder();
-        if (mTitle != null){
+
+        AlertDialog.Builder builder = initBuilder();
+        if (mTitle != null) {
             builder.setTitle(mTitle);
         }
-        setBuilder(builder, savedInstanceState);
+        setBuilder(builder, bundle);
         return builder.create();
     }
 
-    protected abstract void onRestoreInstanceState(@NonNull Bundle savedInstanceState);
+    protected abstract void setBuilder(AlertDialog.Builder builder, @Nullable Bundle arguments);
+
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+
+    }
 
 /*    @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -68,15 +93,6 @@ public abstract class BaseEasyDialog extends DialogFragment {
         outState.putSerializable(KEY_CANCEL_LISTENER, mOnCancelListener);
     }*/
 
-    protected abstract void setBuilder(AlertDialog.Builder builder, Bundle savedInstanceState);
-
-    public void setOnDismissListener(@NonNull OnDismissListener dimissListener) {
-        mOnDismissListener = dimissListener;
-    }
-
-    public void setOnCancelListener(@NonNull OnCancelListener onCancelListener) {
-        mOnCancelListener = onCancelListener;
-    }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
@@ -97,27 +113,22 @@ public abstract class BaseEasyDialog extends DialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        
-        builder = null;
-        
         mTitle = null;
         mOnDismissListener = null;
         mOnCancelListener = null;
     }
 
+
     public CharSequence getTitle() {
         return mTitle;
     }
 
-    public OnDismissListener getOnDismissListener() {
+    protected OnDismissListener getOnDismissListener() {
         return mOnDismissListener;
     }
 
-    public OnCancelListener getOnCancelListener() {
+    protected OnCancelListener getOnCancelListener() {
         return mOnCancelListener;
     }
 
-    public void setTitle(String title) {
-        mTitle = title;
-    }
 }

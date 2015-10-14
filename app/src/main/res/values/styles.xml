@@ -17,8 +17,4 @@
         
     </style>
 
-    <style name="nihao" parent="@style/AppTheme" >
-        <item name="android:colorForeground">@color/foreground_material_light</item>
-    </style>
-
 </resources>

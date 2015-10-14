@@ -14,61 +14,23 @@ import java.text.NumberFormat;
  */
 public class ProgressDialog extends BaseEasyDialog {
 
-    /**
-     * Creates a ProgressDialog with a circular, spinning progress
-     * bar. This is the default.
-     */
-    public static final int STYLE_SPINNER = 0;
-
-    /**
-     * Creates a ProgressDialog with a horizontal progress bar.
-     */
-    public static final int STYLE_HORIZONTAL = 1;
-
-
-    private CharSequence mMessage;
-
     private static final String KEY_MESSAGE = "KEY_MESSAGE";
-
-
-    private int mProgressStyle = STYLE_SPINNER;
 
     private static final String KEY_PROGRESS_STYLE = "KEY_PROGRESS_STYLE";
 
-
-    private String mProgressNumberFormat;
-
     private static final String KEY_PROGRESS_NUMBER_FORMAT = "KEY_PROGRESS_NUMBER_FORMAT";
-
-    private NumberFormat mProgressPercentFormat;
 
     private static final String KEY_PROGRESS_PERCENT_FORMAT = "KEY_PROGRESS_PERCENT_FORMAT";
 
-    private int mMax;
-
     private static final String KEY_MAX = "KEY_MAX";
-
-    private int mProgressVal;
 
     private static final String KEY_PROGRESS_VAL = "KEY_PROGRESS_VAL";
 
-    private int mSecondaryProgressVal;
-
     private static final String KEY_SECONDARY_PROGRESS_VAL = "KEY_SECONDARY_PROGRESS_VAL";
-
-    private int mIncrementDiff;
-
-    private static final String KEY_INCREMENT_DIFF = "KEY_INCREMENT_DIFF";
-
-    private int mIncrementSecondaryDiff;
-
-    private static final String KEY_INCREMENT_SECONDARY_DIFF = "KEY_INCREMENT_SECONDARY_DIFF";
-
-    private boolean mIndeterminate;
 
     private static final String KEY_INDETERMINATE = "KEY_INDETERMINATE";
 
-    
+
     @NonNull
     @Override
     protected AlertDialog.Builder initBuilder() {
@@ -76,148 +38,157 @@ public class ProgressDialog extends BaseEasyDialog {
         return new AlertDialog.Builder(getActivity());
     }
 
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        mMessage = savedInstanceState.getCharSequence(KEY_MESSAGE);
-        mProgressStyle = savedInstanceState.getInt(KEY_PROGRESS_STYLE, STYLE_SPINNER);
-        mProgressNumberFormat = savedInstanceState.getString(KEY_PROGRESS_NUMBER_FORMAT);
-        mProgressPercentFormat = (NumberFormat) savedInstanceState.getSerializable(KEY_PROGRESS_PERCENT_FORMAT);
-        mMax = savedInstanceState.getInt(KEY_MAX, 100);
-        mProgressVal = savedInstanceState.getInt(KEY_PROGRESS_VAL);
-        mSecondaryProgressVal = savedInstanceState.getInt(KEY_SECONDARY_PROGRESS_VAL);
-        mIncrementDiff = savedInstanceState.getInt(KEY_INCREMENT_DIFF);
-        mIncrementSecondaryDiff = savedInstanceState.getInt(KEY_INCREMENT_SECONDARY_DIFF);
-        mIndeterminate = savedInstanceState.getBoolean(KEY_INDETERMINATE);
-    }
+    public static class Builder extends BaseEasyDialog.Builder {
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putCharSequence(KEY_MESSAGE, mMessage);
-        outState.putInt(KEY_PROGRESS_STYLE, mProgressStyle);
-        outState.putString(KEY_PROGRESS_NUMBER_FORMAT, mProgressNumberFormat);
-        outState.putSerializable(KEY_PROGRESS_PERCENT_FORMAT, mProgressPercentFormat);
-        outState.putInt(KEY_MAX, mMax);
-        outState.putInt(KEY_PROGRESS_VAL, mProgressVal);
-        outState.putInt(KEY_SECONDARY_PROGRESS_VAL, mSecondaryProgressVal);
-        outState.putInt(KEY_INCREMENT_DIFF, mIncrementDiff);
-        outState.putInt(KEY_INCREMENT_SECONDARY_DIFF, mIncrementSecondaryDiff);
-        outState.putBoolean(KEY_INDETERMINATE, mIndeterminate);
-    }
+        public Builder(boolean isCircular) {
+            bundle.putInt(KEY_PROGRESS_STYLE, isCircular ? PDialog.STYLE_SPINNER : PDialog.STYLE_HORIZONTAL);
+        }
+        
+        public Builder setMessage(@NonNull CharSequence message) {
+            bundle.putCharSequence(KEY_MESSAGE, message);
+            return this;
+        }
 
+        public Builder setMax(int max) {
+            bundle.putInt(KEY_MAX, max);
+            return this;
+        }
+
+        public Builder setProgress(int value) {
+            bundle.putInt(KEY_PROGRESS_VAL, value);
+            return this;
+        }
+
+        public Builder setSecondaryProgress(int secondaryProgress) {
+            bundle.putInt(KEY_SECONDARY_PROGRESS_VAL, secondaryProgress);
+            return this;
+        }
+
+        public Builder setIndeterminate(boolean indeterminate) {
+            bundle.putBoolean(KEY_INDETERMINATE, indeterminate);
+            return this;
+        }
+
+        public Builder setProgressStyle(int style) {
+           
+            return this;
+        }
+
+        /**
+         * Change the format of the small text showing current and maximum units
+         * of progress.  The default is "%1d/%2d".
+         * Should not be called during the number is progressing.
+         *
+         * @param format A string passed to {@link String#format String.format()};
+         *               use "%1d" for the current number and "%2d" for the maximum.  If null,
+         *               nothing will be shown.
+         */
+        public Builder setProgressNumberFormat(String format) {
+            bundle.putString(KEY_PROGRESS_NUMBER_FORMAT, format);
+            return this;
+        }
+
+        /**
+         * Change the format of the small text showing the percentage of progress.
+         * The default is
+         * {@link NumberFormat#getPercentInstance() NumberFormat.getPercentageInstnace().}
+         * Should not be called during the number is progressing.
+         *
+         * @param format An instance of a {@link NumberFormat} to generate the
+         *               percentage text.  If null, nothing will be shown.
+         */
+        public Builder setProgressPercentFormat(NumberFormat format) {
+            bundle.putSerializable(KEY_PROGRESS_PERCENT_FORMAT, format);
+            return this;
+        }
+
+        @Override
+        public ProgressDialog create() {
+            ProgressDialog dialog = new ProgressDialog();
+            dialog.setArguments(bundle);
+            return dialog;
+        }
+    }
+    
+    
     @Override
-    protected void setBuilder(AlertDialog.Builder builder, Bundle savedInstanceState) {
+    protected void setBuilder(AlertDialog.Builder builder, Bundle arguments) {
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        PDialog dialog = new PDialog(getContext(), getTheme());
-        dialog.setTitle(getTitle());
-        if (!TextUtils.isEmpty(mMessage)) {
-            dialog.setMessage(mMessage);
-        }
-        dialog.setProgressStyle(mProgressStyle);
-        dialog.setProgressNumberFormat(mProgressNumberFormat);
-        dialog.setProgressPercentFormat(mProgressPercentFormat);
-        dialog.setMax(mMax);
-        dialog.setProgress(mProgressVal);
-        dialog.setSecondaryProgress(mSecondaryProgressVal);
-        dialog.incrementProgressBy(mIncrementDiff);
-        dialog.incrementSecondaryProgressBy(mIncrementSecondaryDiff);
-        dialog.setIndeterminate(mIndeterminate);
-        dialog.setCancelable(isCancelable());
-        dialog.setOnCancelListener(getOnCancelListener());
-        dialog.setOnDismissListener(getOnDismissListener());
+        PDialog dialog = new PDialog(getActivity(), getTheme());
+
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            CharSequence message = arguments.getCharSequence(KEY_MESSAGE);
+            int progressStyle = arguments.getInt(KEY_PROGRESS_STYLE);
+            String progressNumberFormat = arguments.getString(KEY_PROGRESS_NUMBER_FORMAT, "%1d/%2d");
+            NumberFormat progressPercentFormat = (NumberFormat) arguments.getSerializable(KEY_PROGRESS_PERCENT_FORMAT);
+            int max = arguments.getInt(KEY_MAX, 100);
+            int progressVal = arguments.getInt(KEY_PROGRESS_VAL);
+            int secondaryProgressVal = arguments.getInt(KEY_SECONDARY_PROGRESS_VAL);
+            boolean indeterminate = arguments.getBoolean(KEY_INDETERMINATE);
         
+            dialog.setTitle(getTitle());
+            if (!TextUtils.isEmpty(message)) {
+                dialog.setMessage(message);
+            }
+            dialog.setCancelable(isCancelable());
+            dialog.setOnCancelListener(getOnCancelListener());
+            dialog.setOnDismissListener(getOnDismissListener());
+            
+            dialog.setProgressStyle(progressStyle);
+            dialog.setMax(max);
+            dialog.setIndeterminate(indeterminate);
+            dialog.setProgressNumberFormat(progressNumberFormat);
+            dialog.setProgressPercentFormat(progressPercentFormat != null ? progressPercentFormat : NumberFormat.getPercentInstance());
+            dialog.setProgress(progressVal);
+            dialog.setSecondaryProgress(secondaryProgressVal);
+        }
         return dialog;
     }
 
-    public void setMessage(@NonNull CharSequence message) {
-        mMessage = message;
-    }
-
-    public void setProgress(int value) {
-        mProgressVal = value;
-    }
-
-    public void setSecondaryProgress(int secondaryProgress) {
-        mSecondaryProgressVal = secondaryProgress;
-    }
-
     public int getProgress() {
-        return mProgressVal;
+        if (getDialog() != null) {
+            return ((PDialog) getDialog()).getProgress();
+        }
+        return -1;
     }
 
     public int getSecondaryProgress() {
-        return mSecondaryProgressVal;
+        if (getDialog() != null) {
+            return ((PDialog) getDialog()).getSecondaryProgress();
+        }
+        return -1;
     }
 
     public int getMax() {
-        return mMax;
+        if (getDialog() != null) {
+            return ((PDialog) getDialog()).getMax();
+        }
+        return -1;
     }
 
-    public void setMax(int max) {
-        mMax = max;
+    public boolean isIndeterminate() {
+        if (getDialog() != null) {
+            return ((PDialog) getDialog()).isIndeterminate();
+        }
+        return false;
     }
 
     public void incrementProgressBy(int diff) {
         if (getDialog() != null) {
             ((PDialog) getDialog()).incrementProgressBy(diff);
         }
-        mIncrementDiff = diff;
     }
 
     public void incrementSecondaryProgressBy(int diff) {
-        mIncrementSecondaryDiff = diff;
+        if (getDialog() != null) {
+            ((PDialog) getDialog()).incrementSecondaryProgressBy(diff);
+        }
     }
-
-    /*public void setProgressDrawable(Drawable d) {
-        mProgressDrawable = d;
-    }
-
-    public void setIndeterminateDrawable(Drawable d) {
-        mIndeterminateDrawable = d;
-    }*/
-
-    public void setIndeterminate(boolean indeterminate) {
-        mIndeterminate = indeterminate;
-    }
-
-    public boolean isIndeterminate() {
-        return mIndeterminate;
-    }
-
-
-    public void setProgressStyle(int style) {
-        mProgressStyle = style;
-    }
-
-    /**
-     * Change the format of the small text showing current and maximum units
-     * of progress.  The default is "%1d/%2d".
-     * Should not be called during the number is progressing.
-     *
-     * @param format A string passed to {@link String#format String.format()};
-     *               use "%1d" for the current number and "%2d" for the maximum.  If null,
-     *               nothing will be shown.
-     */
-    public void setProgressNumberFormat(String format) {
-        mProgressNumberFormat = format;
-    }
-
-    /**
-     * Change the format of the small text showing the percentage of progress.
-     * The default is
-     * {@link NumberFormat#getPercentInstance() NumberFormat.getPercentageInstnace().}
-     * Should not be called during the number is progressing.
-     *
-     * @param format An instance of a {@link NumberFormat} to generate the
-     *               percentage text.  If null, nothing will be shown.
-     */
-    public void setProgressPercentFormat(NumberFormat format) {
-        mProgressPercentFormat = format;
-    }
-
+    
 }

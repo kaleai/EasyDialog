@@ -2,6 +2,7 @@ package kale.ui.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 
@@ -11,35 +12,31 @@ import android.text.TextUtils;
  */
 public class SimpleDialog extends BaseEasyAlertDialog {
 
-    private String mMessage;
-
     private static final String KEY_MESSAGE = "KEY_MESSAGE";
 
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        mMessage = savedInstanceState.getString(KEY_MESSAGE);
-    }
+    public static class Builder extends BaseEasyAlertDialog.Builder {
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(KEY_MESSAGE, mMessage);
-    }
+        public Builder setMessage(@NonNull String message) {
+            bundle.putString(KEY_MESSAGE, message);
+            return Builder.this;
+        }
 
-    @Override
-    protected void setBuilder(AlertDialog.Builder builder) {
-        if (!TextUtils.isEmpty(mMessage)) {
-            builder.setMessage(mMessage);
+        @Override
+        public SimpleDialog create() {
+            SimpleDialog dialog = new SimpleDialog();
+            dialog.setArguments(bundle);
+            return dialog;
         }
     }
 
-    public void setMessage(@NonNull String message) {
-        mMessage = message;
+    @Override
+    protected void setAlertBuilder(AlertDialog.Builder builder, @Nullable Bundle arguments) {
+        if (arguments != null) {
+            CharSequence message = arguments.getCharSequence(KEY_MESSAGE);
+            if (!TextUtils.isEmpty(message)) {
+                builder.setMessage(message);
+            }
+        }
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mMessage = null;
-    }
 }
