@@ -5,7 +5,7 @@
 原生提供的dialog不符合设计给出的标准，我们一般情况下是去通过自定义view然后塞给dialog。但分析后发现这种方式有点过了，其实我们只需要通过style文件来替换dialog默认的布局为我们自定义的布局就可以了。这样的方式既不用改变dialog的使用方式，也不用写多余代码，只需要更改样式就能满足需求。这其实也是android的设计思想，官方一般都会把属性值暴露出来，我们做SDK的时候也应该遵循这种标准。让显示和逻辑分开，显示的内容又可以交给style定义。
 
 ### 添加依赖
-1.添加JitPack仓库
+1.在项目外层的build.gradle中添加JitPack仓库
   
 ```  
 repositories {
@@ -13,14 +13,16 @@ repositories {
 		url "https://jitpack.io"
 	}
 }
-```   
+```    
+2.在用到的项目中添加依赖
 ```  
 dependencies {
-	compile 'com.github.tianzhijiexian:还没做好'
+		compile 'com.github.tianzhijiexian:UIBlock:1.0'
 }    
 ```   
+
 ### 使用方式   
-**在主题中设置默认样式（一次设置就搞定）**  
+**在主题中设置默认样式（如果你想用原生的样式，可以跳过这个步骤）**  
 ```XML  
 <resources>
 
@@ -46,7 +48,7 @@ dependencies {
 就是这么简单，一切都搞定了！   
 我们在代码中直接用对话框就可以了，现在提供了以下几种dialog：    
 
-**1. 最简单的对话框**
+**1. 最简单的对话框**   
 ![](./demo/simple.png)  
 
 ```JAVA  
