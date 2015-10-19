@@ -20,6 +20,7 @@
             android:id="@+id/image_iv"
             android:layout_width="60dp"
             android:layout_height="match_parent"
+            tools:src="@android:drawable/ic_btn_speak_now"
             />
 
         <TextView
@@ -31,7 +32,7 @@
             android:gravity="center_vertical"
             android:textColor="#000000"
 
-            tools:text="123"
+            tools:text="message"
             />
     </LinearLayout>
 
@@ -43,6 +44,7 @@
         android:layout_below="@+id/image_text_ll"
         android:visibility="gone"
 
+        tools:visibility="visible"
         />
 
 </RelativeLayout>

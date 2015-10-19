@@ -32,7 +32,9 @@ public abstract class BaseEasyDialog extends DialogFragment {
 
     private static final String KEY_CANCEL_LISTENER = "key_cancel_listener";
 
-    private boolean isFirstTime = true;
+    //private static final String KEY_IS_FIRST_TIME = "key_is_first_time";
+    
+    private boolean mIsRestored = false;
 
     protected abstract static class Builder {
 
@@ -67,19 +69,21 @@ public abstract class BaseEasyDialog extends DialogFragment {
             return bundle;
         }
 
-
     }
 
     @CallSuper
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            onRestoreInstanceState(savedInstanceState);
+        }
+        
         Bundle bundle;
         if ((bundle = getArguments()) != null) {
             mTitle = bundle.getCharSequence(KEY_TITLE);
             mOnDismissListener = bundle.getParcelable(KEY_DISMISS_LISTENER);
             mOnCancelListener = bundle.getParcelable(KEY_CANCEL_LISTENER);
-            onRestoreInstanceState(savedInstanceState);
         }
 
         AlertDialog.Builder builder = initBuilder();
@@ -102,16 +106,20 @@ public abstract class BaseEasyDialog extends DialogFragment {
 
     }
 
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        mIsRestored = true;
+    }
+
+    
     @Override
     public void onStart() {
         super.onStart();
-        if (isFirstTime) {
-            isFirstTime = false;
-            setViews();
-        }
+        setViews();
     }
 
     protected void setViews() {
@@ -140,8 +148,12 @@ public abstract class BaseEasyDialog extends DialogFragment {
         mTitle = null;
         mOnDismissListener = null;
         mOnCancelListener = null;
+        mIsRestored = false;
     }
 
+    public boolean isRestored() {
+        return mIsRestored;
+    }
 
     public CharSequence getTitle() {
         return mTitle;

@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private Button simplePgDialogBtn;
 
     private Button simplePgHDialogBtn;
+    
+    private Button customDialog;
 
     private void assignViews() {
         simpleDialogBtn = (Button) findViewById(R.id.simple_dialog_btn);
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         multiDialogBtn = (Button) findViewById(R.id.multi_dialog_btn);
         simplePgDialogBtn = (Button) findViewById(R.id.simple_pg_dialog_btn);
         simplePgHDialogBtn = (Button) findViewById(R.id.simple_pg_h_dialog_btn);
-        customDialog();
+        customDialog = (Button) findViewById(R.id.custom_dialog_btn);
     }
 
 
@@ -93,6 +95,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressDialog();
+            }
+        });
+        // 自定义对话框
+        customDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog();
             }
         });
     }

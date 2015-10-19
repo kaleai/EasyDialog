@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -77,22 +76,21 @@ public class DemoSimpleDialog extends SimpleDialog {
 
     @Override
     public void setViews() {
-        // 在onStart中找到控件并进行设置
         if (mBitmap != null) {
             LinearLayout imageTextLl = getView(R.id.image_text_ll);
             imageTextLl.setVisibility(View.VISIBLE);
 
-            ImageView imageView = getView(R.id.image_iv);
-            imageView.setImageBitmap(mBitmap);
-
-            TextView tv = getView(R.id.msg_tv);
-            tv.setText(getMessage());
+            ((ImageView) getView(R.id.image_iv)).setImageBitmap(mBitmap);
+            ((TextView) getView(R.id.msg_tv)).setText(getMessage());
         }
 
-        if (!TextUtils.isEmpty(mInputText)) {
+        if (mInputText != null) {
             mInputTextEt = getView(R.id.input_et);
             mInputTextEt.setVisibility(View.VISIBLE);
-            mInputTextEt.setText(mInputText);
+            if (!isRestored()) {
+                // 如果是从旋转屏幕或其他状态恢复的fragment
+                mInputTextEt.setText(mInputText);
+            }
             mInputTextEt.setHint(mInputHint);
         }
     }
