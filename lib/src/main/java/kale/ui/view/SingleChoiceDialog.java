@@ -15,11 +15,11 @@ import kale.ui.view.DialogInterface.OnItemClickListener;
  */
 public class SingleChoiceDialog extends BaseEasyAlertDialog {
 
-    private static final String KEY_ITEM_STR_ARR = "KEY_ITEM_STR_ARR";
+    private static final String KEY_ITEM_STR_ARR = "key_item_str_arr";
 
-    private static final String KEY_DEFAULT_CHOICE_ARR = "KEY_DEFAULT_CHOICE_ARR";
+    private static final String KEY_DEFAULT_CHOICE_ARR = "key_default_choice_arr";
     
-    private static final String KEY_ITEM_CLICK_LISTENER = "KEY_ITEM_CLICK_LISTENER";
+    private static final String KEY_ITEM_CLICK_LISTENER = "key_item_click_listener";
 
     public static class Builder extends BaseEasyAlertDialog.Builder {
         

@@ -1,6 +1,7 @@
 package kale.ui.view;
 
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -12,7 +13,9 @@ import android.text.TextUtils;
  */
 public class SimpleDialog extends BaseEasyAlertDialog {
 
-    private static final String KEY_MESSAGE = "KEY_MESSAGE";
+    private static final String KEY_MESSAGE = "key_message";
+    
+    private CharSequence mMessage;
 
     public static class Builder extends BaseEasyAlertDialog.Builder {
 
@@ -29,13 +32,23 @@ public class SimpleDialog extends BaseEasyAlertDialog {
     }
 
     @Override
+    @CallSuper
     protected void setAlertBuilder(AlertDialog.Builder builder, @Nullable Bundle arguments) {
         if (arguments != null) {
-            CharSequence message = arguments.getCharSequence(KEY_MESSAGE);
-            if (!TextUtils.isEmpty(message)) {
-                builder.setMessage(message);
+            mMessage = arguments.getCharSequence(KEY_MESSAGE);
+            if (!TextUtils.isEmpty(mMessage)) {
+                builder.setMessage(mMessage);
             }
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mMessage = null;
+    }
+
+    public CharSequence getMessage() {
+        return mMessage;
+    }
 }

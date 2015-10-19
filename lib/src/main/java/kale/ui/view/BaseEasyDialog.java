@@ -4,10 +4,12 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 
 import kale.ui.view.DialogInterface.OnCancelListener;
 import kale.ui.view.DialogInterface.OnDismissListener;
@@ -20,16 +22,17 @@ public abstract class BaseEasyDialog extends DialogFragment {
 
     private CharSequence mTitle;
 
-    private static final String KEY_TITLE = "KEY_TITLE";
+    private static final String KEY_TITLE = "key_title";
 
     private OnDismissListener mOnDismissListener;
 
-    private static final String KEY_DISMISS_LISTENER = "KEY_DISMISS_LISTENER";
+    private static final String KEY_DISMISS_LISTENER = "key_dismiss_listener";
 
     private OnCancelListener mOnCancelListener;
 
-    private static final String KEY_CANCEL_LISTENER = "KEY_CANCEL_LISTENER";
+    private static final String KEY_CANCEL_LISTENER = "key_cancel_listener";
 
+    private boolean isFirstTime = true;
 
     protected abstract static class Builder {
 
@@ -55,14 +58,17 @@ public abstract class BaseEasyDialog extends DialogFragment {
             dialog.setArguments(bundle);
             return dialog;
         }
-        
-        protected abstract @NonNull BaseEasyDialog createDialog();
+
+        protected abstract
+        @NonNull
+        BaseEasyDialog createDialog();
+
+        public Bundle getBundle() {
+            return bundle;
+        }
+
+
     }
-
-
-    protected abstract
-    @NonNull
-    AlertDialog.Builder initBuilder();
 
     @CallSuper
     @NonNull
@@ -81,12 +87,34 @@ public abstract class BaseEasyDialog extends DialogFragment {
             builder.setTitle(mTitle);
         }
         setBuilder(builder, bundle);
-        return builder.create();
+        Dialog dialog = builder.create();
+        setDialog(dialog);
+        return dialog;
     }
+
+    protected abstract
+    @NonNull
+    AlertDialog.Builder initBuilder();
 
     protected abstract void setBuilder(AlertDialog.Builder builder, @Nullable Bundle arguments);
 
+    protected void setDialog(Dialog dialog) {
+
+    }
+
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (isFirstTime) {
+            isFirstTime = false;
+            setViews();
+        }
+    }
+
+    protected void setViews() {
 
     }
 
@@ -125,6 +153,10 @@ public abstract class BaseEasyDialog extends DialogFragment {
 
     protected OnCancelListener getOnCancelListener() {
         return mOnCancelListener;
+    }
+
+    protected <T extends View> T getView(@IdRes int id) {
+        return (T) getDialog().findViewById(id);
     }
 
 }

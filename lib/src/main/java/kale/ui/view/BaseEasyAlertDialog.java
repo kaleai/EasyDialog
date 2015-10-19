@@ -15,17 +15,17 @@ import kale.ui.view.DialogInterface.OnClickListener;
  */
 public abstract class BaseEasyAlertDialog extends BaseEasyDialog {
 
-    private static final String KEY_POSITIVE_TEXT = "KEY_POSITIVE_TEXT";
+    private static final String KEY_POSITIVE_TEXT = "key_positive_text";
 
-    private static final String KEY_POSITIVE_LISTENER = "KEY_POSITIVE_LISTENER";
+    private static final String KEY_POSITIVE_LISTENER = "key_positive_listener";
 
-    private static final String KEY_NEUTRAL_TEXT = "KEY_NEUTRAL_TEXT";
+    private static final String KEY_NEUTRAL_TEXT = "key_neutral_text";
 
-    private static final String KEY_NEUTRAL_LISTENER = "KEY_NEUTRAL_LISTENER";
+    private static final String KEY_NEUTRAL_LISTENER = "key_neutral_listener";
 
-    private static final String KEY_NEGATIVE_TEXT = "KEY_NEGATIVE_TEXT";
+    private static final String KEY_NEGATIVE_TEXT = "key_negative_text";
 
-    private static final String KEY_NEGATIVE_LISTENER = "KEY_NEGATIVE_LISTENER";
+    private static final String KEY_NEGATIVE_LISTENER = "key_negative_listener";
 
     @NonNull
     @Override
@@ -79,6 +79,5 @@ public abstract class BaseEasyAlertDialog extends BaseEasyDialog {
     }
 
     protected abstract void setAlertBuilder(AlertDialog.Builder builder, @Nullable Bundle arguments);
-
 
 }

@@ -14,21 +14,21 @@ import java.text.NumberFormat;
  */
 public class ProgressDialog extends BaseEasyDialog {
 
-    private static final String KEY_MESSAGE = "KEY_MESSAGE";
+    private static final String KEY_MESSAGE = "key_message";
 
-    private static final String KEY_PROGRESS_STYLE = "KEY_PROGRESS_STYLE";
+    private static final String KEY_PROGRESS_STYLE = "key_progress_style";
 
-    private static final String KEY_PROGRESS_NUMBER_FORMAT = "KEY_PROGRESS_NUMBER_FORMAT";
+    private static final String KEY_PROGRESS_NUMBER_FORMAT = "key_progress_number_format";
 
-    private static final String KEY_PROGRESS_PERCENT_FORMAT = "KEY_PROGRESS_PERCENT_FORMAT";
+    private static final String KEY_PROGRESS_PERCENT_FORMAT = "key_progress_percent_format";
 
-    private static final String KEY_MAX = "KEY_MAX";
+    private static final String KEY_MAX = "key_max";
 
-    private static final String KEY_PROGRESS_VAL = "KEY_PROGRESS_VAL";
+    private static final String KEY_PROGRESS_VAL = "key_progress_val";
 
-    private static final String KEY_SECONDARY_PROGRESS_VAL = "KEY_SECONDARY_PROGRESS_VAL";
+    private static final String KEY_SECONDARY_PROGRESS_VAL = "key_secondary_progress_val";
 
-    private static final String KEY_INDETERMINATE = "KEY_INDETERMINATE";
+    private static final String KEY_INDETERMINATE = "key_indeterminate";
 
 
     @NonNull
@@ -185,5 +185,5 @@ public class ProgressDialog extends BaseEasyDialog {
             ((PDialog) getDialog()).incrementSecondaryProgressBy(diff);
         }
     }
-    
+
 }

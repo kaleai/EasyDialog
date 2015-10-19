@@ -1,11 +1,13 @@
 package kale.easydialog;
 
 import android.content.DialogInterface;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import kale.ui.view.DialogInterface.OnCancelListener;
 import kale.ui.view.DialogInterface.OnClickListener;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         multiDialogBtn = (Button) findViewById(R.id.multi_dialog_btn);
         simplePgDialogBtn = (Button) findViewById(R.id.simple_pg_dialog_btn);
         simplePgHDialogBtn = (Button) findViewById(R.id.simple_pg_h_dialog_btn);
+        customDialog();
     }
 
 
@@ -94,8 +97,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void customDialog() {
+        final DemoSimpleDialog dialog = new DemoSimpleDialog();
+        DemoSimpleDialog.Builder builder = new DemoSimpleDialog.Builder();
+        builder.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.kale));
+        builder.setMessage("这是图片");
+        builder.setInputText("d", "hint");
+        builder.setPositiveButton("ok", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dd, int which) {
+                Toast.makeText(getBaseContext(), dialog.getInputTextEt().getText().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialog.setArguments(builder.getBundle());
+        dialog.show(getSupportFragmentManager(), TAG);
+    }
+    
     private void setSimpleDialog() {
-        SimpleDialog.Builder builder = new DemoSimpleDialog.Builder();
+        SimpleDialog.Builder builder = new SimpleDialog.Builder();
         builder.setTitle("Title");
         builder.setMessage("Message");
 
