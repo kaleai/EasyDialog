@@ -50,7 +50,6 @@ public class MultiChoiceDialog extends BaseEasyAlertDialog {
             if (itemStrArr == null) {
                 throw new IllegalArgumentException("Item's String Array is null!");
             }
-
             builder.setMultiChoiceItems(itemStrArr, defaultChoiceArr, new DialogInterface.OnMultiChoiceClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which, boolean isChecked) {

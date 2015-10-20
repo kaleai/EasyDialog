@@ -22,7 +22,7 @@ import kale.ui.view.DialogInterface.OnDismissListener;
 public abstract class BaseEasyDialog extends DialogFragment {
 
     protected final int DEFAULT_RES_ID = -31;
-    
+
     private CharSequence mTitle;
 
     private static final String KEY_TITLE = "key_title";
@@ -91,7 +91,7 @@ public abstract class BaseEasyDialog extends DialogFragment {
         if ((arguments = getArguments()) != null) {
             mTitle = arguments.getCharSequence(KEY_TITLE);
             int stringResId;
-            if (mTitle == null && (stringResId = arguments.getInt(KEY_TITLE_RES_ID,DEFAULT_RES_ID)) != DEFAULT_RES_ID) {
+            if (mTitle == null && (stringResId = arguments.getInt(KEY_TITLE_RES_ID, DEFAULT_RES_ID)) != DEFAULT_RES_ID) {
                 mTitle = getString(stringResId);
             }
             mOnDismissListener = arguments.getParcelable(KEY_DISMISS_LISTENER);
