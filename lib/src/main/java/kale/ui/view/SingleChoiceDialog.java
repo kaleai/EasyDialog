@@ -54,10 +54,6 @@ public class SingleChoiceDialog extends BaseEasyAlertDialog {
             int defaultChoiceIndex = arguments.getInt(KEY_DEFAULT_CHOICE_ARR, 0);
             final OnItemClickListener mListener = arguments.getParcelable(KEY_ITEM_CLICK_LISTENER);
             
-            if (itemStrArr == null) {
-                throw new IllegalArgumentException("Item's String Array is null!");
-            }
-            
             // 默认选中了第一个
             builder.setSingleChoiceItems(itemStrArr, defaultChoiceIndex, new OnClickListener() {
                 @Override

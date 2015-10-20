@@ -46,10 +46,7 @@ public class MultiChoiceDialog extends BaseEasyAlertDialog {
             String[] itemStrArr = arguments.getStringArray(KEY_ITEM_STR_ARR);
             boolean[] defaultChoiceArr = arguments.getBooleanArray(KEY_DEFAULT_CHOICE_ARR);
             final OnMultiChoiceClickListener mListener = arguments.getParcelable(KEY_MULTI_CHOICE_LISTENER);
-
-            if (itemStrArr == null) {
-                throw new IllegalArgumentException("Item's String Array is null!");
-            }
+            
             builder.setMultiChoiceItems(itemStrArr, defaultChoiceArr, new DialogInterface.OnMultiChoiceClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which, boolean isChecked) {
