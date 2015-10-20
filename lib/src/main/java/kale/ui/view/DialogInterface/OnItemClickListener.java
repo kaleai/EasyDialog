@@ -17,10 +17,9 @@ public abstract class OnItemClickListener implements Parcelable {
      * Implementers can call getItemAtPosition(position) if they need
      * to access the data associated with the selected item.
      *
-     * @param position The position of the view in the adapter.
-     * @param id The row id of the item that was clicked.
+     * @param position The position of the item in the adapter.
      */
-    public abstract void onItemClick(DialogInterface dialog, int position, long id);
+    public abstract void onItemClick(DialogInterface dialog, int position);
 
     @Override
     public int describeContents() {

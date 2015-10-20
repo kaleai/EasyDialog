@@ -7,6 +7,7 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -20,9 +21,13 @@ import kale.ui.view.DialogInterface.OnDismissListener;
  */
 public abstract class BaseEasyDialog extends DialogFragment {
 
+    protected final int DEFAULT_RES_ID = -31;
+    
     private CharSequence mTitle;
 
     private static final String KEY_TITLE = "key_title";
+
+    private static final String KEY_TITLE_RES_ID = "key_title_res_id";
 
     private OnDismissListener mOnDismissListener;
 
@@ -32,8 +37,6 @@ public abstract class BaseEasyDialog extends DialogFragment {
 
     private static final String KEY_CANCEL_LISTENER = "key_cancel_listener";
 
-    //private static final String KEY_IS_FIRST_TIME = "key_is_first_time";
-    
     private boolean mIsRestored = false;
 
     protected abstract static class Builder {
@@ -42,6 +45,11 @@ public abstract class BaseEasyDialog extends DialogFragment {
 
         public Builder setTitle(CharSequence title) {
             bundle.putCharSequence(KEY_TITLE, title);
+            return this;
+        }
+
+        public Builder setTitle(@StringRes int title) {
+            bundle.putInt(KEY_TITLE_RES_ID, title);
             return this;
         }
 
@@ -78,19 +86,23 @@ public abstract class BaseEasyDialog extends DialogFragment {
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         }
-        
-        Bundle bundle;
-        if ((bundle = getArguments()) != null) {
-            mTitle = bundle.getCharSequence(KEY_TITLE);
-            mOnDismissListener = bundle.getParcelable(KEY_DISMISS_LISTENER);
-            mOnCancelListener = bundle.getParcelable(KEY_CANCEL_LISTENER);
+
+        Bundle arguments;
+        if ((arguments = getArguments()) != null) {
+            mTitle = arguments.getCharSequence(KEY_TITLE);
+            int stringResId;
+            if (mTitle == null && (stringResId = arguments.getInt(KEY_TITLE_RES_ID,DEFAULT_RES_ID)) != DEFAULT_RES_ID) {
+                mTitle = getString(stringResId);
+            }
+            mOnDismissListener = arguments.getParcelable(KEY_DISMISS_LISTENER);
+            mOnCancelListener = arguments.getParcelable(KEY_CANCEL_LISTENER);
         }
 
         AlertDialog.Builder builder = initBuilder();
         if (mTitle != null) {
             builder.setTitle(mTitle);
         }
-        setBuilder(builder, bundle);
+        setBuilder(builder, arguments);
         Dialog dialog = builder.create();
         setDialog(dialog);
         return dialog;
@@ -115,7 +127,7 @@ public abstract class BaseEasyDialog extends DialogFragment {
         mIsRestored = true;
     }
 
-    
+
     @Override
     public void onStart() {
         super.onStart();

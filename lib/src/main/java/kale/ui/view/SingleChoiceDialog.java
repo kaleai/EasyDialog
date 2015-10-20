@@ -63,7 +63,7 @@ public class SingleChoiceDialog extends BaseEasyAlertDialog {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     if (mListener != null) {
-                        mListener.onItemClick(dialog, which, which);
+                        mListener.onItemClick(dialog, which);
                     }
                 }
             });

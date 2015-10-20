@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
     private void setSimpleDialog() {
         SimpleDialog.Builder builder = new SimpleDialog.Builder();
         builder.setTitle("Title");
-        builder.setMessage("Message");
+        builder.setMessage(R.string.hello_world);
 
         // onCancel - > onDismiss
         builder.setOnCancelListener(new OnCancelListener() {
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setData(new String[]{"Android", "ios", "wp"}, 1);
         builder.setOnItemSelectedListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(DialogInterface dialog, int position, long id) {
+            public void onItemClick(DialogInterface dialog, int position) {
                 Log.d(TAG, "onItemClick pos = " + position);
                 dialog.dismiss();
             }
