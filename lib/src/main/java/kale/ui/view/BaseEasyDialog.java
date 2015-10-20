@@ -118,11 +118,6 @@ public abstract class BaseEasyDialog extends DialogFragment {
 
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         mIsRestored = true;
     }
