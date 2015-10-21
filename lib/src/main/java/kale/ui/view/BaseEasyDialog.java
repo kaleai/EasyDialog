@@ -23,48 +23,51 @@ public abstract class BaseEasyDialog extends DialogFragment {
 
     protected final int DEFAULT_RES_ID = -31;
 
-    private CharSequence mTitle;
-
     private static final String KEY_TITLE = "key_title";
 
     private static final String KEY_TITLE_RES_ID = "key_title_res_id";
 
-    private OnDismissListener mOnDismissListener;
+    private CharSequence mTitle;
+
 
     private static final String KEY_DISMISS_LISTENER = "key_dismiss_listener";
 
-    private OnCancelListener mOnCancelListener;
+    private OnDismissListener mOnDismissListener;
+
 
     private static final String KEY_CANCEL_LISTENER = "key_cancel_listener";
 
+    private OnCancelListener mOnCancelListener;
+
+
     private boolean mIsRestored = false;
 
-    protected abstract static class Builder {
+    protected abstract static class Builder<T> {
 
         protected Bundle bundle = new Bundle();
 
-        public Builder setTitle(CharSequence title) {
+        public T setTitle(CharSequence title) {
             bundle.putCharSequence(KEY_TITLE, title);
-            return this;
+            return (T) this;
         }
 
-        public Builder setTitle(@StringRes int title) {
+        public T setTitle(@StringRes int title) {
             bundle.putInt(KEY_TITLE_RES_ID, title);
-            return this;
+            return (T) this;
         }
 
-        public Builder setOnDismissListener(OnDismissListener listener) {
+        public T setOnDismissListener(OnDismissListener listener) {
             bundle.putParcelable(KEY_DISMISS_LISTENER, listener);
-            return this;
+            return (T) this;
         }
 
-        public Builder setOnCancelListener(OnCancelListener listener) {
+        public T setOnCancelListener(OnCancelListener listener) {
             bundle.putParcelable(KEY_CANCEL_LISTENER, listener);
-            return this;
+            return (T) this;
         }
 
-        public <T extends BaseEasyDialog> T create() {
-            T dialog = (T) createDialog();
+        public <E extends BaseEasyDialog> E create() {
+            E dialog = (E) createDialog();
             dialog.setArguments(bundle);
             return dialog;
         }
@@ -79,16 +82,11 @@ public abstract class BaseEasyDialog extends DialogFragment {
 
     }
 
-    @CallSuper
-    @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            onRestoreInstanceState(savedInstanceState);
-        }
-
-        Bundle arguments;
-        if ((arguments = getArguments()) != null) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
             mTitle = arguments.getCharSequence(KEY_TITLE);
             int stringResId;
             if (mTitle == null && (stringResId = arguments.getInt(KEY_TITLE_RES_ID, DEFAULT_RES_ID)) != DEFAULT_RES_ID) {
@@ -97,12 +95,18 @@ public abstract class BaseEasyDialog extends DialogFragment {
             mOnDismissListener = arguments.getParcelable(KEY_DISMISS_LISTENER);
             mOnCancelListener = arguments.getParcelable(KEY_CANCEL_LISTENER);
         }
+    }
 
-        AlertDialog.Builder builder = initBuilder();
-        if (mTitle != null) {
-            builder.setTitle(mTitle);
+    @CallSuper
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            onRestoreInstanceState(savedInstanceState);
         }
-        setBuilder(builder, arguments);
+        AlertDialog.Builder builder = initBuilder();
+        builder.setTitle(mTitle); // 内部会进行非空判断的，所以这里不用进行判断，可以直接传null
+        setBuilder(builder);
         Dialog dialog = builder.create();
         setDialog(dialog);
         return dialog;
@@ -112,7 +116,7 @@ public abstract class BaseEasyDialog extends DialogFragment {
     @NonNull
     AlertDialog.Builder initBuilder();
 
-    protected abstract void setBuilder(AlertDialog.Builder builder, @Nullable Bundle arguments);
+    protected abstract void setBuilder(@NonNull AlertDialog.Builder builder);
 
     protected void setDialog(Dialog dialog) {
 
@@ -122,7 +126,6 @@ public abstract class BaseEasyDialog extends DialogFragment {
         mIsRestored = true;
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -130,7 +133,6 @@ public abstract class BaseEasyDialog extends DialogFragment {
     }
 
     protected void setViews() {
-
     }
 
     @Override
@@ -147,15 +149,6 @@ public abstract class BaseEasyDialog extends DialogFragment {
         if (mOnCancelListener != null) {
             mOnCancelListener.onCancel(dialog);
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mTitle = null;
-        mOnDismissListener = null;
-        mOnCancelListener = null;
-        mIsRestored = false;
     }
 
     public boolean isRestored() {

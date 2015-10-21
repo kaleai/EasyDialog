@@ -17,12 +17,21 @@ public class SingleChoiceDialog extends BaseEasyAlertDialog {
 
     private static final String KEY_ITEM_STR_ARR = "key_item_str_arr";
 
-    private static final String KEY_DEFAULT_CHOICE_ARR = "key_default_choice_arr";
+    private String[] mItemStrArr;
     
+
+    private static final String KEY_DEFAULT_CHOICE_ARR = "key_default_choice_arr";
+
+    private int mDefaultChoiceIndex;
+    
+
     private static final String KEY_ITEM_CLICK_LISTENER = "key_item_click_listener";
 
-    public static class Builder extends BaseEasyAlertDialog.Builder {
-        
+    private OnItemClickListener mListener;
+    
+    
+    public static class Builder extends BaseEasyAlertDialog.Builder<Builder> {
+
         public Builder setData(@NonNull String[] itemStrArr, int defaultChoiceIndex) {
             bundle.putStringArray(KEY_ITEM_STR_ARR, itemStrArr);
             bundle.putInt(KEY_DEFAULT_CHOICE_ARR, defaultChoiceIndex);
@@ -41,29 +50,29 @@ public class SingleChoiceDialog extends BaseEasyAlertDialog {
         }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mItemStrArr = arguments.getStringArray(KEY_ITEM_STR_ARR);
+            mDefaultChoiceIndex = arguments.getInt(KEY_DEFAULT_CHOICE_ARR, 0);
+            mListener = arguments.getParcelable(KEY_ITEM_CLICK_LISTENER);
+        }
     }
 
     @Override
-    protected void setAlertBuilder(AlertDialog.Builder builder, @Nullable Bundle arguments) {
-        if (arguments != null) {
-            String[] itemStrArr = arguments.getStringArray(KEY_ITEM_STR_ARR);
-            int defaultChoiceIndex = arguments.getInt(KEY_DEFAULT_CHOICE_ARR, 0);
-            final OnItemClickListener mListener = arguments.getParcelable(KEY_ITEM_CLICK_LISTENER);
-            
-            // 默认选中了第一个
-            builder.setSingleChoiceItems(itemStrArr, defaultChoiceIndex, new OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (mListener != null) {
-                        mListener.onItemClick(dialog, which);
-                    }
+    protected void setAlertBuilder(@NonNull AlertDialog.Builder builder) {
+        // 默认选中了第一个，-1标识默认没选中
+        builder.setSingleChoiceItems(mItemStrArr, mDefaultChoiceIndex, new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (mListener != null) {
+                    mListener.onItemClick(dialog, which);
                 }
-            });
-        }
+            }
+        });
     }
 
 }

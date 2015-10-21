@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private Button simplePgDialogBtn;
 
     private Button simplePgHDialogBtn;
-    
+
     private Button customDialog;
 
     private void assignViews() {
@@ -121,42 +121,37 @@ public class MainActivity extends AppCompatActivity {
         dialog.setArguments(builder.getBundle());
         dialog.show(getSupportFragmentManager(), TAG);
     }
-    
+
     private void setSimpleDialog() {
         SimpleDialog.Builder builder = new SimpleDialog.Builder();
-        builder.setTitle("Title");
-        builder.setMessage(R.string.hello_world);
-
-        // onCancel - > onDismiss
-        builder.setOnCancelListener(new OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                Log.d(TAG, "onCancel");
-            }
-        });
-        builder.setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                Log.d(TAG, "onDismiss");
-            }
-        });
-        builder.setNeutralButton("know", null);
-        // 设置对话框上的按钮 ok->dismiss
-        builder.setPositiveButton("ok", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Log.d(TAG, "onClick ok");
-            }
-        });
-
-        // cancel -> dismiss
-        builder.setNegativeButton("cancel", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Log.d(TAG, "onClick cancel");
-                dialog.dismiss();
-            }
-        });
+        builder.setTitle("Title")
+                .setMessage(R.string.hello_world)
+                .setOnCancelListener(new OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        Log.d(TAG, "onCancel"); // onCancel - > onDismiss
+                    }
+                })
+                .setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        Log.d(TAG, "onDismiss");
+                    }
+                })
+                .setNeutralButton("know", null)
+                .setPositiveButton("ok", new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "onClick ok");// 设置对话框上的按钮 ok->dismiss
+                    }
+                })
+                .setNegativeButton("cancel", new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "onClick cancel");
+                        dialog.dismiss(); // cancel -> dismiss
+                    }
+                });
 
         SimpleDialog dialog = builder.create();
         dialog.setCancelable(true);
@@ -165,69 +160,64 @@ public class MainActivity extends AppCompatActivity {
 
     private void singleChoiceDialog() {
         SingleChoiceDialog.Builder builder = new SingleChoiceDialog.Builder();
-        builder.setTitle("Single Choice Dialog");
-        // 设置单选列表的数据和监听
-        builder.setData(new String[]{"Android", "ios", "wp"}, 1);
-        builder.setOnItemSelectedListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(DialogInterface dialog, int position) {
-                Log.d(TAG, "onItemClick pos = " + position);
-                dialog.dismiss();
-            }
-        });
-        SingleChoiceDialog dialog = builder.create();
+        SingleChoiceDialog dialog = builder.setTitle("Single Choice Dialog")
+                .setData(new String[]{"Android", "ios", "wp"}, 1)// 设置单选列表的数据和监听
+                .setOnItemSelectedListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(DialogInterface dialog, int position) {
+                        Log.d(TAG, "onItemClick pos = " + position);
+                        dialog.dismiss();
+                    }
+                })
+                .create();
         dialog.setCancelable(false);
         dialog.show(getSupportFragmentManager(), TAG);
     }
 
     private void multiChoiceDialog() {
-        MultiChoiceDialog.Builder builder = new MultiChoiceDialog.Builder();
-        // 设置数据和默认选中的选项
-        builder.setData(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true});
-        // 设置监听器
-        builder.setOnMultiChoiceClickListener(new OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                Log.d(TAG, "onClick pos = " + which + " , isChecked = " + isChecked);
-            }
-        });
-        builder.create().show(getSupportFragmentManager(), TAG);
+        new MultiChoiceDialog.Builder()
+                .setData(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true}) // 设置数据和默认选中的选项
+                        // 设置监听器
+                .setOnMultiChoiceClickListener(new OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        Log.d(TAG, "onClick pos = " + which + " , isChecked = " + isChecked);
+                    }
+                })
+                .create().show(getSupportFragmentManager(), TAG);
     }
 
     private void circularProgressDialog() {
         ProgressDialog.Builder builder = new ProgressDialog.Builder(true);
-        builder.setTitle("圆形进度条");
-        builder.setMessage("test message");
-        builder.setIndeterminate(true);//设置不显示明确的进度
-        // builder.setIndeterminate(false);// 设置显示明确的进度
-        // 点击空白处，点击返回键都会触发onCancel->onDismiss
-        builder.setOnCancelListener(new OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                Log.d(TAG, "onCancel");
-            }
-        });
-
-        builder.setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface builder) {
-                Log.d(TAG, "onDismiss");
-            }
-        });
-        ProgressDialog dialog = builder.create();
+        ProgressDialog dialog = builder.setTitle("圆形进度条")
+                .setMessage("test message")
+                .setIndeterminate(true)//设置不显示明确的进度
+                        // builder.setIndeterminate(false);// 设置显示明确的进度
+                .setOnCancelListener(new OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        // 点击空白处，点击返回键都会触发onCancel->onDismiss
+                        Log.d(TAG, "onCancel");
+                    }
+                })
+                .setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface builder) {
+                        Log.d(TAG, "onDismiss");
+                    }
+                })
+                .create();
         dialog.setCancelable(true);
         dialog.show(getSupportFragmentManager(), TAG);
     }
 
     private void progressDialog() {
         ProgressDialog.Builder builder = new ProgressDialog.Builder(false);
-        builder.setTitle("横向进度条");
-        builder.setMax(100);
-        builder.setIndeterminate(false);//设置不显示明确的进度
-        builder.setProgress(40);
-
-        final ProgressDialog dialog = builder.create();
-
+        final ProgressDialog dialog = builder.setTitle("横向进度条")
+                .setMax(100)
+                .setIndeterminate(false)//设置不显示明确的进度
+                .setProgress(40)
+                .create();
         dialog.show(getSupportFragmentManager(), TAG);
 
         //启动线程，模拟一个耗时的操作

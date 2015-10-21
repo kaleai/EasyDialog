@@ -3,6 +3,7 @@ package kale.ui.view;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 
@@ -31,19 +32,29 @@ public class ProgressDialog extends BaseEasyDialog {
     private static final String KEY_INDETERMINATE = "key_indeterminate";
 
 
-    @NonNull
-    @Override
-    protected AlertDialog.Builder initBuilder() {
-        // 这里不用build构建模式，这里的返回一个默认对象。其实是无意义的！
-        return new AlertDialog.Builder(getActivity());
-    }
+    private CharSequence message;
 
-    public static class Builder extends BaseEasyDialog.Builder{
+    private int progressStyle;
+
+    private String progressNumberFormat;
+
+    private NumberFormat progressPercentFormat;
+
+    private int max;
+
+    private int progressVal;
+
+    private int secondaryProgressVal;
+
+    private boolean indeterminate;
+
+    
+    public static class Builder extends BaseEasyDialog.Builder<Builder> {
 
         public Builder(boolean isCircular) {
             bundle.putInt(KEY_PROGRESS_STYLE, isCircular ? PDialog.STYLE_SPINNER : PDialog.STYLE_HORIZONTAL);
         }
-        
+
         public Builder setMessage(@NonNull CharSequence message) {
             bundle.putCharSequence(KEY_MESSAGE, message);
             return this;
@@ -104,10 +115,32 @@ public class ProgressDialog extends BaseEasyDialog {
             return new ProgressDialog();
         }
     }
-    
-    
+
+    @NonNull
     @Override
-    protected void setBuilder(AlertDialog.Builder builder, Bundle arguments) {
+    protected AlertDialog.Builder initBuilder() {
+        // 这里不用build构建模式，这里的返回一个默认对象。其实是无意义的！
+        return new AlertDialog.Builder(getActivity());
+    }
+
+    @Override
+    protected void setBuilder(@NonNull AlertDialog.Builder builder) {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            message = arguments.getCharSequence(KEY_MESSAGE);
+            progressStyle = arguments.getInt(KEY_PROGRESS_STYLE);
+            progressNumberFormat = arguments.getString(KEY_PROGRESS_NUMBER_FORMAT, "%1d/%2d");
+            progressPercentFormat = (NumberFormat) arguments.getSerializable(KEY_PROGRESS_PERCENT_FORMAT);
+            max = arguments.getInt(KEY_MAX, 100);
+            progressVal = arguments.getInt(KEY_PROGRESS_VAL);
+            secondaryProgressVal = arguments.getInt(KEY_SECONDARY_PROGRESS_VAL);
+            indeterminate = arguments.getBoolean(KEY_INDETERMINATE);
+        }
     }
 
     @NonNull
@@ -115,34 +148,21 @@ public class ProgressDialog extends BaseEasyDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         PDialog dialog = new PDialog(getActivity(), getTheme());
-
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            CharSequence message = arguments.getCharSequence(KEY_MESSAGE);
-            int progressStyle = arguments.getInt(KEY_PROGRESS_STYLE);
-            String progressNumberFormat = arguments.getString(KEY_PROGRESS_NUMBER_FORMAT, "%1d/%2d");
-            NumberFormat progressPercentFormat = (NumberFormat) arguments.getSerializable(KEY_PROGRESS_PERCENT_FORMAT);
-            int max = arguments.getInt(KEY_MAX, 100);
-            int progressVal = arguments.getInt(KEY_PROGRESS_VAL);
-            int secondaryProgressVal = arguments.getInt(KEY_SECONDARY_PROGRESS_VAL);
-            boolean indeterminate = arguments.getBoolean(KEY_INDETERMINATE);
-        
-            dialog.setTitle(getTitle());
-            if (!TextUtils.isEmpty(message)) {
-                dialog.setMessage(message);
-            }
-            dialog.setCancelable(isCancelable());
-            dialog.setOnCancelListener(getOnCancelListener());
-            dialog.setOnDismissListener(getOnDismissListener());
-            
-            dialog.setProgressStyle(progressStyle);
-            dialog.setMax(max);
-            dialog.setIndeterminate(indeterminate);
-            dialog.setProgressNumberFormat(progressNumberFormat);
-            dialog.setProgressPercentFormat(progressPercentFormat != null ? progressPercentFormat : NumberFormat.getPercentInstance());
-            dialog.setProgress(progressVal);
-            dialog.setSecondaryProgress(secondaryProgressVal);
+        dialog.setTitle(getTitle());
+        if (!TextUtils.isEmpty(message)) {
+            dialog.setMessage(message);
         }
+        dialog.setCancelable(isCancelable());
+        dialog.setOnCancelListener(getOnCancelListener());
+        dialog.setOnDismissListener(getOnDismissListener());
+
+        dialog.setProgressStyle(progressStyle);
+        dialog.setMax(max);
+        dialog.setIndeterminate(indeterminate);
+        dialog.setProgressNumberFormat(progressNumberFormat);
+        dialog.setProgressPercentFormat(progressPercentFormat != null ? progressPercentFormat : NumberFormat.getPercentInstance());
+        dialog.setProgress(progressVal);
+        dialog.setSecondaryProgress(secondaryProgressVal);
         return dialog;
     }
 

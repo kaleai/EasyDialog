@@ -20,10 +20,10 @@ public class SimpleDialog extends BaseEasyAlertDialog {
 
     private CharSequence mMessage;
 
-    public static class Builder extends BaseEasyAlertDialog.Builder {
+    public static class Builder extends BaseEasyAlertDialog.Builder<Builder> {
 
-        public Builder setMessage(@NonNull String message) {
-            bundle.putString(KEY_MESSAGE, message);
+        public Builder setMessage(@NonNull CharSequence message) {
+            bundle.putCharSequence(KEY_MESSAGE, message);
             return Builder.this;
         }
 
@@ -40,26 +40,24 @@ public class SimpleDialog extends BaseEasyAlertDialog {
     }
 
     @Override
-    @CallSuper
-    protected void setAlertBuilder(AlertDialog.Builder builder, @Nullable Bundle arguments) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
         if (arguments != null) {
             mMessage = arguments.getCharSequence(KEY_MESSAGE);
-            
             int stringResId;
             if (mMessage == null && (stringResId = arguments.getInt(KEY_MESSAGE_RES_ID, DEFAULT_RES_ID)) != DEFAULT_RES_ID) {
                 mMessage = getString(stringResId);
-            }
-
-            if (!TextUtils.isEmpty(mMessage)) {
-                builder.setMessage(mMessage);
             }
         }
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mMessage = null;
+    @CallSuper
+    protected void setAlertBuilder(@NonNull AlertDialog.Builder builder) {
+        if (!TextUtils.isEmpty(mMessage)) {
+            builder.setMessage(mMessage);
+        }
     }
 
     public CharSequence getMessage() {

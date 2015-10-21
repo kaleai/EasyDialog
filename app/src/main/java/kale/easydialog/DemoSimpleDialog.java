@@ -31,6 +31,8 @@ public class DemoSimpleDialog extends SimpleDialog {
 
     private Bitmap mBitmap;
 
+    private byte[] mBitmapByteArr;
+
     private CharSequence mInputText;
 
     private CharSequence mInputHint;
@@ -58,18 +60,23 @@ public class DemoSimpleDialog extends SimpleDialog {
     }
 
     @Override
-    protected void setAlertBuilder(AlertDialog.Builder builder, @Nullable Bundle arguments) {
-        super.setAlertBuilder(builder, arguments);
-        builder.setView(R.layout.demo_dialog_layout);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
         if (arguments != null) {
-            byte[] bitmapByteArr = arguments.getByteArray(KEY_IMAGE_BITMAP);
+            mBitmapByteArr = arguments.getByteArray(KEY_IMAGE_BITMAP);
             mInputText = arguments.getCharSequence(KEY_INPUT_TEXT);
             mInputHint = arguments.getCharSequence(KEY_INPUT_HINT);
+        }
+    }
 
-            if (bitmapByteArr != null) {
-                mBitmap = BitmapFactory.decodeByteArray(bitmapByteArr, 0, bitmapByteArr.length);
-                builder.setMessage(null);
-            }
+    @Override
+    protected void setAlertBuilder(AlertDialog.Builder builder) {
+        super.setAlertBuilder(builder);
+        builder.setView(R.layout.demo_dialog_layout);
+        if (mBitmapByteArr != null) {
+            mBitmap = BitmapFactory.decodeByteArray(mBitmapByteArr, 0, mBitmapByteArr.length);
+            builder.setMessage(null);
         }
     }
 
@@ -104,9 +111,6 @@ public class DemoSimpleDialog extends SimpleDialog {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mBitmap = null;
-        mInputText = null;
-        mInputHint = null;
         mInputTextEt = null;
     }
 
