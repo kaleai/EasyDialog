@@ -32,6 +32,12 @@ public class SingleChoiceDialog extends BaseEasyAlertDialog {
     
     public static class Builder extends BaseEasyAlertDialog.Builder<Builder> {
 
+        public Builder setData(@NonNull String[] itemStrArr) {
+            bundle.putStringArray(KEY_ITEM_STR_ARR, itemStrArr);
+            bundle.putInt(KEY_DEFAULT_CHOICE_ARR, -1);
+            return this;
+        }
+
         public Builder setData(@NonNull String[] itemStrArr, int defaultChoiceIndex) {
             bundle.putStringArray(KEY_ITEM_STR_ARR, itemStrArr);
             bundle.putInt(KEY_DEFAULT_CHOICE_ARR, defaultChoiceIndex);
@@ -57,7 +63,7 @@ public class SingleChoiceDialog extends BaseEasyAlertDialog {
         Bundle arguments = getArguments();
         if (arguments != null) {
             mItemStrArr = arguments.getStringArray(KEY_ITEM_STR_ARR);
-            mDefaultChoiceIndex = arguments.getInt(KEY_DEFAULT_CHOICE_ARR, 0);
+            mDefaultChoiceIndex = arguments.getInt(KEY_DEFAULT_CHOICE_ARR, -1);
             mListener = arguments.getParcelable(KEY_ITEM_CLICK_LISTENER);
         }
     }
@@ -65,14 +71,20 @@ public class SingleChoiceDialog extends BaseEasyAlertDialog {
     @Override
     protected void setAlertBuilder(@NonNull AlertDialog.Builder builder) {
         // 默认选中了第一个，-1标识默认没选中
-        builder.setSingleChoiceItems(mItemStrArr, mDefaultChoiceIndex, new OnClickListener() {
+        final OnClickListener listener = new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (mListener != null) {
                     mListener.onItemClick(dialog, which);
                 }
             }
-        });
+        };
+        // -1标识默认没有选中项目
+        if (mDefaultChoiceIndex == -1) {
+            builder.setItems(mItemStrArr, listener);
+        } else {
+            builder.setSingleChoiceItems(mItemStrArr, mDefaultChoiceIndex, listener);
+        }
     }
 
 }
