@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         customDialog = (Button) findViewById(R.id.custom_dialog_btn);
     }
 
-
     private void setViews() {
         singleChoiceDialog();
         // 最简单提示对话框
