@@ -17,9 +17,9 @@
 <LinearLayout
     android:id="@+id/parentPanel"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#ff0000"
     android:orientation="vertical"
     >
 
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                tools:text="alertTitle"
+                android:textAlignment="viewStart"
                 />
 
         </LinearLayout>
@@ -72,7 +72,16 @@
         android:minHeight="48dp"
         >
 
-        <ScrollView
+        <View
+            android:id="@+id/scrollIndicatorUp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="top"
+            android:background="?attr/colorControlHighlight"
+            android:visibility="gone"
+            />
+
+        <android.support.v4.widget.NestedScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,8 +102,8 @@
                     android:paddingLeft="?attr/dialogPreferredPadding"
                     android:paddingRight="?attr/dialogPreferredPadding"
                     android:paddingTop="@dimen/abc_dialog_padding_top_material"
-                    tools:text="message"
                     />
+
                 <View
                     android:id="@+id/textSpacerNoButtons"
                     android:layout_width="0dp"
@@ -102,7 +111,16 @@
                     android:visibility="gone"
                     />
             </LinearLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
+
+        <View
+            android:id="@+id/scrollIndicatorDown"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="?attr/colorControlHighlight"
+            android:visibility="gone"
+            />
 
     </FrameLayout>
 
@@ -113,7 +131,7 @@
         android:layout_weight="1"
         android:minHeight="48dp"
         >
-      
+
         <FrameLayout
             android:id="@+id/custom"
             android:layout_width="match_parent"
@@ -121,49 +139,6 @@
             />
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/buttonPanel"
-        style="?attr/buttonBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:layoutDirection="locale"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingTop="8dp"
-        >
+    <include layout="@layout/abc_alert_dialog_button_bar_material" />
 
-        <Button
-            android:id="@android:id/button3"
-            style="?attr/buttonBarNeutralButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="button3"
-            />
-
-        <android.support.v4.widget.Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:visibility="invisible"
-            />
-
-        <Button
-            android:id="@android:id/button2"
-            style="?attr/buttonBarNegativeButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="button2"
-            />
-
-        <Button
-            android:id="@android:id/button1"
-            style="?attr/buttonBarPositiveButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="button1"
-            />
-    </LinearLayout>
-</LinearLayout>
+</LinearLayout><!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/v7/appcompat/res/layout/abc_alert_dialog_material.xml -->

@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
         customDialog = (Button) findViewById(R.id.custom_dialog_btn);
     }
 
-
     private void setViews() {
+        singleChoiceDialog();
         // 最简单提示对话框
         simpleDialogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +160,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void singleChoiceDialog() {
         SingleChoiceDialog.Builder builder = new SingleChoiceDialog.Builder();
-        SingleChoiceDialog dialog = builder.setTitle("Single Choice Dialog")
+        SingleChoiceDialog dialog = builder
+                .setTitle("Single Choice Dialog")
                 .setData(new String[]{"Android", "ios", "wp"}, 1)// 设置单选列表的数据和监听
                 .setOnItemSelectedListener(new OnItemClickListener() {
                     @Override

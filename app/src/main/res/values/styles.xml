@@ -5,16 +5,80 @@
         <!-- Customize your theme here. -->
 
         <item name="dialogTheme">@style/Theme.Dialog</item>
-        <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
-        <item name="alertDialogStyle">@style/AlertDialog</item>
         <item name="progressDialogStyle">@style/ProgressDialog</item>
-
-        <item name="dialogPreferredPadding">@dimen/abc_dialog_padding_material</item>
-        <item name="alertDialogCenterButtons">false</item>
-        <item name="textColorAlertDialogListItem">@color/abc_primary_text_material_light</item>
-        <!-- dialog中listView的divider -->
-        <item name="listDividerAlertDialog">@null</item>
         
+        <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
+        
+        <!-- 对话框内各个布局的布局文件-->
+        <item name="alertDialogStyle">@style/AlertDialog</item>
+
+        <!-- 对话框整体的内边距 默认：@dimen/abc_dialog_padding_material-->
+        <item name="dialogPreferredPadding">50dp</item>
+        
+        <item name="alertDialogCenterButtons">false</item>
+        
+        <!-- 单选、多选对话框列表文字的颜色 默认：@color/abc_primary_text_material_light -->
+        <item name="textColorAlertDialogListItem">#00ff00</item>
+
+        <!-- 单选、多选对话框的分割线 -->
+        <!-- dialog中listView的divider 默认：@null-->
+        <item name="listDividerAlertDialog">@drawable/divider</item>
+
+        <!-- 单选对话框的按钮图标 (默认不为null)-->
+        <item name="android:listChoiceIndicatorSingle">@null</item>
+        
+    </style>
+
+    <style name="Theme.Dialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">true</item> <!-- 是否透明 -->
+        <item name="android:windowNoTitle">true</item><!--除去title-->
+        <item name="android:windowContentOverlay">@null</item> <!-- 对话框是否有遮盖 -->
+        <item name="android:backgroundDimEnabled">false</item><!-- 对话框出现时背景是否变暗 -->
+
+        <item name="android:colorBackground">@color/background_floating_material_light</item><!-- 背景颜色，因为windowBackground中的背景已经写死了，所以这里的设置无效 -->
+        <item name="android:colorBackgroundCacheHint">@null</item><!-- 着色缓存（一般不用）-->
+
+        <item name="android:windowTitleStyle">@style/RtlOverlay.DialogWindowTitle.AppCompat</item><!-- 标题的字体样式 -->
+        <item name="android:windowTitleBackgroundStyle">@style/Base.DialogWindowTitleBackground.AppCompat</item>
+        <item name="android:windowBackground">@drawable/abc_dialog_material_background_light</item><!--对话框背景(重要)-->
+        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item><!-- 动画 -->
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item><!-- 输入法弹出时自适应 -->
+
+        <item name="windowActionModeOverlay">true</item>
+
+        <item name="listPreferredItemPaddingLeft">24dip</item>
+        <item name="listPreferredItemPaddingRight">24dip</item>
+
+        <item name="android:listDivider">@null</item>
+    </style>
+
+    <style name="Theme.Dialog.Alert" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
+        <item name="windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
+    </style>
+
+    
+    
+    <style name="AlertDialog" parent="Base.AlertDialog.AppCompat">
+        <!-- AlertController.class - line:168 -->
+
+        <!-- dialog的主体布局文件，里面包含了title，message等控件 -->
+        <item name="android:layout">@layout/custom_dialog_alert_material</item>
+        <!-- dialog中的列表布局文件，其实就是listView -->
+        <item name="listLayout">@layout/custom_dialog_list_material</item>
+        <!-- dialog中列表的item的布局 -->
+        <item name="listItemLayout">@layout/custom_dialog_select_item_material</item>
+        <!-- 多选的item的布局 -->
+        <item name="multiChoiceItemLayout">@layout/custom_dialog_select_multichoice_material</item>
+        <!-- 单选的item的布局 -->
+        <item name="singleChoiceItemLayout">@layout/custom_dialog_select_singlechoice_material</item>
+        
+        <item name="android:alertDialogStyle">@style/Theme.Dialog.Alert</item>
     </style>
 
 </resources>

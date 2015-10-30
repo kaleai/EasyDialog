@@ -1,12 +1,15 @@
 package kale.ui.view;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
+import android.util.TypedValue;
 
+import kale.lib.easydialog.R;
 import kale.ui.view.DialogInterface.OnClickListener;
 
 
@@ -88,12 +91,18 @@ public abstract class BaseEasyAlertDialog extends BaseEasyDialog {
             bundle.putParcelable(KEY_NEGATIVE_LISTENER, listener);
             return (T)this;
         }
+    }
 
+    static int resolveDialogTheme(Context context, int resid) {
+        TypedValue outValue = new TypedValue();
+        context.getTheme().resolveAttribute(R.attr.alertDialogTheme, outValue, true);
+        return outValue.resourceId;
     }
 
     @NonNull
     @Override
     protected AlertDialog.Builder initBuilder() {
+//        return new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
         return new AlertDialog.Builder(getActivity());
     }
 
