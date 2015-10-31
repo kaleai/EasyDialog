@@ -39,6 +39,7 @@
             android:paddingLeft="?attr/dialogPreferredPadding"
             android:paddingRight="?attr/dialogPreferredPadding"
             android:paddingTop="@dimen/abc_dialog_padding_top_material"
+            android:background="#00f"
             >
 
             <ImageView

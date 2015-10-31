@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
      Copyright (C) 2015 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,16 +19,17 @@
     This layout file is inflated and used as the ListView to display the items.
     Assign an ID so its state will be saved/restored.
 -->
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-      android:id="@+id/select_dialog_listview"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:cacheColorHint="@null"
-      android:divider="?attr/listDividerAlertDialog"
-      android:scrollbars="vertical"
-      android:overScrollMode="ifContentScrolls"
-      android:fadingEdge="none"
-      android:paddingTop="@dimen/abc_dialog_list_padding_vertical_material"
-      android:paddingBottom="@dimen/abc_dialog_list_padding_vertical_material"
-      android:clipToPadding="false"
-      style="@style/Widget.AppCompat.ListView" /><!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/lmp-mr1-supportlib-release/frameworks/support/v7/appcompat/res/layout/abc_select_dialog_material.xml -->
+<ListView android:id="@+id/select_dialog_listview"
+    style="@style/Widget.AppCompat.ListView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:cacheColorHint="@null"
+    android:clipToPadding="false"
+    android:divider="?attr/listDividerAlertDialog"
+    android:fadingEdge="none"
+    android:overScrollMode="ifContentScrolls"
+    android:paddingBottom="@dimen/abc_dialog_list_padding_vertical_material"
+    android:paddingTop="@dimen/abc_dialog_list_padding_vertical_material"
+    android:scrollbars="vertical"
+    /><!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/v7/appcompat/res/layout/abc_select_dialog_material.xml -->

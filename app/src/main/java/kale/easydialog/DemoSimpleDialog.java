@@ -71,7 +71,7 @@ public class DemoSimpleDialog extends SimpleDialog {
     }
 
     @Override
-    protected void setAlertBuilder(AlertDialog.Builder builder) {
+    protected void setAlertBuilder(@NonNull AlertDialog.Builder builder) {
         super.setAlertBuilder(builder);
         builder.setView(R.layout.demo_dialog_layout);
         if (mBitmapByteArr != null) {

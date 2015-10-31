@@ -7,36 +7,4 @@
         <item name="progressLayout">@layout/custom_dialog_progress</item>
     </style>
 
-<!--    <style name="Theme.Dialog0" parent="Base.Theme.AppCompat.Dialog.Alert">
-        <item name="android:windowFrame">@null</item>&lt;!&ndash;边框&ndash;&gt;
-        <item name="android:windowIsFloating">true</item>&lt;!&ndash;是否浮现在activity之上&ndash;&gt;
-        <item name="android:windowIsTranslucent">true</item> &lt;!&ndash; 是否透明 &ndash;&gt;
-        <item name="android:windowNoTitle">true</item>&lt;!&ndash;除去title&ndash;&gt;
-        <item name="android:windowContentOverlay">@null</item> &lt;!&ndash; 对话框是否有遮盖 &ndash;&gt;
-        <item name="android:backgroundDimEnabled">false</item>&lt;!&ndash; 对话框出现时背景是否变暗 &ndash;&gt;
-
-        <item name="android:colorBackground">@color/background_floating_material_light</item>&lt;!&ndash; 背景颜色，因为windowBackground中的背景已经写死了，所以这里的设置无效 &ndash;&gt;
-        <item name="android:colorBackgroundCacheHint">@null</item>&lt;!&ndash; 着色缓存（一般不用）&ndash;&gt;
-
-        <item name="android:windowTitleStyle">@style/RtlOverlay.DialogWindowTitle.AppCompat</item>&lt;!&ndash; 标题的字体样式 &ndash;&gt;
-        <item name="android:windowTitleBackgroundStyle">@style/Base.DialogWindowTitleBackground.AppCompat</item>
-        <item name="android:windowBackground">@drawable/abc_dialog_material_background_light</item>&lt;!&ndash;对话框背景(重要)&ndash;&gt;
-        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>&lt;!&ndash; 动画 &ndash;&gt;
-        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>&lt;!&ndash; 输入法弹出时自适应 &ndash;&gt;
-
-        <item name="windowActionBar">false</item>
-        <item name="windowActionModeOverlay">true</item>
-
-        <item name="listPreferredItemPaddingLeft">24dip</item>
-        <item name="listPreferredItemPaddingRight">24dip</item>
-
-        <item name="android:listDivider">@null</item>
-    </style>-->
-
-
-    <style name="Theme.Dialog0.Alert" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
-        <item name="windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
-    </style>
-    
 </resources>

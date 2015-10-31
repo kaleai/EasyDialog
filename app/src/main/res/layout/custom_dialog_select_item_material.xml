@@ -31,7 +31,7 @@
     android:gravity="center_vertical"
     android:paddingLeft="?attr/listPreferredItemPaddingLeft"
     android:paddingRight="?attr/listPreferredItemPaddingRight"
-    android:ellipsize="marquee"
-    tools:text="tex1"
+    android:ellipsize="marquee" 
+    tools:text="test"
     />
-<!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/lmp-mr1-supportlib-release/frameworks/support/v7/appcompat/res/layout/custom_dialog_select_item_material.xmlial.xml -->
+    <!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/v7/appcompat/res/layout/select_dialog_item_material.xml -->
