@@ -3,6 +3,7 @@ package kale.easydialog;
 import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -57,7 +58,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setViews() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Theme_Dialog_Alert);
+        builder.setTitle("title")
+
+                .setPositiveButton("ok", null)
+                .create();
+        // builder.show();
+        
+        MyDialog dialog = new MyDialog(this);
+        
+        dialog.setTitle("ddd");
+        dialog.setMessage("ddddddddddddddddd");
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "ok", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                
+            }
+        });
+        //dialog.show();
         singleChoiceDialog();
+
         // 最简单提示对话框
         simpleDialogBtn.setOnClickListener(new View.OnClickListener() {
             @Override

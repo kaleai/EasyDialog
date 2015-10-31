@@ -4,16 +4,16 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
 
-        <item name="dialogTheme">@style/Theme.Dialog</item>
         <item name="progressDialogStyle">@style/ProgressDialog</item>
-        
+
+        <!--<item name="dialogTheme">@style/Theme.Dialog</item>-->
         <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
         
         <!-- 对话框内各个布局的布局文件-->
         <item name="alertDialogStyle">@style/AlertDialog</item>
 
         <!-- 对话框整体的内边距 默认：@dimen/abc_dialog_padding_material-->
-        <item name="dialogPreferredPadding">50dp</item>
+        <item name="dialogPreferredPadding">100dp</item>
         
         <item name="alertDialogCenterButtons">false</item>
         
@@ -25,7 +25,7 @@
         <item name="listDividerAlertDialog">@drawable/divider</item>
 
         <!-- 单选对话框的按钮图标 (默认不为null)-->
-        <item name="android:listChoiceIndicatorSingle">@null</item>
+        <!--<item name="android:listChoiceIndicatorSingle">@null</item>-->
         
     </style>
 
@@ -51,13 +51,14 @@
 
         <item name="windowActionModeOverlay">true</item>
 
-        <item name="listPreferredItemPaddingLeft">24dip</item>
+        <item name="listPreferredItemPaddingLeft">80dip</item>
         <item name="listPreferredItemPaddingRight">24dip</item>
 
         <item name="android:listDivider">@null</item>
     </style>
 
-    <style name="Theme.Dialog.Alert" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <!-- parent="@style/Theme.AppCompat.Light.Dialog.Alert" -->
+    <style name="Theme.Dialog.Alert" >
         <item name="windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
         <item name="windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
     </style>
