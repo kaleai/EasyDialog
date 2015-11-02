@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         simpleDialogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setSimpleDialog();
+                simpleDialog();
             }
         });
 
@@ -105,23 +105,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void customDialog() {
-        final DemoSimpleDialog dialog = new DemoSimpleDialog();
-        DemoSimpleDialog.Builder builder = new DemoSimpleDialog.Builder();
-        builder.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.kale));
-        builder.setMessage("这是图片");
-        builder.setInputText("d", "hint");
-        builder.setPositiveButton("ok", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dd, int which) {
-                Toast.makeText(getBaseContext(), dialog.getInputTextEt().getText().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        dialog.setArguments(builder.getBundle());
-        dialog.show(getSupportFragmentManager(), TAG);
-    }
-
-    private void setSimpleDialog() {
+    private void simpleDialog() {
         SimpleDialog.Builder builder = new SimpleDialog.Builder();
         builder.setTitle("Title")
                 .setMessage(R.string.hello_world)
@@ -154,14 +138,14 @@ public class MainActivity extends AppCompatActivity {
 
         SimpleDialog dialog = builder.create();
         dialog.setCancelable(true);
-        dialog.show(getSupportFragmentManager(), TAG);
+        dialog.show(getSupportFragmentManager());
     }
 
     private void singleChoiceDialog() {
         SingleChoiceDialog.Builder builder = new SingleChoiceDialog.Builder();
         SingleChoiceDialog dialog = builder
                 .setTitle("Single Choice Dialog")
-                .setData(new String[]{"Android", "ios", "wp"})// 设置单选列表的数据和监听
+                .setData(new String[]{"Android", "ios", "wp"}, 1)// 设置单选列表的数据和监听
                 .setOnItemSelectedListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(DialogInterface dialog, int position) {
@@ -238,6 +222,22 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();// 完成后消失
             }
         }).start();
+    }
+
+    private void customDialog() {
+        final DemoSimpleDialog dialog = new DemoSimpleDialog();
+        DemoSimpleDialog.Builder builder = new DemoSimpleDialog.Builder();
+        builder.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.kale));
+        builder.setMessage("这是图片");
+        builder.setInputText("d", "hint");
+        builder.setPositiveButton("ok", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dd, int which) {
+                Toast.makeText(getBaseContext(), dialog.getInputTextEt().getText().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialog.setArguments(builder.getBundle());
+        dialog.show(getSupportFragmentManager(), TAG);
     }
 
 }

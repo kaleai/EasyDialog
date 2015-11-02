@@ -22,212 +22,102 @@ dependencies {
 ```   
 
 ### 使用方式   
-**在主题中设置默认样式（如果你想用原生的样式，可以跳过这个步骤）**  
+**0. 在主题中设置默认样式（如果你想用原生的样式，可以跳过这个步骤）**  
 ```XML  
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
 
-        <item name="dialogTheme">@style/Theme.Dialog</item>
-        <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
-        <item name="alertDialogStyle">@style/AlertDialog</item>
         <item name="progressDialogStyle">@style/ProgressDialog</item>
 
-        <item name="dialogPreferredPadding">@dimen/abc_dialog_padding_material</item>
-        <item name="alertDialogCenterButtons">false</item>
-        <item name="textColorAlertDialogListItem">@color/abc_primary_text_material_light</item>
-        <!-- dialog中listView的divider -->
-        <item name="listDividerAlertDialog">@null</item>
-        
+        <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
+
     </style>
 
 </resources> 
-```  
-就是这么简单，一切都搞定了！   
-我们在代码中直接用对话框就可以了，现在提供了以下几种dialog：    
+```     
 
-**1. 最简单的对话框**   
-![](./demo/simple.png)  
-
-```JAVA  
-SimpleDialog.Builder builder = new SimpleDialog.Builder();
-builder.setTitle("Title");
-builder.setMessage("Message");
-
-// 监听是否取消显示了对话框，触发：onCancel - > onDismiss
-builder.setOnCancelListener(new OnCancelListener() {
-    @Override
-    public void onCancel(DialogInterface dialog) {
-        Log.d(TAG, "onCancel");
-    }
-});
-// 监听对话框关闭
-builder.setOnDismissListener(new OnDismissListener() {
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        Log.d(TAG, "onDismiss");
-    }
-});
-
-// 设置中立的按钮
-builder.setNeutralButton("know", null);
-
-// 设置确定按钮
-builder.setPositiveButton("ok", new OnClickListener() {
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        Log.d(TAG, "onClick ok");
-    }
-});
-
-// 设置取消按钮
-builder.setNegativeButton("cancel", new OnClickListener() {
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        Log.d(TAG, "onClick cancel");
-        dialog.dismiss();
-    }
-});
-
-SimpleDialog dialog = builder.create();
-dialog.setCancelable(true); // 点击屏幕对话框外就关闭
-dialog.show(getSupportFragmentManager(), TAG);
-```    
-**2. 单选对话框**   
-![](./demo/singleChoice.png)  
-
-```JAVA
-SingleChoiceDialog.Builder builder = new SingleChoiceDialog.Builder();
-builder.setTitle("Single Choice Dialog");
-// 设置单选列表的数据
-builder.setData(new String[]{"Android", "ios", "wp"}, 1);
-// 设置监听器
-builder.setOnItemSelectedListener(new OnItemClickListener() {
-    @Override
-    public void onItemClick(DialogInterface dialog, int position, long id) {
-        Log.d(TAG, "onItemClick pos = " + position);
-        dialog.dismiss();
-    }
-});
-SingleChoiceDialog dialog = builder.create();
-dialog.setCancelable(false);
-dialog.show(getSupportFragmentManager(), TAG);  
-```  
-**3. 多选对话框**   
-![](./demo/multiChoice.png)    
-
-```JAVA
-MultiChoiceDialog.Builder builder = new MultiChoiceDialog.Builder();
-// 设置数据和默认选中的选项
-builder.setData(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true});
-// 设置监听器
-builder.setOnMultiChoiceClickListener(new OnMultiChoiceClickListener() {
-    @Override
-    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-        Log.d(TAG, "onClick pos = " + which + " , isChecked = " + isChecked);
-    }
-});
-builder.create().show(getSupportFragmentManager(), TAG);
-```  
-**4. 圆形对话框**   
-![](./demo/circular.png)   
-
-```JAVA
-ProgressDialog.Builder builder = new ProgressDialog.Builder(true);
-builder.setTitle("圆形进度条");
-builder.setMessage("test message");
-
-// 点击空白处，点击返回键都会触发onCancel->onDismiss
-builder.setOnCancelListener(new OnCancelListener() {
-    @Override
-    public void onCancel(DialogInterface builder) {
-        Log.d(TAG, "onCancel");
-    }
-});
-builder.setOnDismissListener(new OnDismissListener() {
-    @Override
-    public void onDismiss(DialogInterface builder) {
-        Log.d(TAG, "onDismiss");
-    }
-});
-ProgressDialog dialog = builder.create();
-dialog.setCancelable(true);
-dialog.show(getSupportFragmentManager(), TAG);
-```  
-**5. 横向有进度条的对话框**   
-![](./demo/progress.png)   
-
-```JAVA
-ProgressDialog.Builder builder = new ProgressDialog.Builder(false);
-builder.setTitle("横向进度条");
-builder.setMax(100);
-builder.setIndeterminate(false);//设置不显示明确的进度
-builder.setProgress(40);
-
-final ProgressDialog dialog = builder.create();
-
-dialog.show(getSupportFragmentManager(), TAG);
-
-//启动线程，模拟一个耗时的操作
-new Thread(new Runnable() {
-    @Override
-    public void run() {
-        int Progress = 0;
-        while (Progress < 100) {
-            try {
-                Thread.sleep(100);
-                Progress++;
-                // dialog.setProgress(Progress);
-                dialog.incrementProgressBy(1);// 进度条一次加1
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        dialog.dismiss();// 完成后消失
-    }
-}).start();
-```
-
-### 定制  
-我们采用原生的样式肯定不能满足我们的需求，我现在就来看看如何做自己的style吧。  
-```XML   
-<resources>
-
-    <style name="Theme.Dialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:windowFrame">@null</item><!--边框-->
-        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
-        <item name="android:windowIsTranslucent">true</item> <!-- 是否透明 -->
-        <item name="android:windowNoTitle">true</item><!--除去title-->
-        <item name="android:windowContentOverlay">@null</item> <!-- 对话框是否有遮盖 -->
-        <item name="android:backgroundDimEnabled">true</item><!-- 对话框出现时背景是否变暗 -->
-        
-        <item name="android:colorBackground">@color/background_floating_material_light</item><!-- 背景颜色，因为windowBackground中的背景已经写死了，所以这里的设置无效 -->
-        <item name="android:colorBackgroundCacheHint">@null</item><!-- 着色缓存（一般不用）-->
-
-        <item name="android:windowTitleStyle">@style/RtlOverlay.DialogWindowTitle.AppCompat</item><!-- 标题的字体样式 -->
-        <item name="android:windowTitleBackgroundStyle">@style/Base.DialogWindowTitleBackground.AppCompat</item>
-        <item name="android:windowBackground">@drawable/abc_dialog_material_background_light</item><!--对话框背景(重要)-->
-        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item><!-- 动画 -->
-        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item><!-- 输入法弹出时自适应 -->
-
+```XML
+<style name="Theme.Dialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="windowActionBar">false</item>
+        <!-- 没有标题栏 -->
+        <item name="windowNoTitle">true</item>
+
+        <!--边框-->
+        <item name="android:windowFrame">@null</item>
+
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+
+        <!-- 是否透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+
+        <!--除去title-->
+        <item name="android:windowNoTitle">true</item>
+
+        <!-- 对话框是否有遮盖 -->
+        <item name="android:windowContentOverlay">@null</item>
+
+        <!-- 对话框出现时背景是否变暗 -->
+        <item name="android:backgroundDimEnabled">true</item>
+
+        <!-- 背景颜色，因为windowBackground中的背景已经写死了，所以这里的设置无效 -->
+        <item name="android:colorBackground">@color/background_floating_material_light</item>
+
+        <!-- 着色缓存（一般不用）-->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+
+        <!-- 标题的字体样式 -->
+        <item name="android:windowTitleStyle">@style/RtlOverlay.DialogWindowTitle.AppCompat</item>
+        <item name="android:windowTitleBackgroundStyle">@style/Base.DialogWindowTitleBackground.AppCompat</item>
+
+        <!--对话框背景(重要)-->
+        <item name="android:windowBackground">@drawable/abc_dialog_material_background_light</item>
+
+        <!-- 动画 -->
+        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
+
+        <!-- 输入法弹出时自适应 -->
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+
         <item name="windowActionModeOverlay">true</item>
 
-        <item name="listPreferredItemPaddingLeft">24dip</item>
+        <!-- 列表部分的内边距，作用于单选、多选列表 -->
+        <item name="listPreferredItemPaddingLeft">20dip</item>
         <item name="listPreferredItemPaddingRight">24dip</item>
 
         <item name="android:listDivider">@null</item>
+
+        <!-- 单选、多选对话框列表文字的颜色 默认：@color/abc_primary_text_material_light -->
+        <item name="textColorAlertDialogListItem">#00ff00</item>
+
+        <!-- 单选、多选对话框的分割线 -->
+        <!-- dialog中listView的divider 默认：@null-->
+        <item name="listDividerAlertDialog">@drawable/divider</item>
+
+        <!-- 单选对话框的按钮图标 (默认不为null)-->
+        <item name="android:listChoiceIndicatorSingle">@android:drawable/btn_radio</item>
+
+        <!-- 对话框整体的内边距，但不作用于列表部分 默认：@dimen/abc_dialog_padding_material-->
+        <item name="dialogPreferredPadding">120dp</item>
+
+        <item name="alertDialogCenterButtons">true</item>
+
+        <!-- 对话框内各个布局的布局文件-->
+        <item name="alertDialogStyle">@style/AlertDialogStyle</item>
     </style>
 
+    <!-- parent="@style/Theme.AppCompat.Light.Dialog.Alert" -->
     <style name="Theme.Dialog.Alert">
         <item name="windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
         <item name="windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
     </style>
-    
-    <style name="AlertDialog" parent="Base.AlertDialog.AppCompat">
+
+
+    <style name="AlertDialogStyle" parent="Base.AlertDialog.AppCompat">
         <!-- AlertController.class - line:168 -->
+
         <!-- dialog的主体布局文件，里面包含了title，message等控件 -->
         <item name="android:layout">@layout/custom_dialog_alert_material</item>
         <!-- dialog中的列表布局文件，其实就是listView -->
@@ -238,21 +128,142 @@ new Thread(new Runnable() {
         <item name="multiChoiceItemLayout">@layout/custom_dialog_select_multichoice_material</item>
         <!-- 单选的item的布局 -->
         <item name="singleChoiceItemLayout">@layout/custom_dialog_select_singlechoice_material</item>
+
     </style>
 
-    <style name="ProgressDialog">
-        <!-- 横向的进度条布局 -->
-        <item name="horizontalProgressLayout">@layout/custom_dialog_progress_horizontal_material</item>
-        <!-- 圆形进度条布局 -->
-        <item name="progressLayout">@layout/custom_dialog_progress</item>
-    </style>
+```
 
-</resources>
+现在提供了以下几种dialog：    
 
+**1. 最简单的对话框**   
+![](./demo/simple.png)  
 
-```   
-只要把上面的内容复制到自己项目的style中，然后去参考里面layout文件，最后替换自己的layout文件就行。完全是照猫画虎，没有任何技术难度！
+```JAVA  
+SimpleDialog.Builder builder = new SimpleDialog.Builder();
+        builder.setTitle("Title")
+                .setMessage(R.string.hello_world)
+                .setOnCancelListener(new OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        Log.d(TAG, "onCancel"); // onCancel - > onDismiss
+                    }
+                })
+                .setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        Log.d(TAG, "onDismiss");
+                    }
+                })
+                .setNeutralButton("know", null)
+                .setPositiveButton("ok", new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "onClick ok");// 设置对话框上的按钮 ok->dismiss
+                    }
+                })
+                .setNegativeButton("cancel", new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "onClick cancel");
+                        dialog.dismiss(); // cancel -> dismiss
+                    }
+                });
 
+        SimpleDialog dialog = builder.create();
+        dialog.setCancelable(true);
+        dialog.show(getSupportFragmentManager(), TAG);
+```    
+**2. 单选对话框**   
+![](./demo/singleChoice.png)  
+
+```JAVA
+SingleChoiceDialog.Builder builder = new SingleChoiceDialog.Builder();
+        SingleChoiceDialog dialog = builder
+                .setTitle("Single Choice Dialog")
+                .setData(new String[]{"Android", "ios", "wp"}, 1)// 设置单选列表的数据和监听
+                .setOnItemSelectedListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(DialogInterface dialog, int position) {
+                        Log.d(TAG, "onItemClick pos = " + position);
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        dialog.setCancelable(false);
+        dialog.show(getSupportFragmentManager(), TAG);
+```  
+**3. 多选对话框**   
+![](./demo/multiChoice.png)    
+
+```JAVA
+new MultiChoiceDialog.Builder()
+                .setData(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true}) // 设置数据和默认选中的选项
+                        // 设置监听器
+                .setOnMultiChoiceClickListener(new OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        Log.d(TAG, "onClick pos = " + which + " , isChecked = " + isChecked);
+                    }
+                })
+                .create().show(getSupportFragmentManager(), TAG);
+```  
+**4. 圆形对话框**   
+![](./demo/circular.png)   
+
+```JAVA
+ProgressDialog.Builder builder = new ProgressDialog.Builder(true);
+        ProgressDialog dialog = builder.setTitle("圆形进度条")
+                .setMessage("test message")
+                .setIndeterminate(true)//设置不显示明确的进度
+                        // builder.setIndeterminate(false);// 设置显示明确的进度
+                .setOnCancelListener(new OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        // 点击空白处，点击返回键都会触发onCancel->onDismiss
+                        Log.d(TAG, "onCancel");
+                    }
+                })
+                .setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface builder) {
+                        Log.d(TAG, "onDismiss");
+                    }
+                })
+                .create();
+        dialog.setCancelable(true);
+        dialog.show(getSupportFragmentManager(), TAG);
+```  
+**5. 横向有进度条的对话框**   
+![](./demo/progress.png)   
+
+```JAVA
+ProgressDialog.Builder builder = new ProgressDialog.Builder(false);
+        final ProgressDialog dialog = builder.setTitle("横向进度条")
+                .setMax(100)
+                .setIndeterminate(false)//设置不显示明确的进度
+                .setProgress(40)
+                .create();
+        dialog.show(getSupportFragmentManager(), TAG);
+
+        //启动线程，模拟一个耗时的操作
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int Progress = 0;
+                while (Progress < 100) {
+                    try {
+                        Thread.sleep(100);
+                        Progress++;
+                        // dialog.setProgress(Progress);
+                        dialog.incrementProgressBy(1);// 进度条一次加1
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                dialog.dismiss();// 完成后消失
+            }
+        }).start();
+```
 
 
 ### 开发者
