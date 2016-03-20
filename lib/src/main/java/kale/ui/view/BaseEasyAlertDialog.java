@@ -54,7 +54,6 @@ public abstract class BaseEasyAlertDialog extends BaseEasyDialog {
     protected abstract static class Builder<T extends Builder> extends BaseEasyDialog.Builder<T> {
 
         public T setPositiveButton(CharSequence positiveText, OnClickListener listener) {
-            
             bundle.putCharSequence(KEY_POSITIVE_TEXT, positiveText);
             bundle.putParcelable(KEY_POSITIVE_LISTENER, listener);
             return (T)this;

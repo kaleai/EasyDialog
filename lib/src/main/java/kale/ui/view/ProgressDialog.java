@@ -188,10 +188,7 @@ public class ProgressDialog extends BaseEasyDialog {
     }
 
     public boolean isIndeterminate() {
-        if (getDialog() != null) {
-            return ((PDialog) getDialog()).isIndeterminate();
-        }
-        return false;
+        return getDialog() != null && ((PDialog) getDialog()).isIndeterminate();
     }
 
     public void incrementProgressBy(int diff) {
