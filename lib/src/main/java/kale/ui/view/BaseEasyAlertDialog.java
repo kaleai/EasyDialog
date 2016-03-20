@@ -20,7 +20,7 @@ public abstract class BaseEasyAlertDialog extends BaseEasyDialog {
 
     private static final String KEY_POSITIVE_TEXT_RES_ID = "key_positive_text_res_id";
 
-    private CharSequence mPositiveText;
+    CharSequence mPositiveText;
     
 
     private static final String KEY_POSITIVE_LISTENER = "key_positive_listener";
@@ -54,6 +54,7 @@ public abstract class BaseEasyAlertDialog extends BaseEasyDialog {
     protected abstract static class Builder<T extends Builder> extends BaseEasyDialog.Builder<T> {
 
         public T setPositiveButton(CharSequence positiveText, OnClickListener listener) {
+            
             bundle.putCharSequence(KEY_POSITIVE_TEXT, positiveText);
             bundle.putParcelable(KEY_POSITIVE_LISTENER, listener);
             return (T)this;
@@ -104,19 +105,19 @@ public abstract class BaseEasyAlertDialog extends BaseEasyDialog {
             int stringResId;
 
             mPositiveText = arguments.getCharSequence(KEY_POSITIVE_TEXT);
-            if (mPositiveText == null && (stringResId = arguments.getInt(KEY_POSITIVE_TEXT_RES_ID, DEFAULT_RES_ID)) != DEFAULT_RES_ID) {
+            if (mPositiveText == null && (stringResId = arguments.getInt(KEY_POSITIVE_TEXT_RES_ID, KEY_DEFAULT_RES_ID)) != KEY_DEFAULT_RES_ID) {
                 mPositiveText = getString(stringResId);
             }
             mPositiveListener = arguments.getParcelable(KEY_POSITIVE_LISTENER);
 
             mNeutralText = arguments.getCharSequence(KEY_NEUTRAL_TEXT);
-            if (mNeutralText == null && (stringResId = arguments.getInt(KEY_NEUTRAL_TEXT_RES_ID, DEFAULT_RES_ID)) != DEFAULT_RES_ID) {
+            if (mNeutralText == null && (stringResId = arguments.getInt(KEY_NEUTRAL_TEXT_RES_ID, KEY_DEFAULT_RES_ID)) != KEY_DEFAULT_RES_ID) {
                 mNeutralText = getString(stringResId);
             }
             mNeutralListener = arguments.getParcelable(KEY_NEUTRAL_LISTENER);
 
             mNegativeText = arguments.getCharSequence(KEY_NEGATIVE_TEXT);
-            if (mNegativeText == null && (stringResId = arguments.getInt(KEY_NEGATIVE_TEXT_RES_ID, DEFAULT_RES_ID)) != DEFAULT_RES_ID) {
+            if (mNegativeText == null && (stringResId = arguments.getInt(KEY_NEGATIVE_TEXT_RES_ID, KEY_DEFAULT_RES_ID)) != KEY_DEFAULT_RES_ID) {
                 mNegativeText = getString(stringResId);
             }
             mNegativeListener = arguments.getParcelable(KEY_NEGATIVE_LISTENER);

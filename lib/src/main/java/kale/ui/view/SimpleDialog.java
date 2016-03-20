@@ -46,7 +46,8 @@ public class SimpleDialog extends BaseEasyAlertDialog {
         if (arguments != null) {
             mMessage = arguments.getCharSequence(KEY_MESSAGE);
             int stringResId;
-            if (mMessage == null && (stringResId = arguments.getInt(KEY_MESSAGE_RES_ID, DEFAULT_RES_ID)) != DEFAULT_RES_ID) {
+            if (mMessage == null 
+                    && (stringResId = arguments.getInt(KEY_MESSAGE_RES_ID, KEY_DEFAULT_RES_ID)) != KEY_DEFAULT_RES_ID) {
                 mMessage = getString(stringResId);
             }
         }
