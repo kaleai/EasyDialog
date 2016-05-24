@@ -1,89 +1,84 @@
 package kale.ui.view;
 
+
+import com.lzh.courier.annoapi.Field;
+import com.lzh.courier.annoapi.Params;
+
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 
-import kale.ui.view.DialogInterface.OnClickListener;
-import kale.ui.view.DialogInterface.OnItemClickListener;
+import lombok.Setter;
 
 /**
  * @author Jack Tony
  * @date 2015/8/11
  */
-public class SingleChoiceDialog extends BaseEasyAlertDialog {
+@Params(fields = {
+        @Field(name = "itemStrArr", type = String[].class),
+        @Field(name = "defaultChoiceIndex", type = int.class)
+},inherited = false)
+public class SingleChoiceDialog extends BaseEasyDialog {
 
-    private static final String KEY_ITEM_STR_ARR = "key_item_str_arr";
+    public static class Builder extends BaseEasyDialog.Builder<Builder> {
 
-    private String[] mItemStrArr;
-    
+        private DialogInterface.OnClickListener onItemClickListener;
 
-    private static final String KEY_DEFAULT_CHOICE_ARR = "key_default_choice_arr";
-
-    private int mDefaultChoiceIndex;
-    
-
-    private static final String KEY_ITEM_CLICK_LISTENER = "key_item_click_listener";
-
-    private OnItemClickListener mListener;
-    
-    
-    public static class Builder extends BaseEasyAlertDialog.Builder<Builder> {
+        private SingleChoiceDialog_Builder builder = SingleChoiceDialog_Builder.create();
 
         public Builder setData(@NonNull String[] itemStrArr) {
-            bundle.putStringArray(KEY_ITEM_STR_ARR, itemStrArr);
-            bundle.putInt(KEY_DEFAULT_CHOICE_ARR, -1);
-            return this;
+            return setData(itemStrArr, -1);
         }
 
         public Builder setData(@NonNull String[] itemStrArr, int defaultChoiceIndex) {
-            bundle.putStringArray(KEY_ITEM_STR_ARR, itemStrArr);
-            bundle.putInt(KEY_DEFAULT_CHOICE_ARR, defaultChoiceIndex);
+            builder.setItemStrArr(itemStrArr);
+            builder.setDefaultChoiceIndex(defaultChoiceIndex);
             return this;
         }
 
-        public Builder setOnItemSelectedListener(OnItemClickListener listener) {
-            bundle.putParcelable(KEY_ITEM_CLICK_LISTENER, listener);
+        public Builder setOnItemSelectedListener(DialogInterface.OnClickListener listener) {
+            onItemClickListener = listener;
             return this;
         }
 
         @NonNull
         @Override
         protected BaseEasyDialog createDialog() {
-            return new SingleChoiceDialog();
+            SingleChoiceDialog dialog = new SingleChoiceDialog();
+            dialog.setOnItemClickListener(onItemClickListener);
+            return dialog;
         }
+
+        @Override
+        protected void addArgs(BaseEasyDialog dialog) {
+            super.addArgs(dialog);
+            dialog.addArguments(builder.createBundle());
+        }
+
     }
 
+    @Setter
+    private DialogInterface.OnClickListener onItemClickListener;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            mItemStrArr = arguments.getStringArray(KEY_ITEM_STR_ARR);
-            mDefaultChoiceIndex = arguments.getInt(KEY_DEFAULT_CHOICE_ARR, -1);
-            mListener = arguments.getParcelable(KEY_ITEM_CLICK_LISTENER);
-        }
-    }
+    protected void configDialogBuilder(AlertDialog.Builder builder) {
+        super.configDialogBuilder(builder);
+        SingleChoiceDialog_Builder.ArgsData data = SingleChoiceDialog_Builder.getArguments(this);
 
-    @Override
-    protected void setAlertBuilder(@NonNull AlertDialog.Builder builder) {
         // 默认选中了第一个，-1标识默认没选中
-        final OnClickListener listener = new OnClickListener() {
+        final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (mListener != null) {
-                    mListener.onItemClick(dialog, which);
+                if (onItemClickListener != null) {
+                    onItemClickListener.onClick(dialog, which);
                 }
             }
         };
-        // -1标识默认没有选中项目
-        if (mDefaultChoiceIndex == -1) {
-            builder.setItems(mItemStrArr, listener);
+        // -1表示默认没有选中项目
+        if (data.getDefaultChoiceIndex() == -1) {
+            builder.setItems(data.getItemStrArr(), listener);
         } else {
-            builder.setSingleChoiceItems(mItemStrArr, mDefaultChoiceIndex, listener);
+            builder.setSingleChoiceItems(data.getItemStrArr(), data.getDefaultChoiceIndex(), listener);
         }
     }
 

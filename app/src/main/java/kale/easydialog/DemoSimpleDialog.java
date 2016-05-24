@@ -1,5 +1,6 @@
 package kale.easydialog;
 
+import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -31,8 +32,6 @@ public class DemoSimpleDialog extends SimpleDialog {
 
     private Bitmap mBitmap;
 
-    private byte[] mBitmapByteArr;
-
     private CharSequence mInputText;
 
     private CharSequence mInputHint;
@@ -40,6 +39,8 @@ public class DemoSimpleDialog extends SimpleDialog {
     private EditText mInputTextEt;
 
     public static class Builder extends SimpleDialog.Builder {
+
+        private Bundle bundle = new Bundle();
 
         public Builder setImageBitmap(Bitmap bitmap) {
             bundle.putByteArray(KEY_IMAGE_BITMAP, bitmap2ByteArr(bitmap));
@@ -57,29 +58,42 @@ public class DemoSimpleDialog extends SimpleDialog {
         protected BaseEasyDialog createDialog() {
             return new DemoSimpleDialog();
         }
+
+        @Override
+        protected void addArgs(BaseEasyDialog dialog) {
+            super.addArgs(dialog);
+            dialog.addArguments(bundle);
+        }
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void configDialogBuilder(AlertDialog.Builder builder) {
+        super.configDialogBuilder(builder);
+
         Bundle arguments = getArguments();
+
+        byte[] mBitmapByteArr = null;
         if (arguments != null) {
             mBitmapByteArr = arguments.getByteArray(KEY_IMAGE_BITMAP);
             mInputText = arguments.getCharSequence(KEY_INPUT_TEXT);
             mInputHint = arguments.getCharSequence(KEY_INPUT_HINT);
         }
-    }
 
-    @Override
-    protected void setAlertBuilder(@NonNull AlertDialog.Builder builder) {
-        super.setAlertBuilder(builder);
-        builder.setView(R.layout.demo_dialog_layout);
         if (mBitmapByteArr != null) {
             mBitmap = BitmapFactory.decodeByteArray(mBitmapByteArr, 0, mBitmapByteArr.length);
             builder.setMessage(null);
         }
     }
 
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.demo_dialog_layout;
+    }
+
+    @Override
+    protected void bindViews(Dialog dialog) {
+        mInputTextEt = getView(R.id.input_et);
+    }
 
     @Override
     public void setViews() {
@@ -92,7 +106,6 @@ public class DemoSimpleDialog extends SimpleDialog {
         }
 
         if (mInputText != null) {
-            mInputTextEt = getView(R.id.input_et);
             mInputTextEt.setVisibility(View.VISIBLE);
             if (!isRestored()) {
                 // 如果是从旋转屏幕或其他状态恢复的fragment

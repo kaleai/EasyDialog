@@ -1,5 +1,9 @@
 package kale.ui.view;
 
+
+import com.lzh.courier.annoapi.Field;
+import com.lzh.courier.annoapi.Params;
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -13,88 +17,145 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
-import kale.ui.view.DialogInterface.OnCancelListener;
-import kale.ui.view.DialogInterface.OnDismissListener;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author Jack Tony
  * @date 2015/10/12
  */
+@Params(fields = {
+        @Field(name = "title", type = CharSequence.class),
+        @Field(name = "titleRes", type = int.class),
+        @Field(name = "positiveText", type = CharSequence.class),
+        @Field(name = "positiveTextResId", type = int.class),
+        @Field(name = "neutralText", type = CharSequence.class),
+        @Field(name = "neutralTextResId", type = int.class),
+        @Field(name = "negativeText", type = CharSequence.class),
+        @Field(name = "negativeTextResId", type = int.class),
+}, inherited = false)
 public abstract class BaseEasyDialog extends DialogFragment {
 
-    protected final int KEY_DEFAULT_RES_ID = -31;
+    @Getter
+    private boolean isRestored = false;
 
-    private static final String KEY_TITLE = "key_title";
+    @Setter
+    private DialogInterface.OnDismissListener onDismissListener;
 
-    private static final String KEY_TITLE_RES_ID = "key_title_res_id";
+    @Setter
+    private DialogInterface.OnCancelListener onCancelListener;
 
-    private CharSequence mTitle;
+    @Setter
+    private DialogInterface.OnClickListener positiveListener;
 
-    private static final String KEY_DISMISS_LISTENER = "key_dismiss_listener";
+    @Setter
+    private DialogInterface.OnClickListener neutralListener;
 
-    private OnDismissListener mOnDismissListener;
-
-    private static final String KEY_CANCEL_LISTENER = "key_cancel_listener";
-
-    private OnCancelListener mOnCancelListener;
-
-    private boolean mIsRestored = false;
+    @Setter
+    private DialogInterface.OnClickListener negativeListener;
 
     protected abstract static class Builder<T extends Builder> {
 
-        protected Bundle bundle = new Bundle();
+        private DialogInterface.OnDismissListener onDismissListener;
+
+        private DialogInterface.OnCancelListener onCancelListener;
+
+        private DialogInterface.OnClickListener positiveListener, neutralListener, negativeListener;
+
+        private BaseEasyDialog_Builder builder = BaseEasyDialog_Builder.create();
 
         public T setTitle(CharSequence title) {
-            bundle.putCharSequence(KEY_TITLE, title);
+            builder.setTitle(title);
             return (T) this;
         }
 
         public T setTitle(@StringRes int title) {
-            bundle.putInt(KEY_TITLE_RES_ID, title);
+            builder.setTitleRes(title);
             return (T) this;
         }
 
-        public T setOnDismissListener(OnDismissListener listener) {
-            bundle.putParcelable(KEY_DISMISS_LISTENER, listener);
+        public T setOnDismissListener(DialogInterface.OnDismissListener listener) {
+            onDismissListener = listener;
             return (T) this;
         }
 
-        public T setOnCancelListener(OnCancelListener listener) {
-            bundle.putParcelable(KEY_CANCEL_LISTENER, listener);
+        public T setOnCancelListener(DialogInterface.OnCancelListener listener) {
+            onCancelListener = listener;
             return (T) this;
         }
 
-        public <E extends BaseEasyDialog> E create() {
-            E dialog = (E) createDialog();
-            dialog.setArguments(bundle);
-            return dialog;
+        public T setPositiveButton(CharSequence positiveText, DialogInterface.OnClickListener listener) {
+            builder.setPositiveText(positiveText);
+            positiveListener = listener;
+            return (T) this;
+        }
+
+        public T setPositiveButton(@StringRes int positiveText, DialogInterface.OnClickListener listener) {
+            builder.setPositiveTextResId(positiveText);
+            positiveListener = listener;
+            return (T) this;
+        }
+
+        public T setNeutralButton(CharSequence neutralText, DialogInterface.OnClickListener listener) {
+            builder.setNeutralText(neutralText);
+            neutralListener = listener;
+            return (T) this;
+        }
+
+        public T setNeutralButton(@StringRes int neutralText, DialogInterface.OnClickListener listener) {
+            builder.setNegativeTextResId(neutralText);
+            neutralListener = listener;
+            return (T) this;
+        }
+
+        public T setNegativeButton(CharSequence negativeText, DialogInterface.OnClickListener listener) {
+            builder.setNegativeText(negativeText);
+            negativeListener = listener;
+            return (T) this;
+        }
+
+        public T setNegativeButton(@StringRes int negativeText, DialogInterface.OnClickListener listener) {
+            builder.setNegativeTextResId(negativeText);
+            negativeListener = listener;
+            return (T) this;
+        }
+
+        public <E extends BaseEasyDialog> E build() {
+            BaseEasyDialog dialog = createDialog();
+            addArgs(dialog);
+            dialog.setOnDismissListener(onDismissListener);
+            dialog.setOnCancelListener(onCancelListener);
+            dialog.setPositiveListener(positiveListener);
+            dialog.setNeutralListener(neutralListener);
+            dialog.setNegativeListener(negativeListener);
+            return (E) dialog;
+        }
+
+        /**
+         * 通过add来添加bundle，并且不会丢失父类的bundle对象
+         */
+        @CallSuper
+        protected void addArgs(BaseEasyDialog dialog) {
+            dialog.addArguments(builder.createBundle());
         }
 
         protected abstract
         @NonNull
         BaseEasyDialog createDialog();
 
-        public Bundle getBundle() {
-            return bundle;
-        }
-
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void addArguments(Bundle bundle) {
         Bundle arguments = getArguments();
         if (arguments != null) {
-            mTitle = arguments.getCharSequence(KEY_TITLE);
-            int stringResId;
-            if (mTitle == null 
-                    && (stringResId = arguments.getInt(KEY_TITLE_RES_ID, KEY_DEFAULT_RES_ID)) != KEY_DEFAULT_RES_ID) {
-                mTitle = getString(stringResId);
-            }
-            mOnDismissListener = arguments.getParcelable(KEY_DISMISS_LISTENER);
-            mOnCancelListener = arguments.getParcelable(KEY_CANCEL_LISTENER);
+            arguments.putAll(bundle);
+            setArguments(arguments);
+        } else {
+            setArguments(bundle);
         }
     }
+
+    private BaseEasyDialog_Builder.ArgsData data;
 
     @CallSuper
     @NonNull
@@ -103,32 +164,72 @@ public abstract class BaseEasyDialog extends DialogFragment {
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         }
-        AlertDialog.Builder builder = initBuilder();
-        builder.setTitle(mTitle); // 内部会进行非空判断的，所以这里不用进行判断，可以直接传null
-        setBuilder(builder);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        configDialogBuilder(builder);
+
         Dialog dialog = builder.create();
         setDialog(dialog);
-        return dialog;
+        return dialog; // bind dialog to fragment
     }
 
-    protected abstract
-    @NonNull
-    AlertDialog.Builder initBuilder();
-
-    protected abstract void setBuilder(@NonNull AlertDialog.Builder builder);
-
-    protected void setDialog(Dialog dialog) {
-
-    }
-
+    @CallSuper
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        mIsRestored = true;
+        isRestored = true;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        bindViews(getDialog());
         setViews();
+    }
+
+    @CallSuper
+    protected void configDialogBuilder(AlertDialog.Builder builder) {
+        data = BaseEasyDialog_Builder.getArguments(this);
+
+        builder.setTitle(data.getTitle()); // 内部会进行非空判断的，可以直接传null
+
+        CharSequence positiveText = getText(data.getPositiveText(), data.getPositiveTextResId());
+        if (positiveText != null) {
+            builder.setPositiveButton(positiveText, positiveListener);
+        }
+
+        CharSequence neutralText = getText(data.getNeutralText(), data.getNeutralTextResId());
+        if (neutralText != null) {
+            builder.setNeutralButton(neutralText, neutralListener);
+        }
+
+        CharSequence negativeText = getText(data.getNegativeText(), data.getNegativeTextResId());
+        if (negativeText != null) {
+            builder.setNegativeButton(negativeText, negativeListener);
+        }
+
+        if (getLayoutResId() != 0) {
+            builder.setView(getLayoutResId());
+        }
+    }
+
+    @Nullable
+    protected CharSequence getText(CharSequence text, int id) {
+        if (text == null) {
+            return id != 0 ? getString(id) : null;
+        } else {
+            return text;
+        }
+    }
+
+    protected void setDialog(Dialog dialog) {
+    }
+
+    protected int getLayoutResId() {
+        return 0;
+    }
+
+    protected void bindViews(Dialog dialog) {
+    }
+
+    protected void beforeSetViews() {
     }
 
     protected void setViews() {
@@ -137,33 +238,21 @@ public abstract class BaseEasyDialog extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        if (mOnDismissListener != null) {
-            mOnDismissListener.onDismiss(dialog);
+        if (onDismissListener != null) {
+            onDismissListener.onDismiss(dialog);
         }
     }
 
     @Override
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
-        if (mOnCancelListener != null) {
-            mOnCancelListener.onCancel(dialog);
+        if (onCancelListener != null) {
+            onCancelListener.onCancel(dialog);
         }
     }
 
-    public boolean isRestored() {
-        return mIsRestored;
-    }
-
     public CharSequence getTitle() {
-        return mTitle;
-    }
-
-    protected OnDismissListener getOnDismissListener() {
-        return mOnDismissListener;
-    }
-
-    protected OnCancelListener getOnCancelListener() {
-        return mOnCancelListener;
+        return data.getTitle();
     }
 
     protected <T extends View> T getView(@IdRes int id) {
@@ -171,6 +260,15 @@ public abstract class BaseEasyDialog extends DialogFragment {
     }
 
     public void show(FragmentManager manager) {
-        super.show(manager, "dialog");
+        show(manager, "dialog");
     }
+
+    public void show(FragmentManager manager, String tag) {
+        try {
+            super.show(manager, tag);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

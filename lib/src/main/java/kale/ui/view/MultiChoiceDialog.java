@@ -1,72 +1,69 @@
 package kale.ui.view;
 
+
+import com.lzh.courier.annoapi.Field;
+import com.lzh.courier.annoapi.Params;
+
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 
-import kale.ui.view.DialogInterface.OnMultiChoiceClickListener;
+import lombok.Setter;
 
 /**
  * @author Jack Tony
  * @date 2015/8/11
  */
-public class MultiChoiceDialog extends BaseEasyAlertDialog {
+@Params(fields = {
+        @Field(name = "itemStrArr", type = String[].class),
+        @Field(name = "defaultChoiceIndex", type = boolean[].class)
+}, inherited = false)
+public class MultiChoiceDialog extends BaseEasyDialog {
 
-    private static final String KEY_ITEM_STR_ARR = "key_item_str_arr";
+    public static class Builder extends BaseEasyDialog.Builder<Builder> {
 
-    private String[] mItemStrArr;
-    
+        private MultiChoiceDialog_Builder builder = MultiChoiceDialog_Builder.create();
 
-    private static final String KEY_DEFAULT_CHOICE_ARR = "key_default_choice_arr";
-
-    private boolean[] mDefaultChoiceArr;
-    
-
-    private static final String KEY_MULTI_CHOICE_LISTENER = "key_multi_choice_listener";
-
-    private OnMultiChoiceClickListener mListener;
-    
-
-    public static class Builder extends BaseEasyAlertDialog.Builder<Builder> {
+        private DialogInterface.OnMultiChoiceClickListener multiChoiceListener;
 
         public Builder setData(@NonNull String[] itemStrArr, @NonNull boolean[] defaultChoiceArr) {
-            bundle.putStringArray(KEY_ITEM_STR_ARR, itemStrArr);
-            bundle.putBooleanArray(KEY_DEFAULT_CHOICE_ARR, defaultChoiceArr);
+            builder.setItemStrArr(itemStrArr).setDefaultChoiceIndex(defaultChoiceArr);
             return this;
         }
 
-        public Builder setOnMultiChoiceClickListener(OnMultiChoiceClickListener listener) {
-            bundle.putParcelable(KEY_MULTI_CHOICE_LISTENER, listener);
+        public Builder setOnMultiChoiceClickListener(DialogInterface.OnMultiChoiceClickListener listener) {
+            multiChoiceListener = listener;
             return this;
         }
 
         @NonNull
         @Override
         protected BaseEasyDialog createDialog() {
-            return new MultiChoiceDialog();
+            MultiChoiceDialog dialog = new MultiChoiceDialog();
+            dialog.setMultiChoiceListener(multiChoiceListener);
+            return dialog;
         }
+
+        @Override
+        protected void addArgs(BaseEasyDialog dialog) {
+            super.addArgs(dialog);
+            dialog.addArguments(builder.createBundle());
+        }
+
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            mItemStrArr = arguments.getStringArray(KEY_ITEM_STR_ARR);
-            mDefaultChoiceArr = arguments.getBooleanArray(KEY_DEFAULT_CHOICE_ARR);
-            mListener = arguments.getParcelable(KEY_MULTI_CHOICE_LISTENER);
-        }
-    }
+    @Setter
+    private DialogInterface.OnMultiChoiceClickListener multiChoiceListener;
 
     @Override
-    protected void setAlertBuilder(@NonNull AlertDialog.Builder builder) {
-        builder.setMultiChoiceItems(mItemStrArr, mDefaultChoiceArr, new DialogInterface.OnMultiChoiceClickListener() {
+    protected void configDialogBuilder(AlertDialog.Builder builder) {
+        super.configDialogBuilder(builder);
+        MultiChoiceDialog_Builder.ArgsData data = MultiChoiceDialog_Builder.getArguments(this);
+        builder.setMultiChoiceItems(data.getItemStrArr(), data.getDefaultChoiceIndex(), new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                if (mListener != null) {
-                    mListener.onClick(dialog, which, isChecked);
+                if (multiChoiceListener != null) {
+                    multiChoiceListener.onClick(dialog, which, isChecked);
                 }
             }
         });

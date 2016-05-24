@@ -4,8 +4,6 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
 
-        <item name="progressDialogStyle">@style/ProgressDialog</item>
-
         <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
 
     </style>

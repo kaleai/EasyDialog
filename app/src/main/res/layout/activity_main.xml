@@ -2,9 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MainActivity"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    android:weightSum="1"
     >
+
+    <Button
+        android:id="@+id/simple_dialog_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="简单提示框"
+        android:layout_weight="0.09"
+        />
+
+    <Button
+        android:id="@+id/single_dialog_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="单选对话框"
+        android:layout_weight="0.09"
+        />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -14,49 +32,23 @@
         android:visibility="visible"
         >
 
-        <Button
-            android:id="@+id/simple_dialog_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="简单提示框"
-            />
-
-        <Button
-            android:id="@+id/single_dialog_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="单选对话框"
-            />
-
-        <Button
-            android:id="@+id/multi_dialog_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="多选对话框"
-            />
-
-        <Button
-            android:id="@+id/simple_pg_dialog_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="圆形进度条"
-            />
-
-        <Button
-            android:id="@+id/simple_pg_h_dialog_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="横向有刻度进度条"
-            />
-
-        <Button
-            android:id="@+id/custom_dialog_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="自定义对话框"
-            />
-
     </LinearLayout>
-    
-   
+
+    <Button
+        android:id="@+id/multi_dialog_btn"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:text="多选对话框"
+        android:layout_weight="0.03"
+        />
+
+    <Button
+        android:id="@+id/custom_dialog_btn"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:text="自定义对话框"
+        android:layout_weight="0.04"
+        />
+
+
 </LinearLayout>

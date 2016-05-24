@@ -1,12 +1,14 @@
-# EasyDialog
-提供自定义dialog style的库，非自定义view，纯净原生!   
+# EasyDialog   
+[![](https://jitpack.io/v/tianzhijiexian/EasyDialog.svg)](https://jitpack.io/#tianzhijiexian/EasyDialog)  
+
+提供自定义Dialog style的库，非自定义view，纯净原生!   
 
 ### 简介  
-原生提供的dialog不符合设计给出的标准，我们一般情况下是去通过自定义view然后塞给dialog。但分析后发现这种方式有点过了，其实我们只需要通过style文件来替换dialog默认的布局为我们自定义的布局就可以了。这样的方式既不用改变dialog的使用方式，也不用写多余代码，只需要更改样式就能满足需求。这其实也是android的设计思想，官方一般都会把属性值暴露出来，我们做SDK的时候也应该遵循这种标准。让显示和逻辑分开，显示的内容又可以交给style定义。
+原生提供的dialog提供了很多style来让开发者进行自定义，如果还是不能满足要求，那么可以通过替换dialog默认的布局来做。这其实也是android的设计思想，官方“一般”都会把属性值暴露出来，我们编码时也可以采取这样的思路，让显示和逻辑分开。
 
 ### 添加依赖
 1.在项目外层的build.gradle中添加JitPack仓库
-  
+
 ```  
 repositories {
 	maven {
@@ -14,28 +16,192 @@ repositories {
 	}
 }
 ```    
+
 2.在用到的项目中添加依赖
-```  
-dependencies {
-	compile 'com.github.tianzhijiexian:EasyDialog:1.0.5'
+
+> dependencies {
+	compile 'com.github.tianzhijiexian:EasyDialog:[Latest release](https://github.com/tianzhijiexian/EasyDialog/releases)'
 }    
-```   
 
 ### 使用方式   
-**0. 在主题中设置默认样式（如果你想用原生的样式，可以跳过这个步骤）**  
+
+**1. 最简单的对话框**   
+
+![](./demo/simple.png)  
+
+```JAVA  
+SimpleDialog.Builder builder = new SimpleDialog.Builder();
+        builder.setTitle("Title")
+                .setMessage(R.string.hello_world)
+                .setOnCancelListener(new OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        Log.d(TAG, "onCancel"); // onCancel - > onDismiss
+                    }
+                })
+                .setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        Log.d(TAG, "onDismiss");
+                    }
+                })
+                .setNeutralButton("know", null)
+                .setPositiveButton("ok", new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "onClick ok");// 设置对话框上的按钮 ok->dismiss
+                    }
+                })
+                .setNegativeButton("cancel", new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "onClick cancel");
+                        dialog.dismiss(); // cancel -> dismiss
+                    }
+                });
+
+        SimpleDialog dialog = builder.create();
+        dialog.setCancelable(true);
+        dialog.show(getSupportFragmentManager(), TAG);
+```    
+**2. 单选对话框**   
+
+![](./demo/singleChoice.png)  
+
+```JAVA
+SingleChoiceDialog.Builder builder = new SingleChoiceDialog.Builder();
+        SingleChoiceDialog dialog = builder
+                .setTitle("Single Choice Dialog")
+                .setData(new String[]{"Android", "ios", "wp"}, 1)// 设置单选列表的数据和监听
+                .setOnItemSelectedListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(DialogInterface dialog, int position) {
+                        Log.d(TAG, "onItemClick pos = " + position);
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        dialog.setCancelable(false);
+        dialog.show(getSupportFragmentManager(), TAG);
+```  
+**3. 多选对话框**   
+
+![](./demo/multiChoice.png)    
+
+```JAVA
+new MultiChoiceDialog.Builder()
+                .setData(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true}) // 设置数据和默认选中的选项
+                        // 设置监听器
+                .setOnMultiChoiceClickListener(new OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        Log.d(TAG, "onClick pos = " + which + " , isChecked = " + isChecked);
+                    }
+                })
+                .create().show(getSupportFragmentManager(), TAG);
+```  
+
+**4. 自定义对话框**
+
+![](./demo/custom.png)  
+
+```JAVA
+dialog = new DemoSimpleDialog.Builder()
+                .setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.kale))
+                .setInputText("", "hint")
+                .setMessage("这是图片")
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface ignore, int which) {
+                        Toast.makeText(getBaseContext(), dialog.getInputTextEt().getText().toString(), Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                })
+                .build();
+        dialog.show(getSupportFragmentManager(), TAG);
+```
+
+### 自定义对话框   
+自定义对话框需要继承自`BaseEasyDialog`，如果需要传入更多的参数，还需要继承自`BaseEasyDialog.Builder`。  
+
+```JAVA
+public class DemoDialog extends BaseEasyDialog {
+
+    /**
+     * 继承自{@link kale.ui.view.BaseEasyDialog.Builder}以扩展builder
+     */
+    public static class Builder extends BaseEasyDialog.Builder<Builder> {
+
+        public static final String KEY_NUM = "KEY_NUM";
+
+        private Bundle bundle = new Bundle();
+
+        /**
+         * 扩展一个方法来传入参数
+         */
+        public Builder setSomeArg(int i) {
+            bundle.putInt(KEY_NUM, i);
+            return this;
+        }
+
+        @NonNull
+        @Override
+        protected BaseEasyDialog createDialog() {
+            return new DemoDialog();
+        }
+
+        @Override
+        protected void addArgs(BaseEasyDialog dialog) {
+            super.addArgs(dialog); // 保留父类的bundle
+            dialog.addArguments(bundle); // 增加自己的bundle
+        }
+    }
+
+    /**
+     * 配置alertDialog的builder
+     */
+    @Override
+    protected void configDialogBuilder(AlertDialog.Builder builder) {
+        super.configDialogBuilder(builder);
+
+        builder.setMessage("message");
+    }
+
+}
+
+```  
+如果要自定义界面，还可以复写下列方法：  
+
+```JAVA
+@Override
+protected int getLayoutResId() {
+    return super.getLayoutResId();
+}
+
+@Override
+protected void bindViews(Dialog dialog) {
+    super.bindViews(dialog);
+}
+
+@Override
+protected void setViews() {
+    super.setViews();
+}
+```
+
+### 自定义样式  
+**在主题中设置默认样式（如果你想用原生的样式，可以跳过这个步骤）**  
 ```XML  
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
 
-        <item name="progressDialogStyle">@style/ProgressDialog</item>
-
         <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
 
     </style>
 
-</resources> 
+</resources>
 ```     
 
 ```XML
@@ -133,148 +299,14 @@ dependencies {
 
 ```
 
-现在提供了以下几种dialog：    
-
-**1. 最简单的对话框**   
-![](./demo/simple.png)  
-
-```JAVA  
-SimpleDialog.Builder builder = new SimpleDialog.Builder();
-        builder.setTitle("Title")
-                .setMessage(R.string.hello_world)
-                .setOnCancelListener(new OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        Log.d(TAG, "onCancel"); // onCancel - > onDismiss
-                    }
-                })
-                .setOnDismissListener(new OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        Log.d(TAG, "onDismiss");
-                    }
-                })
-                .setNeutralButton("know", null)
-                .setPositiveButton("ok", new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.d(TAG, "onClick ok");// 设置对话框上的按钮 ok->dismiss
-                    }
-                })
-                .setNegativeButton("cancel", new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.d(TAG, "onClick cancel");
-                        dialog.dismiss(); // cancel -> dismiss
-                    }
-                });
-
-        SimpleDialog dialog = builder.create();
-        dialog.setCancelable(true);
-        dialog.show(getSupportFragmentManager(), TAG);
-```    
-**2. 单选对话框**   
-![](./demo/singleChoice.png)  
-
-```JAVA
-SingleChoiceDialog.Builder builder = new SingleChoiceDialog.Builder();
-        SingleChoiceDialog dialog = builder
-                .setTitle("Single Choice Dialog")
-                .setData(new String[]{"Android", "ios", "wp"}, 1)// 设置单选列表的数据和监听
-                .setOnItemSelectedListener(new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(DialogInterface dialog, int position) {
-                        Log.d(TAG, "onItemClick pos = " + position);
-                        dialog.dismiss();
-                    }
-                })
-                .create();
-        dialog.setCancelable(false);
-        dialog.show(getSupportFragmentManager(), TAG);
-```  
-**3. 多选对话框**   
-![](./demo/multiChoice.png)    
-
-```JAVA
-new MultiChoiceDialog.Builder()
-                .setData(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true}) // 设置数据和默认选中的选项
-                        // 设置监听器
-                .setOnMultiChoiceClickListener(new OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        Log.d(TAG, "onClick pos = " + which + " , isChecked = " + isChecked);
-                    }
-                })
-                .create().show(getSupportFragmentManager(), TAG);
-```  
-**4. 圆形对话框**   
-![](./demo/circular.png)   
-
-```JAVA
-ProgressDialog.Builder builder = new ProgressDialog.Builder(true);
-        ProgressDialog dialog = builder.setTitle("圆形进度条")
-                .setMessage("test message")
-                .setIndeterminate(true)//设置不显示明确的进度
-                        // builder.setIndeterminate(false);// 设置显示明确的进度
-                .setOnCancelListener(new OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        // 点击空白处，点击返回键都会触发onCancel->onDismiss
-                        Log.d(TAG, "onCancel");
-                    }
-                })
-                .setOnDismissListener(new OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface builder) {
-                        Log.d(TAG, "onDismiss");
-                    }
-                })
-                .create();
-        dialog.setCancelable(true);
-        dialog.show(getSupportFragmentManager(), TAG);
-```  
-**5. 横向有进度条的对话框**   
-![](./demo/progress.png)   
-
-```JAVA
-ProgressDialog.Builder builder = new ProgressDialog.Builder(false);
-        final ProgressDialog dialog = builder.setTitle("横向进度条")
-                .setMax(100)
-                .setIndeterminate(false)//设置不显示明确的进度
-                .setProgress(40)
-                .create();
-        dialog.show(getSupportFragmentManager(), TAG);
-
-        //启动线程，模拟一个耗时的操作
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int Progress = 0;
-                while (Progress < 100) {
-                    try {
-                        Thread.sleep(100);
-                        Progress++;
-                        // dialog.setProgress(Progress);
-                        dialog.incrementProgressBy(1);// 进度条一次加1
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                dialog.dismiss();// 完成后消失
-            }
-        }).start();
-```
-
-
 ### 开发者
 ![](https://avatars3.githubusercontent.com/u/9552155?v=3&s=460)
 
 Jack Tony: <developer_kale@qq.com>  
 
-
 ### License
 
-    Copyright 2015 Jack Tony
+    Copyright 2016 Jack Tony
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -287,4 +319,3 @@ Jack Tony: <developer_kale@qq.com>
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
- 

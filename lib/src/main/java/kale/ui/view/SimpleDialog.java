@@ -1,35 +1,36 @@
 package kale.ui.view;
 
-import android.os.Bundle;
-import android.support.annotation.CallSuper;
+import com.lzh.courier.annoapi.Field;
+import com.lzh.courier.annoapi.Params;
+
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
+
+import lombok.Getter;
 
 /**
  * @author Jack Tony
  * @date 2015/8/11
  */
-public class SimpleDialog extends BaseEasyAlertDialog {
+@Params(fields = {
+        @Field(name = "message", type = CharSequence.class),
+        @Field(name = "messageResId", type = int.class)
+},inherited = false)
+public class SimpleDialog extends BaseEasyDialog {
 
-    private static final String KEY_MESSAGE = "key_message";
+    public static class Builder extends BaseEasyDialog.Builder<Builder> {
 
-    private static final String KEY_MESSAGE_RES_ID = "key_message_res_id";
-
-    private CharSequence mMessage;
-
-    public static class Builder extends BaseEasyAlertDialog.Builder<Builder> {
+        private SimpleDialog_Builder builder = SimpleDialog_Builder.create();
 
         public Builder setMessage(@NonNull CharSequence message) {
-            bundle.putCharSequence(KEY_MESSAGE, message);
-            return Builder.this;
+            builder.setMessage(message);
+            return this;
         }
 
         public Builder setMessage(@StringRes int message) {
-            bundle.putInt(KEY_MESSAGE_RES_ID, message);
-            return Builder.this;
+            builder.setMessageResId(message);
+            return this;
         }
 
         @NonNull
@@ -37,31 +38,26 @@ public class SimpleDialog extends BaseEasyAlertDialog {
         protected BaseEasyDialog createDialog() {
             return new SimpleDialog();
         }
+
+        @Override
+        protected void addArgs(BaseEasyDialog dialog) {
+            super.addArgs(dialog);
+            dialog.addArguments(builder.createBundle());
+        }
+        
     }
 
+    @Getter
+    private CharSequence message;
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            mMessage = arguments.getCharSequence(KEY_MESSAGE);
-            int stringResId;
-            if (mMessage == null 
-                    && (stringResId = arguments.getInt(KEY_MESSAGE_RES_ID, KEY_DEFAULT_RES_ID)) != KEY_DEFAULT_RES_ID) {
-                mMessage = getString(stringResId);
-            }
+    protected void configDialogBuilder(AlertDialog.Builder builder) {
+        super.configDialogBuilder(builder);
+        SimpleDialog_Builder.ArgsData data = SimpleDialog_Builder.getArguments(this);
+        message = getText(data.getMessage(), data.getMessageResId());
+        if (message != null) {
+            builder.setMessage(message);
         }
     }
 
-    @Override
-    @CallSuper
-    protected void setAlertBuilder(@NonNull AlertDialog.Builder builder) {
-        if (!TextUtils.isEmpty(mMessage)) {
-            builder.setMessage(mMessage);
-        }
-    }
-
-    public CharSequence getMessage() {
-        return mMessage;
-    }
 }
