@@ -15,14 +15,14 @@ import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 
+import kale.ui.view.BaseCustomDialog;
 import kale.ui.view.BaseEasyDialog;
-import kale.ui.view.SimpleDialog;
 
 /**
  * @author Jack Tony
  * @date 2015/8/27
  */
-public class DemoSimpleDialog extends SimpleDialog {
+public class DemoSimpleDialog extends BaseCustomDialog {
 
     private static final String KEY_INPUT_TEXT = "key_input_text";
 
@@ -38,7 +38,7 @@ public class DemoSimpleDialog extends SimpleDialog {
 
     private EditText mInputTextEt;
 
-    public static class Builder extends SimpleDialog.Builder {
+    public static class Builder extends BaseCustomDialog.Builder<DemoSimpleDialog.Builder> {
 
         private Bundle bundle = new Bundle();
 
@@ -56,14 +56,11 @@ public class DemoSimpleDialog extends SimpleDialog {
         @NonNull
         @Override
         protected BaseEasyDialog createDialog() {
-            return new DemoSimpleDialog();
+            DemoSimpleDialog dialog = new DemoSimpleDialog();
+            dialog.addArguments(bundle);
+            return dialog;
         }
 
-        @Override
-        protected void addArgs(BaseEasyDialog dialog) {
-            super.addArgs(dialog);
-            dialog.addArguments(bundle);
-        }
     }
 
     @Override
@@ -102,7 +99,7 @@ public class DemoSimpleDialog extends SimpleDialog {
             imageTextLl.setVisibility(View.VISIBLE);
 
             ((ImageView) getView(R.id.image_iv)).setImageBitmap(mBitmap);
-            ((TextView) getView(R.id.msg_tv)).setText(getMessage());
+            ((TextView) getView(R.id.msg_tv)).setText(R.string.app_name);
         }
 
         if (mInputText != null) {

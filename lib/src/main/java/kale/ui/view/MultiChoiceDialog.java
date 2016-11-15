@@ -40,14 +40,9 @@ public class MultiChoiceDialog extends BaseEasyDialog {
         @Override
         protected BaseEasyDialog createDialog() {
             MultiChoiceDialog dialog = new MultiChoiceDialog();
+            dialog.addArguments(builder.createBundle());
             dialog.setMultiChoiceListener(multiChoiceListener);
             return dialog;
-        }
-
-        @Override
-        protected void addArgs(BaseEasyDialog dialog) {
-            super.addArgs(dialog);
-            dialog.addArguments(builder.createBundle());
         }
 
     }

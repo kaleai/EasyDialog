@@ -54,6 +54,8 @@ public abstract class BaseEasyDialog extends DialogFragment {
     @Setter
     private DialogInterface.OnClickListener negativeListener;
 
+    private BaseEasyDialog_Builder.ArgsData data;
+
     protected abstract static class Builder<T extends Builder> {
 
         private DialogInterface.OnDismissListener onDismissListener;
@@ -122,7 +124,7 @@ public abstract class BaseEasyDialog extends DialogFragment {
 
         public <E extends BaseEasyDialog> E build() {
             BaseEasyDialog dialog = createDialog();
-            addArgs(dialog);
+            dialog.addArguments(builder.createBundle());
             dialog.setOnDismissListener(onDismissListener);
             dialog.setOnCancelListener(onCancelListener);
             dialog.setPositiveListener(positiveListener);
@@ -131,20 +133,14 @@ public abstract class BaseEasyDialog extends DialogFragment {
             return (E) dialog;
         }
 
-        /**
-         * 通过add来添加bundle，并且不会丢失父类的bundle对象
-         */
-        @CallSuper
-        protected void addArgs(BaseEasyDialog dialog) {
-            dialog.addArguments(builder.createBundle());
-        }
-
-        protected abstract
         @NonNull
-        BaseEasyDialog createDialog();
+        protected abstract BaseEasyDialog createDialog();
 
     }
 
+    /**
+     * 将自己的bundle添加入父类的bundle中
+     */
     public void addArguments(Bundle bundle) {
         Bundle arguments = getArguments();
         if (arguments != null) {
@@ -155,7 +151,13 @@ public abstract class BaseEasyDialog extends DialogFragment {
         }
     }
 
-    private BaseEasyDialog_Builder.ArgsData data;
+    /**
+     * 设置自己的bundle，会覆盖父类的bundle
+     */
+    @Override
+    public void setArguments(Bundle args) {
+        super.setArguments(args);
+    }
 
     @CallSuper
     @NonNull
@@ -166,10 +168,7 @@ public abstract class BaseEasyDialog extends DialogFragment {
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         configDialogBuilder(builder);
-
-        Dialog dialog = builder.create();
-        setDialog(dialog);
-        return dialog; // bind dialog to fragment
+        return builder.create(); // bind dialog to fragment
     }
 
     @CallSuper
@@ -177,13 +176,9 @@ public abstract class BaseEasyDialog extends DialogFragment {
         isRestored = true;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        bindViews(getDialog());
-        setViews();
-    }
-
+    /**
+     * 当默认的build不能满足需求时，请继承此方法
+     */
     @CallSuper
     protected void configDialogBuilder(AlertDialog.Builder builder) {
         data = BaseEasyDialog_Builder.getArguments(this);
@@ -204,10 +199,6 @@ public abstract class BaseEasyDialog extends DialogFragment {
         if (negativeText != null) {
             builder.setNegativeButton(negativeText, negativeListener);
         }
-
-        if (getLayoutResId() != 0) {
-            builder.setView(getLayoutResId());
-        }
     }
 
     @Nullable
@@ -217,22 +208,6 @@ public abstract class BaseEasyDialog extends DialogFragment {
         } else {
             return text;
         }
-    }
-
-    protected void setDialog(Dialog dialog) {
-    }
-
-    protected int getLayoutResId() {
-        return 0;
-    }
-
-    protected void bindViews(Dialog dialog) {
-    }
-
-    protected void beforeSetViews() {
-    }
-
-    protected void setViews() {
     }
 
     @Override

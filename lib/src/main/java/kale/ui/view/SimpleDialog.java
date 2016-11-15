@@ -36,15 +36,11 @@ public class SimpleDialog extends BaseEasyDialog {
         @NonNull
         @Override
         protected BaseEasyDialog createDialog() {
-            return new SimpleDialog();
+            SimpleDialog dialog = new SimpleDialog();
+            dialog.addArguments(builder.createBundle());
+            return dialog;
         }
 
-        @Override
-        protected void addArgs(BaseEasyDialog dialog) {
-            super.addArgs(dialog);
-            dialog.addArguments(builder.createBundle());
-        }
-        
     }
 
     @Getter

@@ -152,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
         dialog = new DemoSimpleDialog.Builder()
                 .setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.kale))
                 .setInputText("", "hint")
-                .setMessage("这是图片")
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface ignore, int which) {

@@ -45,14 +45,9 @@ public class SingleChoiceDialog extends BaseEasyDialog {
         @Override
         protected BaseEasyDialog createDialog() {
             SingleChoiceDialog dialog = new SingleChoiceDialog();
+            dialog.addArguments(builder.createBundle());
             dialog.setOnItemClickListener(onItemClickListener);
             return dialog;
-        }
-
-        @Override
-        protected void addArgs(BaseEasyDialog dialog) {
-            super.addArgs(dialog);
-            dialog.addArguments(builder.createBundle());
         }
 
     }
