@@ -2,9 +2,11 @@ package kale.easydialog;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +45,13 @@ public class MainActivity extends AppCompatActivity {
         singleDialogBtn = (Button) findViewById(R.id.single_dialog_btn);
         multiDialogBtn = (Button) findViewById(R.id.multi_dialog_btn);
         customDialog = (Button) findViewById(R.id.custom_dialog_btn);
+        
+        findViewById(R.id.jump_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CustomStyleActivity.class));
+            }
+        });
     }
 
     private void setViews() {
@@ -155,8 +164,10 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface ignore, int which) {
-                        Toast.makeText(getBaseContext(), dialog.getInputTextEt().getText().toString(), Toast.LENGTH_SHORT)
-                                .show();
+                        String text = dialog.getInputTextEt().getText().toString();
+                        if (!TextUtils.isEmpty(text)) {
+                            Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+                        }
                     }
                 })
                 .build();

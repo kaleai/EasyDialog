@@ -3,9 +3,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-
-        <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
-
+    </style>
+    
+    <style name="AppTheme.CustomDialogStyle">
+        <!-- 如果要看自定义样式的例子，可以加载此布局文件 -->
+        <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item> 
     </style>
 
     <style name="Theme.Dialog" parent="Theme.AppCompat.Light.Dialog">

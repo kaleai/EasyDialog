@@ -50,5 +50,14 @@
         android:layout_weight="0.04"
         />
 
+    
+    <Button
+        android:id="@+id/jump_btn"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:layout_marginTop="80dp"
+        android:text="跳转到自定义样式的dialog"
+        />
+    
 
 </LinearLayout>
