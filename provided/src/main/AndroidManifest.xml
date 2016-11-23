@@ -1,0 +1,10 @@
+<manifest package="kale.ui.view.dialog.provided"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true"
+        />
+
+</manifest>

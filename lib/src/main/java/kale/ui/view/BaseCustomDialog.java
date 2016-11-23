@@ -1,7 +1,6 @@
 package kale.ui.view;
 
 import android.app.Dialog;
-import android.support.v7.app.AlertDialog;
 
 /**
  * @author Kale
@@ -9,19 +8,19 @@ import android.support.v7.app.AlertDialog;
  *
  * 不用系统的dialog，自己定义的dialog需要继承此类
  */
-public abstract class BaseCustomDialog extends BaseEasyDialog {
+public abstract class BaseCustomDialog extends EasyDialog {
 
     @Override
-    protected void configDialogBuilder(AlertDialog.Builder builder) {
-        super.configDialogBuilder(builder);
+    protected void configBuilder(Builder builder) {
+        super.configBuilder(builder);
         if (getLayoutResId() != 0) {
             builder.setView(getLayoutResId());
         }
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    protected void configViews(Dialog dialog) {
+        super.configViews(dialog);
         bindViews(getDialog());
         setViews();
     }

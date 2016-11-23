@@ -1,12 +1,12 @@
 package kale.easydialog;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,7 +16,7 @@ import android.widget.TextView;
 import java.io.ByteArrayOutputStream;
 
 import kale.ui.view.BaseCustomDialog;
-import kale.ui.view.BaseEasyDialog;
+import kale.ui.view.EasyDialog;
 
 /**
  * @author Jack Tony
@@ -38,9 +38,13 @@ public class DemoSimpleDialog extends BaseCustomDialog {
 
     private EditText mInputTextEt;
 
-    public static class Builder extends BaseCustomDialog.Builder<DemoSimpleDialog.Builder> {
+    public static class Builder extends EasyDialog.Builder<Builder> {
 
         private Bundle bundle = new Bundle();
+
+        public Builder(@NonNull Context context) {
+            super(context);
+        }
 
         public Builder setImageBitmap(Bitmap bitmap) {
             bundle.putByteArray(KEY_IMAGE_BITMAP, bitmap2ByteArr(bitmap));
@@ -55,17 +59,16 @@ public class DemoSimpleDialog extends BaseCustomDialog {
 
         @NonNull
         @Override
-        protected BaseEasyDialog createDialog() {
+        protected DemoSimpleDialog createDialog() {
             DemoSimpleDialog dialog = new DemoSimpleDialog();
-            dialog.addArguments(bundle);
+            dialog.setArguments(bundle);
             return dialog;
         }
 
     }
 
-    @Override
-    protected void configDialogBuilder(AlertDialog.Builder builder) {
-        super.configDialogBuilder(builder);
+    protected void configBuilder(EasyDialog.Builder builder) {
+        super.configBuilder(builder);
 
         Bundle arguments = getArguments();
 

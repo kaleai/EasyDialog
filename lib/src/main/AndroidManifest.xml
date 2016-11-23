@@ -1,7 +1,5 @@
-<manifest package="kale.lib.easydialog"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+<manifest package="kale.lib.easydialog">
 
-    <application android:allowBackup="true" />
+    <application />
 
 </manifest>

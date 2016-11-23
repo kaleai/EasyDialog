@@ -4,7 +4,7 @@
 提供自定义Dialog style的库，非自定义view，纯净原生！   
 
 ### 简介  
->原生的Dialog提供了很多Style来让开发者进行自定义。如果还不能满足要求，那么可以通过替换Dialog默认的布局来做。
+>原生的Dialog提供了很多Style来让开发者进行自定义，如果还不能满足要求，那么可以通过替换Dialog默认的布局来做。
 
 这其实是android的设计思想，官方“一般”都会把属性值暴露出来，我们编码时也可以采取这样的思路，让显示和逻辑分开。因此，本项目并没有重新实现Dialog，而是通过封装了DialogFragment来让大家使用和定制Dialog更加的方便。
 
@@ -34,7 +34,7 @@ repositories {
 ![](./demo/simple.png)  
 
 ```JAVA  
-SimpleDialog.Builder builder = new SimpleDialog.Builder();
+EasyDialog.Builder builder = new EasyDialog.Builder();
 builder.setTitle("Title")
         .setMessage(R.string.hello_world)
         .setOnCancelListener(new OnCancelListener() {
@@ -60,7 +60,7 @@ builder.setTitle("Title")
             }
         });
 
-SimpleDialog dialog = builder.build();
+EasyDialog dialog = builder.build();
 dialog.setCancelable(true); // 点击空白是否可以取消
 dialog.show(getSupportFragmentManager(), TAG);
 ```    
@@ -69,10 +69,9 @@ dialog.show(getSupportFragmentManager(), TAG);
 ![](./demo/singleChoice.png)  
 
 ```JAVA
-SingleChoiceDialog dialog = new SingleChoiceDialog.Builder()
+EasyDialog dialog = new EasyDialog.Builder()
         .setTitle("Single Choice Dialog")
-        .setData(new String[]{"Android", "ios", "wp"}, 1)// 设置单选列表的数据和监听
-        .setOnItemSelectedListener(new OnItemClickListener() {
+        .setSingleChoiceItems(new String[]{"Android", "ios", "wp"}, 1, new OnClickListener() {
             @Override
             public void onItemClick(DialogInterface dialog, int position) {
                 Log.d(TAG, "onItemClick pos = " + position);
@@ -87,10 +86,11 @@ dialog.show(getSupportFragmentManager());
 ![](./demo/multiChoice.png)    
 
 ```JAVA
-new MultiChoiceDialog.Builder()
-        .setData(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true}) // 设置数据和默认选中的选项
-        // 设置监听器
-        .setOnMultiChoiceClickListener(new OnMultiChoiceClickListener() {
+new EasyDialog.Builder()
+        .setMultiChoiceItems(
+				new String[]{"Android", "ios", "wp"},
+				new boolean[]{true, false, true},
+				new OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                 Log.d(TAG, "onClick pos = " + which + " , isChecked = " + isChecked);
@@ -119,13 +119,13 @@ dialog = new DemoSimpleDialog.Builder()
 ```
 
 ### 自定义对话框   
-自定义对话框需要继承自`BaseCustomDialog`。如果需要传入更多的参数，还需要继承自`BaseEasyDialog.Builder`来建立自己的builder。  
+自定义对话框需要继承自`BaseCustomDialog`。如果需要传入更多的参数，还需要继承自`EasyDialog.Builder`来建立自己的builder。  
 
 ```JAVA
 public class DemoDialog extends BaseCustomDialog {
 	public static final String KEY_NUM = "KEY_NUM";
     /**
-     * 继承自{@link kale.ui.view.BaseEasyDialog.Builder}以扩展builder
+     * 继承自{@link kale.ui.view.EasyDialog.Builder}以扩展builder
      */
     public static class Builder extends BaseEasyDialog.Builder<DemoDialog.Builder> {
 
@@ -143,7 +143,7 @@ public class DemoDialog extends BaseCustomDialog {
         @Override
         protected BaseEasyDialog createDialog() {
             BaseEasyDialog dialog = new DemoDialog();
-			dialog.addArguments(bundle); // 增加自己的bundle
+			dialog.setArguments(bundle); // 增加自己的bundle
         }
 
 		@Override

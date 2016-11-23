@@ -12,9 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import kale.ui.view.MultiChoiceDialog;
-import kale.ui.view.SimpleDialog;
-import kale.ui.view.SingleChoiceDialog;
+import kale.ui.view.EasyDialog;
 
 /**
  * 关于更多对话框的设置请参考：http://www.cnblogs.com/tianzhijiexian/p/3867731.html
@@ -45,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         singleDialogBtn = (Button) findViewById(R.id.single_dialog_btn);
         multiDialogBtn = (Button) findViewById(R.id.multi_dialog_btn);
         customDialog = (Button) findViewById(R.id.custom_dialog_btn);
-        
+
         findViewById(R.id.jump_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    
     private void setViews() {
         // 最简单提示对话框
         simpleDialogBtn.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void simpleDialog() {
-        SimpleDialog.Builder builder = new SimpleDialog.Builder();
+        EasyDialog.Builder builder = new EasyDialog.Builder(this);
         builder.setTitle("Title")
                 .setMessage(R.string.hello_world)
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -117,48 +115,45 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "onClick cancel");
                         dialog.dismiss(); // cancel -> dismiss
                     }
-                });
+                })
+                .setCancelable(true);
 
-        SimpleDialog dialog = builder.build();
-        dialog.setCancelable(true);
+        EasyDialog dialog = builder.build();
         dialog.show(getSupportFragmentManager());
     }
 
     private void singleChoiceDialog() {
-        SingleChoiceDialog.Builder builder = new SingleChoiceDialog.Builder();
-        SingleChoiceDialog dialog = builder
+        EasyDialog dialog = new EasyDialog.Builder(this)
                 .setTitle("Single Choice Dialog")
-                .setData(new String[]{"Android", "ios", "wp"}, 1)// 设置单选列表的数据和监听
-                .setOnItemSelectedListener(new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(new String[]{"Android", "ios", "wp"}, 1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int position) {
                         Log.d(TAG, "onItemClick pos = " + position);
                         dialog.dismiss();
                     }
-
-                })
+                })// 设置单选列表的数据和监听
                 .build();
         dialog.setCancelable(false);
         dialog.show(getSupportFragmentManager(), TAG);
     }
 
     private void multiChoiceDialog() {
-        new MultiChoiceDialog.Builder()
-                .setData(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true}) // 设置数据和默认选中的选项
-                // 设置监听器
-                .setOnMultiChoiceClickListener(new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        Log.d(TAG, "onClick pos = " + which + " , isChecked = " + isChecked);
-                    }
-                })
+        new EasyDialog.Builder<>(this)
+                // 设置数据和默认选中的选项
+                .setMultiChoiceItems(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true},
+                        new DialogInterface.OnMultiChoiceClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                                Log.d(TAG, "onClick pos = " + which + " , isChecked = " + isChecked);
+                            }
+                        }) // 设置监听器
                 .build().show(getSupportFragmentManager(), TAG);
     }
 
-    DemoSimpleDialog dialog;
+    private DemoSimpleDialog dialog;
 
     private void customDialog() {
-        dialog = new DemoSimpleDialog.Builder()
+        dialog = new DemoSimpleDialog.Builder(this)
                 .setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.kale))
                 .setInputText("", "hint")
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -171,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .build();
-        dialog.show(getSupportFragmentManager(), TAG);
+        dialog.show(getSupportFragmentManager()); // 一个参数的show()
     }
 
 }
