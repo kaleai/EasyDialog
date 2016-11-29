@@ -38,11 +38,14 @@ public class MainActivity extends AppCompatActivity {
 
     private Button customDialog;
 
+    private Button customDialog02;
+
     private void assignViews() {
         simpleDialogBtn = (Button) findViewById(R.id.simple_dialog_btn);
         singleDialogBtn = (Button) findViewById(R.id.single_dialog_btn);
         multiDialogBtn = (Button) findViewById(R.id.multi_dialog_btn);
         customDialog = (Button) findViewById(R.id.custom_dialog_btn);
+        customDialog02 = (Button) findViewById(R.id.custom_dialog02_btn);
 
         findViewById(R.id.jump_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    
+
     private void setViews() {
         // 最简单提示对话框
         simpleDialogBtn.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +85,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 customDialog();
+            }
+        });
+
+        customDialog02.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog02();
             }
         });
     }
@@ -167,6 +177,12 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .build();
         dialog.show(getSupportFragmentManager()); // 一个参数的show()
+    }
+
+    private void customDialog02() {
+        CustomDialog.Builder builder = new CustomDialog.Builder(this);
+        CustomDialog dialog = builder.build();
+        dialog.show(getSupportFragmentManager());
     }
 
 }

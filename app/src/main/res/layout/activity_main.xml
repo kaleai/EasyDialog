@@ -50,6 +50,13 @@
         android:layout_weight="0.04"
         />
 
+    <Button
+        android:id="@+id/custom_dialog02_btn"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:text="自定义对话框02"
+        android:layout_weight="0.04"
+        />
     
     <Button
         android:id="@+id/jump_btn"
