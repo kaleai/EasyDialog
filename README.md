@@ -13,9 +13,9 @@
 
 ```  
 repositories {
-	maven {
-		url "https://jitpack.io"
-	}
+    maven {
+	url "https://jitpack.io"
+    }
 }
 ```    
 
@@ -25,7 +25,7 @@ repositories {
 
 
 **举例：**    
-> compile 'com.github.tianzhijiexian:EasyDialog:1.0.6'
+> compile 'com.github.tianzhijiexian:EasyDialog:1.x.x'
 
 ### 使用方式   
 
@@ -88,13 +88,13 @@ dialog.show(getSupportFragmentManager());
 ```JAVA
 new EasyDialog.Builder()
         .setMultiChoiceItems(
-				new String[]{"Android", "ios", "wp"},
-				new boolean[]{true, false, true},
-				new OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                Log.d(TAG, "onClick pos = " + which + " , isChecked = " + isChecked);
-            }
+		new String[]{"Android", "ios", "wp"},
+		new boolean[]{true, false, true},
+		new OnMultiChoiceClickListener() {
+            	  @Override
+            	  public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                	Log.d(TAG, "onClick pos = " + which + " , isChecked = " + isChecked);
+            	}
         })
         .build().show(getSupportFragmentManager(), TAG);
 ```  
@@ -143,24 +143,23 @@ public class DemoDialog extends BaseCustomDialog {
         @Override
         protected BaseEasyDialog createDialog() {
             BaseEasyDialog dialog = new DemoDialog();
-			dialog.setArguments(bundle); // 增加自己的bundle
+	    dialog.setArguments(bundle); // 增加自己的bundle
         }
 
-		@Override
-		protected int getLayoutResId() {
-			return R.layout.custom_dialog;
-		}
+	@Override
+	protected int getLayoutResId() {
+	    return R.layout.custom_dialog;
+	}
 
-		@Override
-		protected void bindViews(View root) {
+	@Override
+	protected void bindViews(View root) {
 
-		}
+	}
 
-		@Override
-		protected void setViews() {
-			getDialog().getWindow().setBackgroundDrawable(new ColorDrawable()); // 不显示dialog背景
-
-		}
+	@Override
+	protected void setViews() {
+	     getDialog().getWindow().setBackgroundDrawable(new ColorDrawable()); // 不显示dialog背景
+	}
 
     }
 
