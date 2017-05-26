@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
      Copyright (C) 2015 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,9 +20,11 @@
     This layout file is inflated and used as the ListView to display the items.
     Assign an ID so its state will be saved/restored.
 -->
-<ListView android:id="@+id/select_dialog_listview"
+<view xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/select_dialog_listview"
     style="@style/Widget.AppCompat.ListView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    class="android.support.v7.app.AlertController$RecycleListView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:cacheColorHint="@null"
@@ -29,7 +32,6 @@
     android:divider="?attr/listDividerAlertDialog"
     android:fadingEdge="none"
     android:overScrollMode="ifContentScrolls"
-    android:paddingBottom="@dimen/abc_dialog_list_padding_vertical_material"
-    android:paddingTop="@dimen/abc_dialog_list_padding_vertical_material"
     android:scrollbars="vertical"
-    /><!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/v7/appcompat/res/layout/abc_select_dialog_material.xml -->
+    app:paddingBottomNoButtons="8dp"
+    app:paddingTopNoTitle="8dp"/>

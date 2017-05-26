@@ -1,15 +1,15 @@
 package kale.easydialog;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.View;
 import android.view.WindowManager;
 
 import kale.ui.view.BaseCustomDialog;
-import kale.ui.view.EasyDialog;
+import kale.ui.view.BaseEasyDialog;
 
 /**
  * @author Kale
@@ -18,7 +18,7 @@ import kale.ui.view.EasyDialog;
 
 public class CustomDialog extends BaseCustomDialog {
 
-    public static class Builder extends EasyDialog.Builder<Builder> {
+    public static class Builder extends BaseEasyDialog.Builder<Builder> {
 
         Builder(@NonNull Context context) {
             super(context);
@@ -37,8 +37,8 @@ public class CustomDialog extends BaseCustomDialog {
     }
 
     @Override
-    protected void bindViews(Dialog dialog) {
-
+    protected void bindViews(View root) {
+        
     }
 
     @Override

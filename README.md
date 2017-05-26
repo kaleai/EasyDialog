@@ -125,7 +125,7 @@ dialog = new DemoSimpleDialog.Builder()
 public class DemoDialog extends BaseCustomDialog {
 	public static final String KEY_NUM = "KEY_NUM";
     /**
-     * 继承自{@link kale.ui.view.EasyDialog.Builder}以扩展builder
+     * 继承自{@link kale.ui.view.BaseEasyDialog.Builder}以扩展builder
      */
     public static class Builder extends BaseEasyDialog.Builder<DemoDialog.Builder> {
 
@@ -152,7 +152,7 @@ public class DemoDialog extends BaseCustomDialog {
 		}
 
 		@Override
-		protected void bindViews(Dialog dialog) {
+		protected void bindViews(View root) {
 
 		}
 
@@ -162,16 +162,6 @@ public class DemoDialog extends BaseCustomDialog {
 
 		}
 
-    }
-
-    /**
-     * 配置alertDialog的builder
-     */
-    @Override
-    protected void configDialogBuilder(AlertDialog.Builder builder) {
-        super.configDialogBuilder(builder);
-
-        builder.setMessage("message");
     }
 
 }
@@ -294,7 +284,7 @@ Jack Tony: <developer-kale@foxmail.com>
 
 ### License
 
-    Copyright 2016 Jack Tony
+    Copyright 2016-2019 Jack Tony
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

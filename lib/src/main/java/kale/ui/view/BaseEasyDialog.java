@@ -27,7 +27,7 @@ import lombok.Setter;
  * @author Jack Tony
  * @date 2015/10/12
  */
-abstract class BaseEasyDialog extends DialogFragment {
+public abstract class BaseEasyDialog extends DialogFragment {
 
     @Getter
     private boolean isRestored = false;
@@ -38,8 +38,17 @@ abstract class BaseEasyDialog extends DialogFragment {
     @Setter(AccessLevel.PUBLIC)
     private DialogInterface.OnCancelListener onCancelListener;
 
+    @Override
+    public void setArguments(Bundle args) {
+        if (getArguments() != null) {
+            getArguments().putAll(args);
+        } else {
+            super.setArguments(args);
+        }
+    }
+
     /**
-     * 这里千万不要做findView的操作，这必须要等dialog创建后才行
+     * 这里千万不要做{@link Dialog#findViewById(int)}的操作，这必须要等dialog创建后才行
      */
     @CallSuper
     @NonNull
@@ -77,7 +86,7 @@ abstract class BaseEasyDialog extends DialogFragment {
     }
 
     public void show(FragmentManager manager) {
-        show(manager, "dialog");
+        show(manager, "easy-dialog");
     }
 
     public void show(FragmentManager manager, String tag) {
@@ -92,7 +101,7 @@ abstract class BaseEasyDialog extends DialogFragment {
      * @author Kale
      * @date 2016/11/22
      */
-    public static class Builder<T extends Builder> extends AlertDialog.Builder {
+    public abstract static class Builder<T extends Builder> extends AlertDialog.Builder {
 
         private int themeResId;
 
@@ -100,7 +109,7 @@ abstract class BaseEasyDialog extends DialogFragment {
             super(context);
         }
 
-        static int resolveDialogTheme(@NonNull Context context, @StyleRes int resid) {
+        public static int resolveDialogTheme(@NonNull Context context, @StyleRes int resid) {
             if (resid >= 0x01000000) {   // start of real resource IDs.
                 return resid;
             } else {
@@ -239,9 +248,7 @@ abstract class BaseEasyDialog extends DialogFragment {
         }
 
         @NonNull
-        protected EasyDialog createDialog() {
-            return new EasyDialog();
-        }
+        protected abstract EasyDialog createDialog();
 
         public BuildParams getBuildParams(AlertController.AlertParams p) {
             BuildParams data = new BuildParams();
@@ -266,6 +273,7 @@ abstract class BaseEasyDialog extends DialogFragment {
          */
         @Deprecated
         @Override
+        @SuppressWarnings("unchecked")
         public AlertDialog create() {
             return super.create();
         }

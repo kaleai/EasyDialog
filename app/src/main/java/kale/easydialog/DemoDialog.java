@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import kale.ui.view.BaseEasyDialog;
 import kale.ui.view.EasyDialog;
 
 /**
@@ -17,7 +18,7 @@ public class DemoDialog extends EasyDialog {
     /**
      * 继承自{@link kale.ui.view.EasyDialog.Builder}以扩展builder
      */
-    public static class Builder extends EasyDialog.Builder<Builder> {
+    public static class Builder extends BaseEasyDialog.Builder<Builder> {
 
         private Bundle bundle = new Bundle();
 

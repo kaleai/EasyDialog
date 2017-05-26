@@ -1,6 +1,7 @@
 package kale.easydialog;
 
-import android.app.Dialog;
+import java.io.ByteArrayOutputStream;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,10 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
-
 import kale.ui.view.BaseCustomDialog;
-import kale.ui.view.EasyDialog;
+import kale.ui.view.BaseEasyDialog;
 
 /**
  * @author Jack Tony
@@ -38,7 +37,7 @@ public class DemoSimpleDialog extends BaseCustomDialog {
 
     private EditText mInputTextEt;
 
-    public static class Builder extends EasyDialog.Builder<Builder> {
+    public static class Builder extends BaseEasyDialog.Builder<Builder> {
 
         private Bundle bundle = new Bundle();
 
@@ -67,9 +66,9 @@ public class DemoSimpleDialog extends BaseCustomDialog {
 
     }
 
-    protected void configBuilder(EasyDialog.Builder builder) {
-        super.configBuilder(builder);
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         Bundle arguments = getArguments();
 
         byte[] mBitmapByteArr = null;
@@ -78,10 +77,8 @@ public class DemoSimpleDialog extends BaseCustomDialog {
             mInputText = arguments.getCharSequence(KEY_INPUT_TEXT);
             mInputHint = arguments.getCharSequence(KEY_INPUT_HINT);
         }
-
         if (mBitmapByteArr != null) {
             mBitmap = BitmapFactory.decodeByteArray(mBitmapByteArr, 0, mBitmapByteArr.length);
-            builder.setMessage(null);
         }
     }
 
@@ -91,7 +88,7 @@ public class DemoSimpleDialog extends BaseCustomDialog {
     }
 
     @Override
-    protected void bindViews(Dialog dialog) {
+    protected void bindViews(View root) {
         mInputTextEt = getView(R.id.input_et);
     }
 

@@ -1,11 +1,14 @@
 package kale.ui.view;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.view.Window;
 
 import lombok.AccessLevel;
 import lombok.Setter;
@@ -38,29 +41,20 @@ public class EasyDialog extends BaseEasyDialog {
     /**
      * use {@link Builder#build()}
      */
-    @Deprecated
     public EasyDialog() {
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        configViews(getDialog());
+        Window window = getDialog().getWindow();
+        bindAndSetViews(window != null ? window.getDecorView() : null);
     }
 
-    protected void configViews(Dialog dialog) {
-
+    protected void bindAndSetViews(@Nullable View root) {
     }
 
-    @Override
-    public void setArguments(Bundle args) {
-        if (getArguments() != null) {
-            getArguments().putAll(args);
-        } else {
-            super.setArguments(args);
-        }
-    }
-
+    @CallSuper
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,15 +87,26 @@ public class EasyDialog extends BaseEasyDialog {
                 builder.setItems(p.items, onClickListener);
             }
         }
-        configBuilder(builder);
+        modifyOriginBuilder(builder);
         return builder.create();
     }
 
-    /**
-     * 当默认的build不能满足需求时，请继承此方法
-     */
     @CallSuper
-    protected void configBuilder(Builder builder) {
+    protected void modifyOriginBuilder(Builder builder) {
+    }
+
+    public static class Builder extends BaseEasyDialog.Builder<Builder> {
+
+        public Builder(@NonNull Context context) {
+            super(context);
+        }
+
+        @NonNull
+        @Override
+        protected EasyDialog createDialog() {
+            return new EasyDialog();
+        }
+
     }
 
 }

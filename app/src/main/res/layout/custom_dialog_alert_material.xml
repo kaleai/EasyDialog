@@ -51,7 +51,7 @@
                 android:src="@null"
                 />
 
-            <android.support.v7.internal.widget.DialogTitle
+            <android.support.v7.widget.DialogTitle
                 android:id="@+id/alertTitle"
                 style="?attr/android:windowTitleStyle"
                 android:layout_width="match_parent"

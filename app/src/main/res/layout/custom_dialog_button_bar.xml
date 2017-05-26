@@ -14,10 +14,11 @@
      limitations under the License.
 -->
 
-<android.support.v7.internal.widget.ButtonBarLayout android:id="@+id/buttonPanel"
+<android.support.v7.widget.ButtonBarLayout android:id="@+id/buttonPanel"
     style="?attr/buttonBarStyle"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="bottom"
@@ -28,7 +29,6 @@
     android:paddingRight="12dp"
     android:paddingTop="4dp"
     app:allowStacking="@bool/abc_allow_stacked_button_bar"
-    xmlns:tools="http://schemas.android.com/tools"
     >
 
     <Button
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@android:color/darker_gray"
-        
+
         tools:text="ddd02"
         />
 
@@ -61,6 +61,4 @@
         tools:text="ddd01"
         />
 
-</android.support.v7.internal.widget.ButtonBarLayout>
-    
-    <!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/v7/appcompat/res/layout/abc_alert_dialog_button_bar_material.xml -->
+</android.support.v7.widget.ButtonBarLayout><!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/v7/appcompat/res/layout/abc_alert_dialog_button_bar_material.xml -->

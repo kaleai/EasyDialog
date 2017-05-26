@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void multiChoiceDialog() {
-        new EasyDialog.Builder<>(this)
+        new EasyDialog.Builder(this)
                 // 设置数据和默认选中的选项
                 .setMultiChoiceItems(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true},
                         new DialogInterface.OnMultiChoiceClickListener() {
