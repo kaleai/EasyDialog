@@ -1,0 +1,21 @@
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetBottom="16dp"
+    android:insetLeft="26dp"
+    android:insetRight="26dp"
+    android:insetTop="16dp"
+    >
+
+    <layer-list>
+        <item>
+            <color android:color="#00E4007F" />
+        </item>
+
+        <item android:top="80dp">
+            <shape android:shape="rectangle">
+                <corners android:radius="10dp" />
+                <solid android:color="@android:color/holo_red_dark" />
+            </shape>
+        </item>
+
+    </layer-list>
+</inset>

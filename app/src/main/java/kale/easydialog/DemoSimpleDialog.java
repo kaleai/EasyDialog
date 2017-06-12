@@ -89,17 +89,17 @@ public class DemoSimpleDialog extends BaseCustomDialog {
 
     @Override
     protected void bindViews(View root) {
-        mInputTextEt = getView(R.id.input_et);
+        mInputTextEt = findView(R.id.input_et);
     }
 
     @Override
     public void setViews() {
         if (mBitmap != null) {
-            LinearLayout imageTextLl = getView(R.id.image_text_ll);
+            LinearLayout imageTextLl = findView(R.id.image_text_ll);
             imageTextLl.setVisibility(View.VISIBLE);
 
-            ((ImageView) getView(R.id.image_iv)).setImageBitmap(mBitmap);
-            ((TextView) getView(R.id.msg_tv)).setText(R.string.app_name);
+            ((ImageView) findView(R.id.image_iv)).setImageBitmap(mBitmap);
+            ((TextView) findView(R.id.msg_tv)).setText(R.string.app_name);
         }
 
         if (mInputText != null) {

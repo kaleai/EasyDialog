@@ -7,28 +7,30 @@ import java.io.Serializable;
  * @date 2016/11/22
  */
 
-/*package*/ class BuildParams implements Serializable {
+public class BuildParams implements Serializable {
 
-    int themeResId;
+    public int mIconId = 0;
 
-    CharSequence title;
+    public int themeResId;
 
-    CharSequence message;
+    public CharSequence title;
 
-    CharSequence positiveText;
+    public CharSequence message;
 
-    CharSequence neutralText;
+    public CharSequence positiveText;
 
-    CharSequence negativeText;
+    public CharSequence neutralText;
 
-    CharSequence[] items;
+    public CharSequence negativeText;
 
-    boolean[] checkedItems;
+    public CharSequence[] items;
 
-    boolean isMultiChoice;
+    public boolean[] checkedItems;
 
-    boolean isSingleChoice;
+    public boolean isMultiChoice;
 
-    int checkedItem;
+    public boolean isSingleChoice;
+
+    public int checkedItem;
 
 }

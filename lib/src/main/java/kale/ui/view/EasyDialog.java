@@ -72,6 +72,7 @@ public class EasyDialog extends BaseEasyDialog {
         Builder builder = new Builder(getActivity());
 
         builder.setTitle(p.title)
+                .setIcon(p.mIconId)
                 .setMessage(p.message)
                 .setPositiveButton(p.positiveText, positiveListener)
                 .setNeutralButton(p.neutralText, neutralListener)
@@ -89,6 +90,10 @@ public class EasyDialog extends BaseEasyDialog {
         }
         modifyOriginBuilder(builder);
         return builder.create();
+    }
+
+    public BuildParams getBuildParams() {
+        return mBuildParams;
     }
 
     @CallSuper

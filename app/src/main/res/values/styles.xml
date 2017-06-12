@@ -43,8 +43,8 @@
         <item name="android:windowTitleStyle">@style/RtlOverlay.DialogWindowTitle.AppCompat</item>
         <item name="android:windowTitleBackgroundStyle">@style/Base.DialogWindowTitleBackground.AppCompat</item>
 
-        <!--对话框背景(重要)-->
-        <!--<item name="android:windowBackground">@drawable/abc_dialog_material_background_light</item>-->
+        <!--对话框背景(重要)  , default = abc_dialog_material_background-->
+        <item name="android:windowBackground">@drawable/dialog_bg_custom</item>
 
         <!-- 动画 -->
         <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
@@ -71,7 +71,7 @@
         <item name="android:listChoiceIndicatorSingle">@android:drawable/btn_radio</item>
 
         <!-- 对话框整体的内边距，但不作用于列表部分 默认：@dimen/abc_dialog_padding_material-->
-        <item name="dialogPreferredPadding">120dp</item>
+        <item name="dialogPreferredPadding">20dp</item>
 
         <item name="alertDialogCenterButtons">true</item>
 

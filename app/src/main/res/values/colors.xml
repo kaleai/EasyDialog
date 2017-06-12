@@ -4,4 +4,5 @@
     <color name="primary_material_dark">#03a9f4</color>
     <color name="foreground_material_light">#e10b56</color>
     <color name="primary_dark_material_dark">#5e84a2</color>
+    <color name="custom_dialog_bg">@android:color/holo_red_dark</color>
 </resources>

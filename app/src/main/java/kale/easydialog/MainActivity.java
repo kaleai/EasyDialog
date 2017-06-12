@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
     private void simpleDialog() {
         EasyDialog.Builder builder = new EasyDialog.Builder(this);
         builder.setTitle("Title")
+                .setIcon(R.mipmap.ic_launcher)
                 .setMessage(R.string.hello_world)
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "onDismiss");
                     }
                 })
-                .setNeutralButton("know", null)
+//                .setNeutralButton("know", null)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -181,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void customDialog02() {
         CustomDialog.Builder builder = new CustomDialog.Builder(this);
+        builder.setTitle("Custom Dialog");
         CustomDialog dialog = builder.build();
         dialog.show(getSupportFragmentManager());
     }

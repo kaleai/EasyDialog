@@ -3,9 +3,11 @@ package kale.ui.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.CallSuper;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -81,7 +83,7 @@ public abstract class BaseEasyDialog extends DialogFragment {
         }
     }
 
-    protected <T extends View> T getView(@IdRes int id) {
+    protected <T extends View> T findView(@IdRes int id) {
         return (T) getDialog().findViewById(id);
     }
 
@@ -146,6 +148,16 @@ public abstract class BaseEasyDialog extends DialogFragment {
         @Override
         public T setMessage(@StringRes int messageId) {
             return (T) super.setMessage(messageId);
+        }
+
+        @Override
+        public T setIcon(@DrawableRes int iconId) {
+            return (T)super.setIcon(iconId);
+        }
+
+        @Override
+        public T setIcon(Drawable icon) {
+            return (T)super.setIcon(icon);
         }
 
         ///////////////////////////////////////////////////////////////////////////
@@ -254,6 +266,7 @@ public abstract class BaseEasyDialog extends DialogFragment {
             BuildParams data = new BuildParams();
             data.themeResId = themeResId;
 
+            data.mIconId = p.mIconId;
             data.title = p.mTitle;
             data.message = p.mMessage;
             data.positiveText = p.mPositiveButtonText;
