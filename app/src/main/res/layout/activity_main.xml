@@ -1,70 +1,95 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout android:id="@+id/coordinatorlayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:baselineAligned="false"
-    android:orientation="vertical"
-    android:weightSum="1"
+    android:fitsSystemWindows="true"
     >
 
-    <Button
-        android:id="@+id/simple_dialog_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="简单提示框"
-        android:layout_weight="0.09"
-        />
-
-    <Button
-        android:id="@+id/single_dialog_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="单选对话框"
-        android:layout_weight="0.09"
-        />
-
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false"
         android:orientation="vertical"
-        android:visibility="visible"
+        android:padding="16dp"
+        android:weightSum="1"
+        tools:context=".MainActivity"
         >
+
+        <Button
+            android:id="@+id/simple_dialog_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="simpleDialog"
+            android:text="简单提示框"
+            />
+
+        <Button
+            android:id="@+id/single_dialog_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="singleChoiceDialog"
+            android:text="单选对话框"
+            />
+
+        <Button
+            android:id="@+id/multi_dialog_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="multiChoiceDialog"
+            android:text="多选对话框"
+            />
+
+        <Button
+            android:id="@+id/custom_dialog_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="customDialog"
+            android:text="自定义对话框"
+            />
+
+        <Button
+            android:id="@+id/custom_dialog02_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="customDialog02"
+            android:text="自定义对话框02"
+            />
+
+        <Button
+            android:id="@+id/bottom_dialog_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="customBottomDialog"
+            android:text="底部对话框"
+            />
+
+
+        <Button
+            android:id="@+id/bottom_dialog02_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="customBottomDialog02"
+            android:text="底部对话框02"
+            />
+        
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:id="@+id/jump_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:text="跳转到自定义样式的dialog"
+            />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/multi_dialog_btn"
-        android:layout_width="match_parent"
-        android:layout_height="67dp"
-        android:text="多选对话框"
-        android:layout_weight="0.03"
-        />
+    <include layout="@layout/content_bottom_sheet" />
 
-    <Button
-        android:id="@+id/custom_dialog_btn"
-        android:layout_width="match_parent"
-        android:layout_height="61dp"
-        android:text="自定义对话框"
-        android:layout_weight="0.04"
-        />
-
-    <Button
-        android:id="@+id/custom_dialog02_btn"
-        android:layout_width="match_parent"
-        android:layout_height="61dp"
-        android:text="自定义对话框02"
-        android:layout_weight="0.04"
-        />
-    
-    <Button
-        android:id="@+id/jump_btn"
-        android:layout_width="match_parent"
-        android:layout_height="61dp"
-        android:layout_marginTop="80dp"
-        android:text="跳转到自定义样式的dialog"
-        />
-    
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -4,8 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import kale.ui.view.BaseEasyDialog;
-import kale.ui.view.EasyDialog;
+import kale.ui.view.dialog.BaseEasyDialog;
+import kale.ui.view.dialog.EasyDialog;
 
 /**
  * @author Kale
@@ -16,7 +16,7 @@ public class DemoDialog extends EasyDialog {
     public static final String KEY_NUM = "KEY_NUM";
 
     /**
-     * 继承自{@link kale.ui.view.EasyDialog.Builder}以扩展builder
+     * 继承自{@link EasyDialog.Builder}以扩展builder
      */
     public static class Builder extends BaseEasyDialog.Builder<Builder> {
 

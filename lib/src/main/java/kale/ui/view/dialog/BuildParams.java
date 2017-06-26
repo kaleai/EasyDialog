@@ -1,4 +1,4 @@
-package kale.ui.view;
+package kale.ui.view.dialog;
 
 import java.io.Serializable;
 

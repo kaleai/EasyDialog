@@ -4,19 +4,18 @@ apply plugin: 'com.github.dcendents.android-maven'
 group='com.github.tianzhijiexian'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.0'
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 26
     }
 }
 
 dependencies {
-    provided 'com.android.support:support-v4:25.1.0'
     provided project(':provided')
-    
-    provided "org.projectlombok:lombok:1.12.6"
+    provided 'org.projectlombok:lombok:1.12.6'
     annotationProcessor "org.projectlombok:lombok:1.12.6"
+    provided 'com.android.support:design:26.0.0-alpha1'
 }

@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import kale.ui.view.BaseCustomDialog;
-import kale.ui.view.BaseEasyDialog;
+import kale.ui.view.dialog.BaseCustomDialog;
+import kale.ui.view.dialog.BaseEasyDialog;
 
 /**
  * @author Jack Tony

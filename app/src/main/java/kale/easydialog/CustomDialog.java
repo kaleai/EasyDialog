@@ -12,9 +12,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import kale.ui.view.BaseCustomDialog;
-import kale.ui.view.BaseEasyDialog;
-import kale.ui.view.EasyDialog;
+import kale.ui.view.dialog.BaseCustomDialog;
+import kale.ui.view.dialog.BaseEasyDialog;
+import kale.ui.view.dialog.EasyDialog;
 
 /**
  * @author Kale

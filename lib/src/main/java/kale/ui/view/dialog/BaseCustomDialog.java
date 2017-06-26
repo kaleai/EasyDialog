@@ -1,6 +1,10 @@
-package kale.ui.view;
+package kale.ui.view.dialog;
 
+import android.app.Dialog;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialog;
 import android.view.View;
 
 /**
@@ -11,11 +15,29 @@ import android.view.View;
  */
 public abstract class BaseCustomDialog extends EasyDialog {
 
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        if (!isBottomDialog()) {
+            return super.onCreateDialog(savedInstanceState);
+        } else {
+            return new BottomSheetDialog(getContext(), getTheme());
+        }
+    }
+
     @Override
     protected void modifyOriginBuilder(Builder builder) {
         super.modifyOriginBuilder(builder);
         if (getLayoutResId() != 0) {
             builder.setView(getLayoutResId());
+        }
+    }
+
+    @Override
+    public void setupDialog(Dialog dialog, int style) {
+        super.setupDialog(dialog, style);
+        if (isBottomDialog()) {
+            dialog.setContentView(getLayoutResId());
         }
     }
 

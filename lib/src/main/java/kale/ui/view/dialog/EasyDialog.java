@@ -1,4 +1,4 @@
-package kale.ui.view;
+package kale.ui.view.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -19,9 +19,12 @@ import lombok.Setter;
  */
 public class EasyDialog extends BaseEasyDialog {
 
-    public static final String KEY_BUILD_PARAMS = "key_build_params";
-
     private BuildParams mBuildParams;
+
+    /**
+     * 仅仅对于{@link BaseCustomDialog}的子类才有用
+     */
+    private boolean isBottomDialog = false;
 
     @Setter(AccessLevel.PUBLIC)
     private DialogInterface.OnClickListener positiveListener;
@@ -61,6 +64,7 @@ public class EasyDialog extends BaseEasyDialog {
         Bundle bundle = getArguments();
         if (bundle != null) {
             mBuildParams = (BuildParams) bundle.getSerializable(KEY_BUILD_PARAMS);
+            isBottomDialog = bundle.getBoolean(KEY_IS_BOTTOM_DIALOG, false);
         }
     }
 
@@ -92,12 +96,16 @@ public class EasyDialog extends BaseEasyDialog {
         return builder.create();
     }
 
+    @CallSuper
+    protected void modifyOriginBuilder(Builder builder) {
+    }
+
     public BuildParams getBuildParams() {
         return mBuildParams;
     }
 
-    @CallSuper
-    protected void modifyOriginBuilder(Builder builder) {
+    public boolean isBottomDialog() {
+        return isBottomDialog;
     }
 
     public static class Builder extends BaseEasyDialog.Builder<Builder> {

@@ -125,7 +125,7 @@ dialog = new DemoSimpleDialog.Builder()
 public class DemoDialog extends BaseCustomDialog {
 	public static final String KEY_NUM = "KEY_NUM";
     /**
-     * 继承自{@link kale.ui.view.BaseEasyDialog.Builder}以扩展builder
+     * 继承自{@link kale.ui.view.dialog.BaseEasyDialog.Builder}以扩展builder
      */
     public static class Builder extends BaseEasyDialog.Builder<DemoDialog.Builder> {
 

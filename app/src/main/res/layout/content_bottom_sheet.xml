@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/ll_sheet_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="40dp"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="快拉我~"
+        android:textSize="30dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom|center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

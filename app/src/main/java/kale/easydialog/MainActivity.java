@@ -5,14 +5,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import kale.ui.view.EasyDialog;
+import kale.ui.view.dialog.EasyDialog;
 
 /**
  * 关于更多对话框的设置请参考：http://www.cnblogs.com/tianzhijiexian/p/3867731.html
@@ -21,82 +22,40 @@ public class MainActivity extends AppCompatActivity {
 
     public final String TAG = getClass().getSimpleName();
 
+    private BottomSheetBehavior behavior;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         assignViews();
-        setViews();
     }
 
-    private Button simpleDialogBtn;
-
-    private Button singleDialogBtn;
-
-    private Button multiDialogBtn;
-
-    private Button customDialog;
-
-    private Button customDialog02;
-
     private void assignViews() {
-        simpleDialogBtn = (Button) findViewById(R.id.simple_dialog_btn);
-        singleDialogBtn = (Button) findViewById(R.id.single_dialog_btn);
-        multiDialogBtn = (Button) findViewById(R.id.multi_dialog_btn);
-        customDialog = (Button) findViewById(R.id.custom_dialog_btn);
-        customDialog02 = (Button) findViewById(R.id.custom_dialog02_btn);
-
         findViewById(R.id.jump_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, CustomStyleActivity.class));
             }
         });
-    }
 
-    private void setViews() {
-        // 最简单提示对话框
-        simpleDialogBtn.setOnClickListener(new View.OnClickListener() {
+        View view = findViewById(R.id.ll_sheet_root);
+        // 得到 Bottom Sheet 的视图对象所对应的 BottomSheetBehavior 对象
+        this.behavior = BottomSheetBehavior.from(view);
+        this.behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
-            public void onClick(View v) {
-                simpleDialog();
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
             }
-        });
 
-        // 单选对话框
-        singleDialogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                singleChoiceDialog();
-            }
-        });
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
 
-        // 多选对话框
-        multiDialogBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                multiChoiceDialog();
-            }
-        });
-
-        // 自定义对话框
-        customDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customDialog();
-            }
-        });
-
-        customDialog02.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customDialog02();
             }
         });
     }
 
-    private void simpleDialog() {
+    public void simpleDialog(View v) {
         EasyDialog.Builder builder = new EasyDialog.Builder(this);
         builder.setTitle("Title")
                 .setIcon(R.mipmap.ic_launcher)
@@ -104,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
+                        // 点空白处消失时才会触发！！！！
                         Log.d(TAG, "onCancel"); // onCancel - > onDismiss
                     }
                 })
@@ -133,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager());
     }
 
-    private void singleChoiceDialog() {
+    public void singleChoiceDialog(View v) {
         EasyDialog dialog = new EasyDialog.Builder(this)
                 .setTitle("Single Choice Dialog")
                 .setSingleChoiceItems(new String[]{"Android", "ios", "wp"}, 1, new DialogInterface.OnClickListener() {
@@ -148,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), TAG);
     }
 
-    private void multiChoiceDialog() {
+    public void multiChoiceDialog(View v) {
         new EasyDialog.Builder(this)
                 // 设置数据和默认选中的选项
                 .setMultiChoiceItems(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true},
@@ -163,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DemoSimpleDialog dialog;
 
-    private void customDialog() {
+    public void customDialog(View v) {
         dialog = new DemoSimpleDialog.Builder(this)
                 .setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.kale))
                 .setInputText("", "hint")
@@ -180,11 +140,41 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager()); // 一个参数的show()
     }
 
-    private void customDialog02() {
+    public void customDialog02(View v) {
         CustomDialog.Builder builder = new CustomDialog.Builder(this);
         builder.setTitle("Custom Dialog");
         CustomDialog dialog = builder.build();
         dialog.show(getSupportFragmentManager());
     }
 
+    public void customBottomDialog(View v) {
+        CustomBottomSheetDialog.Builder builder = new CustomBottomSheetDialog.Builder(this);
+        builder.setMessage("click me");
+        builder.setIsBottomDialog(true);
+        CustomBottomSheetDialog dialog = builder.build();
+        dialog.show(getSupportFragmentManager(), "dialog");
+
+        dialog.setCancelable(false); // 如果设置了，那么底部dialog就不支持手势关闭和空白处关闭
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                // 监听点空白处cancel的事件
+                Toast.makeText(MainActivity.this, "cancel", Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                Toast.makeText(MainActivity.this, "dismiss", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void customBottomDialog02(View v) {
+        if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        } else {
+            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package kale.ui.view;
+package kale.ui.view.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -12,10 +12,10 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertController;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -29,7 +29,11 @@ import lombok.Setter;
  * @author Jack Tony
  * @date 2015/10/12
  */
-public abstract class BaseEasyDialog extends DialogFragment {
+public abstract class BaseEasyDialog extends AppCompatDialogFragment {
+
+    protected static final String KEY_BUILD_PARAMS = "key_build_params";
+
+    protected static final String KEY_IS_BOTTOM_DIALOG = "key_is_bottom_dialog";
 
     @Getter
     private boolean isRestored = false;
@@ -106,6 +110,8 @@ public abstract class BaseEasyDialog extends DialogFragment {
     public abstract static class Builder<T extends Builder> extends AlertDialog.Builder {
 
         private int themeResId;
+
+        private boolean isBottomDialog = false;
 
         public Builder(@NonNull Context context) {
             super(context);
@@ -234,6 +240,11 @@ public abstract class BaseEasyDialog extends DialogFragment {
             return (T) super.setMultiChoiceItems(items, checkedItems, listener);
         }
 
+        public T setIsBottomDialog(boolean b) {
+            this.isBottomDialog = b;
+            return (T) this;
+        }
+
         ///////////////////////////////////////////////////////////////////////////
         // finish
         ///////////////////////////////////////////////////////////////////////////
@@ -243,7 +254,8 @@ public abstract class BaseEasyDialog extends DialogFragment {
             AlertController.AlertParams p = getParams();
 
             Bundle bundle = new Bundle();
-            bundle.putSerializable(EasyDialog.KEY_BUILD_PARAMS, getBuildParams(p));
+            bundle.putSerializable(KEY_BUILD_PARAMS, getBuildParams(p));
+            bundle.putBoolean(KEY_IS_BOTTOM_DIALOG, isBottomDialog);
             dialog.setArguments(bundle);
 
             dialog.setOnCancelListener(p.mOnCancelListener);
