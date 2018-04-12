@@ -4,9 +4,14 @@
 提供自定义Dialog style的库，非自定义view，纯净原生！   
 
 ### 简介  
+
 >原生的Dialog提供了很多Style来让开发者进行自定义，如果还不能满足要求，那么可以通过替换Dialog默认的布局来做。
 
-这其实是android的设计思想，官方“一般”都会把属性值暴露出来，我们编码时也可以采取这样的思路，让显示和逻辑分开。因此，本项目并没有重新实现Dialog，而是通过封装了DialogFragment来让大家使用和定制Dialog更加的方便。
+这其实是Android的设计思想，官方“一般”都会把属性值暴露出来，我们编码时也可以采取这样的思路，让显示和逻辑分开。因此，本项目并没有重新实现Dialog，而是通过封装了DialogFragment来让大家使用和定制Dialog更加的方便。
+
+顺便提一下dialogFragment的方法调用流程：
+
+![](http://static.zybuluo.com/shark0017/tm558z1tp99o3tfet1ij9jjd/image_1bk8b5uh6ikp3the4k1iv8ote13.png)
 
 ### 添加依赖
 1.在项目外层的build.gradle中添加JitPack仓库
