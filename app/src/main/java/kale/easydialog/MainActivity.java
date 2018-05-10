@@ -39,10 +39,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        View view = findViewById(R.id.ll_sheet_root);
         // 得到 Bottom Sheet 的视图对象所对应的 BottomSheetBehavior 对象
-        this.behavior = BottomSheetBehavior.from(view);
-        this.behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+        behavior = BottomSheetBehavior.from(findViewById(R.id.ll_sheet_root));
+        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
 

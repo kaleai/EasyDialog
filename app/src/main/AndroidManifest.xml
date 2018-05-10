@@ -23,6 +23,7 @@
             android:name=".CustomStyleActivity"
             android:theme="@style/AppTheme.CustomDialogStyle"
             />
+
     </application>
 
 </manifest>

@@ -72,7 +72,7 @@ public class CustomDialog extends BaseCustomDialog {
         layoutParams.width = dm.widthPixels - (padding * 2);
 //        layoutParams.height = getResources().getDimensionPixelOffset(R.dimen.dialog_height); // 200dp
         layoutParams.gravity = Gravity.TOP;
-        getDialog().getWindow().setAttributes(layoutParams); // 通过attr设置
+//        getDialog().getWindow().setAttributes(layoutParams); // 通过attr设置
         
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg_custom_red);
 

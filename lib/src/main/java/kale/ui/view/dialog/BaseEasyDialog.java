@@ -1,5 +1,7 @@
 package kale.ui.view.dialog;
 
+import java.lang.reflect.Field;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,13 +15,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertController;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.support.v7.app.AlertController;
 import android.util.TypedValue;
 import android.view.View;
-
-import java.lang.reflect.Field;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -88,7 +88,7 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
     }
 
     protected <T extends View> T findView(@IdRes int id) {
-        return (T) getDialog().findViewById(id);
+        return getDialog().findViewById(id);
     }
 
     public void show(FragmentManager manager) {
