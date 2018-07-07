@@ -11,7 +11,7 @@ import android.view.View;
  * @author Kale
  * @date 2016/11/15
  *
- * 不用系统的dialog，自己定义的dialog需要继承此类
+ * 自定义dialog的父类
  */
 public abstract class BaseCustomDialog extends EasyDialog {
 
@@ -26,11 +26,11 @@ public abstract class BaseCustomDialog extends EasyDialog {
     }
 
     @Override
-    protected void modifyOriginBuilder(Builder builder) {
-        super.modifyOriginBuilder(builder);
+    protected Builder resetOriginBuilder(Builder builder) {
         if (getLayoutResId() != 0) {
             builder.setView(getLayoutResId());
         }
+        return builder;
     }
 
     @Override

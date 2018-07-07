@@ -12,8 +12,10 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -35,14 +37,17 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
 
     protected static final String KEY_IS_BOTTOM_DIALOG = "key_is_bottom_dialog";
 
-    @Getter
-    private boolean isRestored = false;
-
     @Setter(AccessLevel.PUBLIC)
     private DialogInterface.OnDismissListener onDismissListener;
 
     @Setter(AccessLevel.PUBLIC)
     private DialogInterface.OnCancelListener onCancelListener;
+
+    @Getter(AccessLevel.PROTECTED)
+    private boolean isBottomDialog;
+
+    @Getter(AccessLevel.PROTECTED)
+    private BuildParams buildParams;
 
     @Override
     public void setArguments(Bundle args) {
@@ -53,22 +58,15 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
         }
     }
 
-    /**
-     * 这里千万不要做{@link Dialog#findViewById(int)}的操作，这必须要等dialog创建后才行
-     */
     @CallSuper
-    @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            onRestoreInstanceState(savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            buildParams = (BuildParams) bundle.getSerializable(KEY_BUILD_PARAMS);
+            isBottomDialog = bundle.getBoolean(KEY_IS_BOTTOM_DIALOG, false);
         }
-        return null;
-    }
-
-    @CallSuper
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        isRestored = true;
     }
 
     @Override
@@ -92,17 +90,23 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
     }
 
     public void show(FragmentManager manager) {
-        show(manager, "easy-dialog");
+        show(manager, "kale-easy-dialog");
     }
 
     public void show(FragmentManager manager, String tag) {
+        if (manager == null || manager.isDestroyed() || manager.isStateSaved()) {
+            // do nothing!!!
+            return;
+        }
+
         try {
             super.show(manager, tag);
         } catch (IllegalStateException e) {
+            // 防御：java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
             e.printStackTrace();
         }
     }
-
+    
     /**
      * @author Kale
      * @date 2016/11/22
@@ -158,12 +162,12 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
 
         @Override
         public T setIcon(@DrawableRes int iconId) {
-            return (T)super.setIcon(iconId);
+            return (T) super.setIcon(iconId);
         }
 
         @Override
         public T setIcon(Drawable icon) {
-            return (T)super.setIcon(icon);
+            return (T) super.setIcon(icon);
         }
 
         ///////////////////////////////////////////////////////////////////////////
@@ -266,7 +270,7 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
             dialog.setNegativeListener(p.mNegativeButtonListener);
             dialog.setOnClickListener(p.mOnClickListener);
             dialog.setOnMultiChoiceClickListener(p.mOnCheckboxClickListener);
-            
+
             dialog.setCancelable(p.mCancelable);
             return (D) dialog;
         }

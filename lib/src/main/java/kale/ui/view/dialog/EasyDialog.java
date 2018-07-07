@@ -1,5 +1,6 @@
 package kale.ui.view.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.Setter;
 
 /**
@@ -18,13 +20,6 @@ import lombok.Setter;
  * @date 2016/11/22
  */
 public class EasyDialog extends BaseEasyDialog {
-
-    private BuildParams mBuildParams;
-
-    /**
-     * 仅仅对于{@link BaseCustomDialog}的子类才有用
-     */
-    private boolean isBottomDialog = false;
 
     @Setter(AccessLevel.PUBLIC)
     private DialogInterface.OnClickListener positiveListener;
@@ -41,12 +36,31 @@ public class EasyDialog extends BaseEasyDialog {
     @Setter(AccessLevel.PUBLIC)
     private DialogInterface.OnMultiChoiceClickListener onMultiChoiceClickListener;
 
+    @Getter
+    private boolean isRestored = false;
+
     /**
      * use {@link Builder#build()}
      */
     public EasyDialog() {
     }
 
+    /**
+     * 这里千万不要做{@link Dialog#findViewById(int)}的操作
+     */
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        super.onCreateDialog(savedInstanceState);
+        if (savedInstanceState != null) {
+            onRestoreInstanceState(savedInstanceState);
+        }
+        return createDialog(getActivity());
+    }
+
+    /**
+     * 这时dialog已经创建完毕，可以调用{@link Dialog#findViewById(int)}
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -54,26 +68,29 @@ public class EasyDialog extends BaseEasyDialog {
         bindAndSetViews(window != null ? window.getDecorView() : null);
     }
 
+    /**
+     * 复写来保存参数
+     */
+    @CallSuper
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * 复写来恢复参数
+     */
+    @CallSuper
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        isRestored = true;
+    }
+
     protected void bindAndSetViews(@Nullable View root) {
     }
 
-    @CallSuper
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            mBuildParams = (BuildParams) bundle.getSerializable(KEY_BUILD_PARAMS);
-            isBottomDialog = bundle.getBoolean(KEY_IS_BOTTOM_DIALOG, false);
-        }
-    }
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreateDialog(savedInstanceState);
-        BuildParams p = mBuildParams;
-        Builder builder = new Builder(getActivity());
+    private Dialog createDialog(@NonNull Activity activity) {
+        BuildParams p = getBuildParams(); // 得到来自父类的通用参数，这里将参数组装成builder对象
+        Builder builder = new Builder(activity);
 
         builder.setTitle(p.title)
                 .setIcon(p.mIconId)
@@ -92,20 +109,26 @@ public class EasyDialog extends BaseEasyDialog {
                 builder.setItems(p.items, onClickListener);
             }
         }
-        modifyOriginBuilder(builder);
-        return builder.create();
+
+        Builder newBuilder = resetOriginBuilder(builder);
+        modifyOriginBuilder(newBuilder);
+        return newBuilder.create();
     }
 
+    /**
+     * 修改构造当前dialog的builder对象，框架将会用这个builder对象来做真正的构造器
+     */
+    protected Builder resetOriginBuilder(Builder builder) {
+        return builder;
+    }
+
+    /**
+     * 暂时兼容老版本，推荐用resetOriginBuilder()来更换
+     */
     @CallSuper
+    @Deprecated
     protected void modifyOriginBuilder(Builder builder) {
-    }
 
-    public BuildParams getBuildParams() {
-        return mBuildParams;
-    }
-
-    public boolean isBottomDialog() {
-        return isBottomDialog;
     }
 
     public static class Builder extends BaseEasyDialog.Builder<Builder> {

@@ -47,10 +47,11 @@ public class CustomDialog extends BaseCustomDialog {
     }
 
     @Override
-    protected void modifyOriginBuilder(EasyDialog.Builder builder) {
-        super.modifyOriginBuilder(builder);
+    protected EasyDialog.Builder resetOriginBuilder(EasyDialog.Builder builder) {
+        super.resetOriginBuilder(builder);
         View titleView = LayoutInflater.from(getContext()).inflate(R.layout.custom_title_view, null, false);
         builder.setCustomTitle(titleView);
+        return builder;
     }
 
     @Override
@@ -67,13 +68,13 @@ public class CustomDialog extends BaseCustomDialog {
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
 
         final WindowManager.LayoutParams layoutParams = getDialog().getWindow().getAttributes();
-        
+
         int padding = getResources().getDimensionPixelOffset(R.dimen.activity_horizontal_margin);
         layoutParams.width = dm.widthPixels - (padding * 2);
 //        layoutParams.height = getResources().getDimensionPixelOffset(R.dimen.dialog_height); // 200dp
         layoutParams.gravity = Gravity.TOP;
 //        getDialog().getWindow().setAttributes(layoutParams); // 通过attr设置
-        
+
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg_custom_red);
 
         // 也可通过setLayout来设置
