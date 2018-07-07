@@ -33,9 +33,9 @@ import static android.support.v7.app.AlertController.AlertParams;
  */
 public abstract class BaseEasyDialog extends AppCompatDialogFragment {
 
-    protected static final String KEY_BUILD_PARAMS = "key_build_params";
+    private static final String KEY_DIALOG_PARAMS = "key_dialog_params";
 
-    protected static final String KEY_IS_BOTTOM_DIALOG = "key_is_bottom_dialog";
+    private static final String KEY_IS_BOTTOM_DIALOG = "key_is_bottom_dialog";
 
     @Setter(AccessLevel.PUBLIC)
     private DialogInterface.OnDismissListener onDismissListener;
@@ -47,7 +47,7 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
     private boolean isBottomDialog;
 
     @Getter(AccessLevel.PROTECTED)
-    private BuildParams buildParams;
+    private DialogParams dialogParams;
 
     @Override
     public void setArguments(Bundle args) {
@@ -64,7 +64,7 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            buildParams = (BuildParams) bundle.getSerializable(KEY_BUILD_PARAMS);
+            dialogParams = (DialogParams) bundle.getSerializable(KEY_DIALOG_PARAMS);
             isBottomDialog = bundle.getBoolean(KEY_IS_BOTTOM_DIALOG, false);
         }
     }
@@ -259,7 +259,7 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
             AlertParams p = getParams();
 
             Bundle bundle = new Bundle();
-            bundle.putSerializable(KEY_BUILD_PARAMS, getBuildParams(p));
+            bundle.putSerializable(KEY_DIALOG_PARAMS, createDialogParamsByAlertParams(p));
             bundle.putBoolean(KEY_IS_BOTTOM_DIALOG, isBottomDialog);
             dialog.setArguments(bundle);
 
@@ -279,23 +279,24 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
         @NonNull
         protected abstract EasyDialog createDialog();
 
-        BuildParams getBuildParams(AlertParams p) {
-            BuildParams data = new BuildParams();
-            data.themeResId = themeResId;
+        private DialogParams createDialogParamsByAlertParams(AlertParams p) {
+            DialogParams params = new DialogParams();
+            
+            params.themeResId = themeResId;
 
-            data.mIconId = p.mIconId;
-            data.title = p.mTitle;
-            data.message = p.mMessage;
-            data.positiveText = p.mPositiveButtonText;
-            data.neutralText = p.mNeutralButtonText;
-            data.negativeText = p.mNegativeButtonText;
-            data.items = p.mItems;
-            data.isMultiChoice = p.mIsMultiChoice;
-            data.checkedItems = p.mCheckedItems;
-            data.isSingleChoice = p.mIsSingleChoice;
-            data.checkedItem = p.mCheckedItem;
+            params.mIconId = p.mIconId;
+            params.title = p.mTitle;
+            params.message = p.mMessage;
+            params.positiveText = p.mPositiveButtonText;
+            params.neutralText = p.mNeutralButtonText;
+            params.negativeText = p.mNegativeButtonText;
+            params.items = p.mItems;
+            params.isMultiChoice = p.mIsMultiChoice;
+            params.checkedItems = p.mCheckedItems;
+            params.isSingleChoice = p.mIsSingleChoice;
+            params.checkedItem = p.mCheckedItem;
 
-            return data;
+            return params;
         }
 
         /**
@@ -323,4 +324,5 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
         }
 
     }
+    
 }

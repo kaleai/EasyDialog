@@ -81,6 +81,6 @@ public class CustomDialog extends BaseCustomDialog {
 //        getDialog().getWindow().setLayout(dm.widthPixels, getDialog().getWindow().getAttributes().height);
 
         TextView title = findView(R.id.title_tv);
-        title.setText(getBuildParams().title);
+        title.setText(getDialogParams().title);
     }
 }

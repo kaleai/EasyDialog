@@ -89,10 +89,10 @@ public class EasyDialog extends BaseEasyDialog {
     }
 
     private Dialog createDialog(@NonNull Activity activity) {
-        BuildParams p = getBuildParams(); // 得到来自父类的通用参数，这里将参数组装成builder对象
-        Builder builder = new Builder(activity);
+        DialogParams p = getDialogParams(); // 得到来自父类的参数，这里将参数组装成builder对象
 
-        builder.setTitle(p.title)
+        Builder builder = new Builder(activity)
+                .setTitle(p.title)
                 .setIcon(p.mIconId)
                 .setMessage(p.message)
                 .setPositiveButton(p.positiveText, positiveListener)
@@ -110,9 +110,7 @@ public class EasyDialog extends BaseEasyDialog {
             }
         }
 
-        Builder newBuilder = resetOriginBuilder(builder);
-        modifyOriginBuilder(newBuilder);
-        return newBuilder.create();
+        return resetOriginBuilder(builder).create();
     }
 
     /**
@@ -120,15 +118,6 @@ public class EasyDialog extends BaseEasyDialog {
      */
     protected Builder resetOriginBuilder(Builder builder) {
         return builder;
-    }
-
-    /**
-     * 暂时兼容老版本，推荐用resetOriginBuilder()来更换
-     */
-    @CallSuper
-    @Deprecated
-    protected void modifyOriginBuilder(Builder builder) {
-
     }
 
     public static class Builder extends BaseEasyDialog.Builder<Builder> {

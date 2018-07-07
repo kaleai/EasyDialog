@@ -47,6 +47,6 @@ public class CustomBottomSheetDialog extends BaseCustomDialog {
                 dismiss();
             }
         });
-        ((TextView) findView(R.id.message_tv)).setText(getBuildParams().message);
+        ((TextView) findView(R.id.message_tv)).setText(getDialogParams().message);
     }
 }

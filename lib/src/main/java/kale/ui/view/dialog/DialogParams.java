@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @date 2016/11/22
  */
 
-class BuildParams implements Serializable {
+public class DialogParams implements Serializable {
 
     public int mIconId = 0;
 
