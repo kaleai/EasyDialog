@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @date 2016/11/22
  */
 
-public class BuildParams implements Serializable {
+class BuildParams implements Serializable {
 
     public int mIconId = 0;
 

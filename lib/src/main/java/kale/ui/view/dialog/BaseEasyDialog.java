@@ -2,7 +2,7 @@ package kale.ui.view.dialog;
 
 import java.lang.reflect.Field;
 
-import android.app.Dialog;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
@@ -15,17 +15,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
-import android.support.v7.app.AlertController;
 import android.util.TypedValue;
 import android.view.View;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+
+import static android.support.v7.app.AlertController.AlertParams;
 
 /**
  * @author Jack Tony
@@ -106,7 +106,7 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * @author Kale
      * @date 2016/11/22
@@ -121,6 +121,7 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
             super(context);
         }
 
+        @SuppressLint("ResourceType")
         public static int resolveDialogTheme(@NonNull Context context, @StyleRes int resid) {
             if (resid >= 0x01000000) {   // start of real resource IDs.
                 return resid;
@@ -255,7 +256,7 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
 
         public <D extends EasyDialog> D build() {
             EasyDialog dialog = createDialog();
-            AlertController.AlertParams p = getParams();
+            AlertParams p = getParams();
 
             Bundle bundle = new Bundle();
             bundle.putSerializable(KEY_BUILD_PARAMS, getBuildParams(p));
@@ -278,7 +279,7 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
         @NonNull
         protected abstract EasyDialog createDialog();
 
-        public BuildParams getBuildParams(AlertController.AlertParams p) {
+        BuildParams getBuildParams(AlertParams p) {
             BuildParams data = new BuildParams();
             data.themeResId = themeResId;
 
@@ -307,12 +308,12 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
             return super.create();
         }
 
-        AlertController.AlertParams getParams() {
-            AlertController.AlertParams P = null;
+        AlertParams getParams() {
+            AlertParams P = null;
             try {
                 Field field = AlertDialog.Builder.class.getDeclaredField("P");
                 field.setAccessible(true);
-                P = (AlertController.AlertParams) field.get(this);
+                P = (AlertParams) field.get(this);
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
