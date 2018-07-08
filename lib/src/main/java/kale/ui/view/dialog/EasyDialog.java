@@ -145,7 +145,11 @@ public class EasyDialog extends BaseEasyDialog {
 
     public static class Builder extends BaseEasyDialog.Builder<Builder> {
 
-        Builder(@NonNull Context context) {
+        /**
+         * should use {@link EasyDialog#builder(Context)}
+         */
+        @Deprecated
+        public Builder(@NonNull Context context) {
             super(context);
         }
 
