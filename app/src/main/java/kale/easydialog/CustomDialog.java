@@ -35,18 +35,17 @@ public class CustomDialog extends BaseCustomDialog {
     @Override
     protected void setViews() {
         setLayout();
-        
+
         setBackground();
 
         titleTv.setText(getDialogParams().title);
     }
 
     @Override
-    protected EasyDialog.Builder resetOriginBuilder(EasyDialog.Builder builder) {
-        super.resetOriginBuilder(builder);
+    protected void modifyOriginBuilder(EasyDialog.Builder builder) {
+        super.modifyOriginBuilder(builder);
         View titleView = LayoutInflater.from(getContext()).inflate(R.layout.custom_title_view, null, false);
         builder.setCustomTitle(titleView);
-        return builder;
     }
 
     @Override

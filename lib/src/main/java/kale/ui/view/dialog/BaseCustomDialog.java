@@ -26,11 +26,11 @@ public abstract class BaseCustomDialog extends EasyDialog {
     }
 
     @Override
-    protected Builder resetOriginBuilder(Builder builder) {
+    protected void modifyOriginBuilder(Builder builder) {
+        super.modifyOriginBuilder(builder);
         if (getLayoutResId() != 0) {
             builder.setView(getLayoutResId());
         }
-        return builder;
     }
 
     @Override

@@ -110,14 +110,15 @@ public class EasyDialog extends BaseEasyDialog {
             }
         }
 
-        return resetOriginBuilder(builder).create();
+        modifyOriginBuilder(builder);
+        return builder.create();
     }
 
     /**
      * 修改构造当前dialog的builder对象，框架将会用这个builder对象来做真正的构造器
      */
-    protected Builder resetOriginBuilder(Builder builder) {
-        return builder;
+    @CallSuper
+    protected void modifyOriginBuilder(Builder builder) {
     }
 
     public static Builder builder(Context context) {
