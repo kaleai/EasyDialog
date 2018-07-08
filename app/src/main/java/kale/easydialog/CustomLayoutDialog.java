@@ -16,9 +16,11 @@ import kale.ui.view.dialog.EasyDialog;
 /**
  * @author Kale
  * @date 2016/11/15
+ * 
+ * 自定义布局的dialog
  */
 
-public class CustomDialog extends BaseCustomDialog {
+public class CustomLayoutDialog extends BaseCustomDialog {
 
     private TextView titleTv;
 

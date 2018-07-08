@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:onClick="customDialog"
-            android:text="自定义对话框"
+            android:text="自定义输入框"
             />
 
         <Button
@@ -55,7 +55,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="customDialog02"
-            android:text="自定义对话框02"
+            android:text="顶部对话框"
+            />
+
+        <Button
+            android:id="@+id/custom_dialog03_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="customDialog03"
+            android:text="自定义参数对话框"
             />
 
         <Button
@@ -67,13 +75,12 @@
             android:text="底部对话框"
             />
 
-
         <Button
             android:id="@+id/bottom_dialog02_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="customBottomDialog02"
-            android:text="底部对话框02"
+            android:text="可手势呼出的底部对话框"
             />
 
         <View

@@ -21,7 +21,7 @@ import kale.ui.view.dialog.BaseEasyDialog;
  * @author Jack Tony
  * @date 2015/8/27
  */
-public class DemoSimpleDialog extends BaseCustomDialog {
+public class CustomInputDialog extends BaseCustomDialog {
 
     private static final String KEY_INPUT_TEXT = "key_input_text";
 
@@ -58,8 +58,8 @@ public class DemoSimpleDialog extends BaseCustomDialog {
 
         @NonNull
         @Override
-        protected DemoSimpleDialog createDialog() {
-            DemoSimpleDialog dialog = new DemoSimpleDialog();
+        protected CustomInputDialog createDialog() {
+            CustomInputDialog dialog = new CustomInputDialog();
             dialog.setArguments(bundle);
             return dialog;
         }

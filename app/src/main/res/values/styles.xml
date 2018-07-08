@@ -1,13 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-    </style>
-    
-    <style name="AppTheme.CustomDialogStyle">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar" />
+
+    <style name="AppThemeNight" parent="Theme.AppCompat.DayNight" />
+
+    <style name="AppThemeNight.CustomDialogStyle">
         <!-- 如果要看自定义样式的例子，可以加载此布局文件 -->
-        <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item> 
+        <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
     </style>
 
     <style name="Theme.Dialog" parent="Theme.AppCompat.Light.Dialog">
@@ -88,7 +88,7 @@
 
     <!-- 这里全是自定义的属性，修改后就会改变dialog的颜色等样式 -->
     <style name="AlertDialogStyle" parent="Base.AlertDialog.AppCompat">
-        
+
         <!-- AlertController.class - line:168 -->
 
         <!-- dialog的主体布局文件，里面包含了title，message等控件 -->

@@ -120,10 +120,10 @@ public class MainActivity extends AppCompatActivity {
                 .build().show(getSupportFragmentManager(), TAG);
     }
 
-    private DemoSimpleDialog dialog;
+    private CustomInputDialog dialog;
 
     public void customDialog(View v) {
-        dialog = new DemoSimpleDialog.Builder(this)
+        dialog = new CustomInputDialog.Builder(this)
                 .setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.kale))
                 .setInputText("", "hint")
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -140,10 +140,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void customDialog02(View v) {
-        CustomDialog.Builder builder = CustomDialog.builder(this, CustomDialog.class);
+        CustomLayoutDialog.Builder builder = CustomLayoutDialog.builder(this, CustomLayoutDialog.class);
         builder.setTitle("Custom Dialog");
-        CustomDialog dialog = builder.build();
+        CustomLayoutDialog dialog = builder.build();
         dialog.show(getSupportFragmentManager());
+    }
+
+    public void customDialog03(View v){
+        new CustomArgsDialog.Builder(this)
+                .setSomeArg(31)
+                .setTitle("custom args dialog")
+                .setMessage("message")
+                .build()
+                .show(getSupportFragmentManager());
     }
 
     public void customBottomDialog(View v) {

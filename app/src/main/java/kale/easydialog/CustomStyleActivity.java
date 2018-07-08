@@ -2,6 +2,7 @@ package kale.easydialog;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,8 +15,10 @@ public class CustomStyleActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         
+        super.onCreate(savedInstanceState);
+
         TextView view = findViewById(R.id.jump_btn);
         view.setOnClickListener(new View.OnClickListener() {
             @Override

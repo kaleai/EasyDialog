@@ -24,7 +24,7 @@
         <activity
             android:name=".CustomStyleActivity"
             android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.CustomDialogStyle"
+            android:theme="@style/AppThemeNight.CustomDialogStyle"
             />
 
     </application>
