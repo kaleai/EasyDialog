@@ -45,6 +45,7 @@
             android:id="@+id/custom_dialog_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:onClick="customDialog"
             android:text="自定义对话框"
             />
@@ -61,6 +62,7 @@
             android:id="@+id/bottom_dialog_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:onClick="customBottomDialog"
             android:text="底部对话框"
             />
@@ -73,7 +75,7 @@
             android:onClick="customBottomDialog02"
             android:text="底部对话框02"
             />
-        
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -85,7 +87,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
-            android:text="跳转到自定义样式的dialog"
+            android:drawableLeft="@android:drawable/arrow_down_float"
+            android:text="切换样式"
             />
 
     </LinearLayout>
