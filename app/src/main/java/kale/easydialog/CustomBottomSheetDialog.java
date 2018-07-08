@@ -1,32 +1,15 @@
 package kale.easydialog;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
 import kale.ui.view.dialog.BaseCustomDialog;
-import kale.ui.view.dialog.BaseEasyDialog;
-import kale.ui.view.dialog.EasyDialog;
 
 /**
  * @author Kale
  * @date 2017/6/26
  */
 public class CustomBottomSheetDialog extends BaseCustomDialog {
-
-    public static class Builder extends BaseEasyDialog.Builder<Builder> {
-
-        public Builder(@NonNull Context context) {
-            super(context);
-        }
-
-        @NonNull
-        @Override
-        protected EasyDialog createDialog() {
-            return new CustomBottomSheetDialog();
-        }
-    }
 
     @Override
     protected int getLayoutResId() {

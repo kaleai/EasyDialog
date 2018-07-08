@@ -1,9 +1,7 @@
 package kale.easydialog;
 
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,7 +11,6 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import kale.ui.view.dialog.BaseCustomDialog;
-import kale.ui.view.dialog.BaseEasyDialog;
 import kale.ui.view.dialog.EasyDialog;
 
 /**
@@ -23,18 +20,7 @@ import kale.ui.view.dialog.EasyDialog;
 
 public class CustomDialog extends BaseCustomDialog {
 
-    public static class Builder extends BaseEasyDialog.Builder<Builder> {
-
-        Builder(@NonNull Context context) {
-            super(context);
-        }
-
-        @NonNull
-        @Override
-        protected CustomDialog createDialog() {
-            return new CustomDialog();
-        }
-    }
+    private TextView titleTv;
 
     @Override
     protected int getLayoutResId() {
@@ -43,7 +29,16 @@ public class CustomDialog extends BaseCustomDialog {
 
     @Override
     protected void bindViews(View root) {
-  
+        titleTv = findView(R.id.title_tv);
+    }
+
+    @Override
+    protected void setViews() {
+        setLayout();
+        
+        setBackground();
+
+        titleTv.setText(getDialogParams().title);
     }
 
     @Override
@@ -60,10 +55,7 @@ public class CustomDialog extends BaseCustomDialog {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
     }
 
-    @Override
-    protected void setViews() {
-//        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable()); // 去除dialog的背景
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0xffffffff)); // 白色背景
+    private void setLayout() {
         final DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -75,12 +67,13 @@ public class CustomDialog extends BaseCustomDialog {
         layoutParams.gravity = Gravity.TOP;
 //        getDialog().getWindow().setAttributes(layoutParams); // 通过attr设置
 
-        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg_custom_red);
-
         // 也可通过setLayout来设置
 //        getDialog().getWindow().setLayout(dm.widthPixels, getDialog().getWindow().getAttributes().height);
+    }
 
-        TextView title = findView(R.id.title_tv);
-        title.setText(getDialogParams().title);
+    private void setBackground() {
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable()); // 去除dialog的背景
+//        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0xffffffff)); // 白色背景
+        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg_custom_red); // 设置主体背景
     }
 }

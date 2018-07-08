@@ -120,9 +120,31 @@ public class EasyDialog extends BaseEasyDialog {
         return builder;
     }
 
+    public static Builder builder(Context context) {
+        return new Builder(context);
+    }
+
+    public static <Dialog extends EasyDialog> Builder builder(Context context, final Class<Dialog> clz) {
+        return new Builder(context) {
+            @NonNull
+            @Override
+            protected EasyDialog createDialog() {
+                Dialog dialog = null;
+                try {
+                    dialog = clz.newInstance();
+                } catch (java.lang.InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                return dialog;
+            }
+        };
+    }
+
     public static class Builder extends BaseEasyDialog.Builder<Builder> {
 
-        public Builder(@NonNull Context context) {
+        Builder(@NonNull Context context) {
             super(context);
         }
 

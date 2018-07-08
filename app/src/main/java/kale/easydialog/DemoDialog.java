@@ -33,7 +33,7 @@ public class DemoDialog extends EasyDialog {
 
         @NonNull
         @Override
-        protected DemoDialog createDialog() {
+        protected EasyDialog createDialog() {
             DemoDialog dialog = new DemoDialog();
             dialog.setArguments(bundle); // 增加自己的bundle
             return dialog;

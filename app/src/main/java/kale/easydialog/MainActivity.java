@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void simpleDialog(View v) {
-        EasyDialog.Builder builder = new EasyDialog.Builder(this);
+        EasyDialog.Builder builder = EasyDialog.builder(this);
         builder.setTitle("Title")
                 .setIcon(R.mipmap.ic_launcher)
                 .setMessage(R.string.hello_world)
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void singleChoiceDialog(View v) {
-        EasyDialog dialog = new EasyDialog.Builder(this)
+        EasyDialog dialog = EasyDialog.builder(this)
                 .setTitle("Single Choice Dialog")
                 .setSingleChoiceItems(new String[]{"Android", "ios", "wp"}, 1, new DialogInterface.OnClickListener() {
                     @Override
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void multiChoiceDialog(View v) {
-        new EasyDialog.Builder(this)
+        EasyDialog.builder(this)
                 // 设置数据和默认选中的选项
                 .setMultiChoiceItems(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true},
                         new DialogInterface.OnMultiChoiceClickListener() {
@@ -140,17 +140,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void customDialog02(View v) {
-        CustomDialog.Builder builder = new CustomDialog.Builder(this);
+        CustomDialog.Builder builder = CustomDialog.builder(this, CustomDialog.class);
         builder.setTitle("Custom Dialog");
         CustomDialog dialog = builder.build();
         dialog.show(getSupportFragmentManager());
     }
 
     public void customBottomDialog(View v) {
-        CustomBottomSheetDialog.Builder builder = new CustomBottomSheetDialog.Builder(this);
+        CustomBottomSheetDialog.Builder builder = CustomBottomSheetDialog.builder(this, CustomBottomSheetDialog.class);
         builder.setMessage("click me");
         builder.setIsBottomDialog(true);
-        CustomBottomSheetDialog dialog = builder.build();
+        EasyDialog dialog = builder.build();
         dialog.show(getSupportFragmentManager(), "dialog");
 
         dialog.setCancelable(false); // 如果设置了，那么底部dialog就不支持手势关闭和空白处关闭
