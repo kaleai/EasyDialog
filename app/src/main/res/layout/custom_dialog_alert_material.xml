@@ -70,6 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="@android:color/holo_purple"
         >
 
         <LinearLayout
