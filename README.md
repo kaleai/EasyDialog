@@ -30,7 +30,7 @@ repositories {
 
 
 **举例：**    
-> compile 'com.github.tianzhijiexian:EasyDialog:1.x.x'
+> compile 'com.github.tianzhijiexian:EasyDialog:1.1.2'
 
 ### 使用方式   
 
