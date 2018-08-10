@@ -16,7 +16,7 @@ import kale.ui.view.dialog.EasyDialog;
  *
  * 自定义builder参数的dialog
  */
-public class CustomArgsDialog extends BaseCustomDialog {
+public class CustomBuilderDialog extends BaseCustomDialog {
 
     public static final String KEY_NUM = "KEY_NUM";
 
@@ -39,7 +39,7 @@ public class CustomArgsDialog extends BaseCustomDialog {
         @NonNull
         @Override
         protected EasyDialog createDialog() {
-            CustomArgsDialog dialog = new CustomArgsDialog();
+            CustomBuilderDialog dialog = new CustomBuilderDialog();
             dialog.setArguments(bundle); // 增加自己的bundle
             return dialog;
         }

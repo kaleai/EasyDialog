@@ -1,7 +1,6 @@
 package kale.easydialog;
 
 
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.jump_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CustomStyleActivity.class));
+                startActivity(new Intent(MainActivity.this, MyStyleActivity.class));
             }
         });
 
@@ -85,12 +84,13 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "onClick ok");// 设置对话框上的按钮 ok->dismiss
 
                         ft.remove(easyDialog);
-                        ft.addToBackStack("stack ");
+                        ft.addToBackStack(null);
 
-                        CustomLayoutDialog.Builder builder = CustomLayoutDialog.builder(MainActivity.this, CustomLayoutDialog.class);
-                        builder.setTitle("Custom Dialog");
-                        builder.build().show(ft,"cusom dddd");
-                        
+                        EasyDialog.builder(MainActivity.this)
+                                .setTitle("Stack Dialog")
+                                .setMessage("Please press back button")
+                                .build()
+                                .show(ft, "stackDialog");
                     }
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -103,12 +103,15 @@ public class MainActivity extends AppCompatActivity {
                 .setNeutralButton("ignore", null)
                 .setCancelable(true);
 
-        EasyDialog easyDialog = builder.build();
+        easyDialog = builder.build();
         easyDialog.showAllowingStateLoss(getSupportFragmentManager());
-        
+
 //        easyDialog.show(getSupportFragmentManager());
     }
 
+    /**
+     * 支持单选列表的对话框
+     */
     public void singleChoiceDialog(View v) {
         EasyDialog dialog = EasyDialog.builder(this)
                 .setTitle("Single Choice Dialog")
@@ -124,6 +127,9 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), TAG);
     }
 
+    /**
+     * 支持多选列表的对话框
+     */
     public void multiChoiceDialog(View v) {
         EasyDialog.builder(this)
                 // 设置数据和默认选中的选项
@@ -137,10 +143,13 @@ public class MainActivity extends AppCompatActivity {
                 .build().show(getSupportFragmentManager(), TAG);
     }
 
-    private CustomInputDialog dialog;
+    private InputDialog dialog;
 
+    /**
+     * 可以输入文字的dialog，拥有自定义布局
+     */
     public void inputDialog(View v) {
-        dialog = new CustomInputDialog.Builder(this)
+        dialog = new InputDialog.Builder(this)
                 .setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.kale))
                 .setInputText("", "hint")
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -156,15 +165,22 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager()); // 一个参数的show()
     }
 
-    public void customDialog02(View v) {
-        CustomLayoutDialog.Builder builder = CustomLayoutDialog.builder(this, CustomLayoutDialog.class);
-        builder.setTitle("Custom Dialog");
-        CustomLayoutDialog dialog = builder.build();
-        dialog.show(getSupportFragmentManager());
+    /**
+     * 显示在顶部的dialog，背景透明
+     */
+    public void topDialog(View v) {
+        TopDialog.Builder builder = TopDialog.builder(this, TopDialog.class);
+        builder.setTitle("标题");
+        builder.setNegativeButton("因为设置了透明背景,", null);
+        builder.setPositiveButton("所以这里是透明的", null);
+        builder.build().show(getSupportFragmentManager());
     }
 
-    public void customDialog03(View v){
-        new CustomArgsDialog.Builder(this)
+    /**
+     * 自定dialog的builder
+     */
+    public void customBuilderDialog(View v) {
+        new CustomBuilderDialog.Builder(this)
                 .setSomeArg(31)
                 .setTitle("custom args dialog")
                 .setMessage("message")
@@ -172,8 +188,11 @@ public class MainActivity extends AppCompatActivity {
                 .show(getSupportFragmentManager());
     }
 
-    public void customBottomDialog(View v) {
-        CustomBottomSheetDialog.Builder builder = CustomBottomSheetDialog.builder(this, CustomBottomSheetDialog.class);
+    /**
+     * 从底部弹出的对话框
+     */
+    public void bottomDialog(View v) {
+        BottomSheetDialog.Builder builder = BottomSheetDialog.builder(this, BottomSheetDialog.class);
         builder.setMessage("click me");
         builder.setIsBottomDialog(true);
         EasyDialog dialog = builder.build();

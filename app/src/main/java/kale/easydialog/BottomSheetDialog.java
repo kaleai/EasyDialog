@@ -9,7 +9,7 @@ import kale.ui.view.dialog.BaseCustomDialog;
  * @author Kale
  * @date 2017/6/26
  */
-public class CustomBottomSheetDialog extends BaseCustomDialog {
+public class BottomSheetDialog extends BaseCustomDialog {
 
     @Override
     protected int getLayoutResId() {

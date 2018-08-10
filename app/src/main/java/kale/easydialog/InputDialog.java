@@ -9,12 +9,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import kale.ui.view.dialog.BaseCustomDialog;
 import kale.ui.view.dialog.BaseEasyDialog;
@@ -23,7 +26,7 @@ import kale.ui.view.dialog.BaseEasyDialog;
  * @author Jack Tony
  * @date 2015/8/27
  */
-public class CustomInputDialog extends BaseCustomDialog {
+public class InputDialog extends BaseCustomDialog {
 
     private static final String KEY_INPUT_TEXT = "key_input_text";
 
@@ -39,6 +42,9 @@ public class CustomInputDialog extends BaseCustomDialog {
 
     private EditText mInputTextEt;
 
+    /**
+     * 自定义builder来增加一些参数，记得要继承自BaseEasyDialog.Builder
+     */
     public static class Builder extends BaseEasyDialog.Builder<Builder> {
 
         private Bundle bundle = new Bundle();
@@ -60,8 +66,8 @@ public class CustomInputDialog extends BaseCustomDialog {
 
         @NonNull
         @Override
-        protected CustomInputDialog createDialog() {
-            CustomInputDialog dialog = new CustomInputDialog();
+        protected InputDialog createDialog() {
+            InputDialog dialog = new InputDialog();
             dialog.setArguments(bundle);
             return dialog;
         }
@@ -86,7 +92,7 @@ public class CustomInputDialog extends BaseCustomDialog {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.demo_dialog_layout;
+        return R.layout.input_layout;
     }
 
     @Override
@@ -113,14 +119,19 @@ public class CustomInputDialog extends BaseCustomDialog {
             mInputTextEt.setHint(mInputHint);
         }
 
-        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        getPositiveListener().onClick(null, AlertDialog.BUTTON_POSITIVE);
-                        dismiss();
-                    }
-                });
+        Button button = ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE);
+        
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(mInputTextEt.getText())) {
+                    Toast.makeText(getActivity(), "请输入内容，否则不能关闭！", Toast.LENGTH_SHORT).show();
+                } else {
+                    getPositiveListener().onClick(null, AlertDialog.BUTTON_POSITIVE);
+                    dismiss();
+                }
+            }
+        });
 
         showInputMethod(mInputTextEt);
     }

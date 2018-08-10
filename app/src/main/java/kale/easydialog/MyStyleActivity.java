@@ -11,7 +11,7 @@ import android.widget.TextView;
  * @date 2016/11/21
  */
 
-public class CustomStyleActivity extends MainActivity {
+public class MyStyleActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class CustomStyleActivity extends MainActivity {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CustomStyleActivity.this, MainActivity.class));
+                startActivity(new Intent(MyStyleActivity.this, MainActivity.class));
             }
         });
     }

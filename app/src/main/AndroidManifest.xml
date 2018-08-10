@@ -22,7 +22,7 @@
         </activity>
         
         <activity
-            android:name=".CustomStyleActivity"
+            android:name=".MyStyleActivity"
             android:launchMode="singleInstance"
             android:theme="@style/AppThemeNight.CustomDialogStyle"
             />

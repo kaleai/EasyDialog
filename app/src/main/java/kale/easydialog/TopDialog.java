@@ -21,13 +21,27 @@ import kale.ui.view.dialog.EasyDialog;
  * 自定义布局的dialog
  */
 
-public class CustomLayoutDialog extends BaseCustomDialog {
+public class TopDialog extends BaseCustomDialog {
 
     private TextView titleTv;
 
+    /**
+     * 自定义布局
+     */
     @Override
     protected int getLayoutResId() {
         return R.layout.custom_dialog_layout;
+    }
+
+    /**
+     * title的布局，title的布局会在自定义布局的上方
+     */
+    @Override
+    protected void modifyOriginBuilder(EasyDialog.Builder builder) {
+        super.modifyOriginBuilder(builder);
+
+        View titleView = LayoutInflater.from(getContext()).inflate(R.layout.custom_title_layout, null, false);
+        builder.setCustomTitle(titleView); // 修改builder中的titleView
     }
 
     @Override
@@ -38,9 +52,9 @@ public class CustomLayoutDialog extends BaseCustomDialog {
     @Override
     protected void setViews() {
         setLayout();
-
         setBackground();
 
+        // 可从getDialogParams()得到builder中的所有参数
         titleTv.setText(getDialogParams().title);
 
         titleTv.setOnClickListener(new View.OnClickListener() {
@@ -48,47 +62,55 @@ public class CustomLayoutDialog extends BaseCustomDialog {
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-                ft.remove(CustomLayoutDialog.this);
+                ft.remove(TopDialog.this);
                 ft.addToBackStack(null);
 
                 EasyDialog.Builder builder = EasyDialog.builder(getContext());
-                builder.setTitle("Title").build().show(ft,"title");
+                builder.setTitle("第二个对话框")
+                        .setMessage("点击“返回”后会退回到之前的dialog")
+                        .build()
+                        .show(ft, "dialog");
             }
         });
     }
 
-    @Override
-    protected void modifyOriginBuilder(EasyDialog.Builder builder) {
-        super.modifyOriginBuilder(builder);
-        View titleView = LayoutInflater.from(getContext()).inflate(R.layout.custom_title_view, null, false);
-        builder.setCustomTitle(titleView);
-    }
-
+    /**
+     * 这时dialog已经初始化完毕
+     */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
     }
 
+    /**
+     * 可通过attr设置：
+     * getDialog().getWindow().setAttributes(layoutParams);
+     *
+     * 也可通过setLayout来设置：
+     * getDialog().getWindow().setLayout(dm.widthPixels, getDialog().getWindow().getAttributes().height);
+     */
     private void setLayout() {
         final DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
 
         final WindowManager.LayoutParams layoutParams = getDialog().getWindow().getAttributes();
 
-        int padding = getResources().getDimensionPixelOffset(R.dimen.activity_horizontal_margin);
+        // 强制宽高
+        int padding = getResources().getDimensionPixelOffset(R.dimen.dialog_padding);
         layoutParams.width = dm.widthPixels - (padding * 2);
-//        layoutParams.height = getResources().getDimensionPixelOffset(R.dimen.dialog_height); // 200dp
-        layoutParams.gravity = Gravity.TOP;
-//        getDialog().getWindow().setAttributes(layoutParams); // 通过attr设置
 
-        // 也可通过setLayout来设置
-//        getDialog().getWindow().setLayout(dm.widthPixels, getDialog().getWindow().getAttributes().height);
+        layoutParams.height = getResources().getDimensionPixelOffset(R.dimen.dialog_height);
+
+        layoutParams.gravity = Gravity.TOP; // 设置展示的位置
     }
 
+    /**
+     * 强制取消背景，保持有透明
+     */
     private void setBackground() {
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable()); // 去除dialog的背景
-//        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0xffffffff)); // 白色背景
-        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg_custom_red); // 设置主体背景
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable()); // 去除dialog的背景，即透明
+//        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0xffffffff)); // 设置白色背景
+//        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg_custom_red); // 设置背景
     }
 }

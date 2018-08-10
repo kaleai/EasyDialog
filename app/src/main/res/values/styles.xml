@@ -92,15 +92,15 @@
         <!-- AlertController.class - line:168 -->
 
         <!-- dialog的主体布局文件，里面包含了title，message等控件 -->
-        <item name="android:layout">@layout/custom_dialog_alert_material</item>
+        <item name="android:layout">@layout/dialog_frame</item>
         <!-- dialog中的列表布局文件，其实就是listView -->
-        <item name="listLayout">@layout/custom_dialog_list_material</item>
+        <item name="listLayout">@layout/dialog_list_layout</item>
         <!-- dialog中列表的item的布局 -->
-        <item name="listItemLayout">@layout/custom_dialog_select_item_material</item>
+        <item name="listItemLayout">@layout/dialog_select_item</item>
         <!-- 多选的item的布局 -->
-        <item name="multiChoiceItemLayout">@layout/custom_dialog_select_multichoice_material</item>
+        <item name="multiChoiceItemLayout">@layout/dialog_multichoice_item</item>
         <!-- 单选的item的布局 -->
-        <item name="singleChoiceItemLayout">@layout/custom_dialog_select_singlechoice_material</item>
+        <item name="singleChoiceItemLayout">@layout/dialog_singlechoice_item</item>
     </style>
 
 </resources>

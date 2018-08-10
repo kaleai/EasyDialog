@@ -54,7 +54,7 @@
             android:id="@+id/custom_dialog02_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="customDialog02"
+            android:onClick="topDialog"
             android:text="顶部对话框"
             />
 
@@ -62,7 +62,7 @@
             android:id="@+id/custom_dialog03_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="customDialog03"
+            android:onClick="customBuilderDialog"
             android:text="自定义参数对话框"
             />
 
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:onClick="customBottomDialog"
+            android:onClick="bottomDialog"
             android:text="底部对话框"
             />
 
