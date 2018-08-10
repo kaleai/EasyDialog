@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center"
-        android:text="快拉我~"
+        android:text="快拉我啊~~"
         android:textSize="30dp"
         />
 
@@ -29,16 +29,19 @@
         <Button
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:text="微信"
             />
 
         <Button
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:text="微博"
             />
 
         <Button
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:text="QQ"
             />
 
     </LinearLayout>

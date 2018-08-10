@@ -14,11 +14,11 @@ import kale.ui.view.dialog.EasyDialog;
  * @author Kale
  * @date 2016/5/3
  *
- * 自定义builder参数的dialog
+ * 自定义builder的dialog
  */
-public class CustomBuilderDialog extends BaseCustomDialog {
+public class NewBuilderDialog extends BaseCustomDialog {
 
-    public static final String KEY_NUM = "KEY_NUM";
+    public static final String KEY_AGE = "KEY_AGE",KEY_NAME="KEY_NAME";
 
     /**
      * 继承自{@link EasyDialog.Builder}以扩展builder
@@ -31,15 +31,20 @@ public class CustomBuilderDialog extends BaseCustomDialog {
             super(context);
         }
 
-        public Builder setSomeArg(int i) {
-            bundle.putInt(KEY_NUM, i);
+        public Builder setAge(int age) {
+            bundle.putInt(KEY_AGE, age);
+            return this;
+        }
+
+        public Builder setName(String name) {
+            bundle.putString(KEY_NAME, name);
             return this;
         }
 
         @NonNull
         @Override
         protected EasyDialog createDialog() {
-            CustomBuilderDialog dialog = new CustomBuilderDialog();
+            NewBuilderDialog dialog = new NewBuilderDialog();
             dialog.setArguments(bundle); // 增加自己的bundle
             return dialog;
         }
@@ -58,13 +63,15 @@ public class CustomBuilderDialog extends BaseCustomDialog {
     @Override
     protected void modifyOriginBuilder(EasyDialog.Builder builder) {
         super.modifyOriginBuilder(builder);
-        builder.setMessage("new message is " + getArguments().getInt(KEY_NUM));
+        Bundle arguments = getArguments();
+        String str = "name: " + arguments.getString(KEY_NAME) + ", age: " + arguments.getInt(KEY_AGE);
+        builder.setMessage("修改后的message是：" + str);
     }
 
     @Override
     protected void setViews() {
-        int i = getArguments().getInt(KEY_NUM);
-        Toast.makeText(getContext(), "num: " + i, Toast.LENGTH_SHORT).show();
+        int age = getArguments().getInt(KEY_AGE);
+        Toast.makeText(getContext(), "age: " + age, Toast.LENGTH_SHORT).show();
     }
 
 }

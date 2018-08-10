@@ -34,7 +34,7 @@ public class TopDialog extends BaseCustomDialog {
     }
 
     /**
-     * title的布局，title的布局会在自定义布局的上方
+     * title的布局，title的布局会显示在自定义布局的上方
      */
     @Override
     protected void modifyOriginBuilder(EasyDialog.Builder builder) {

@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="customBuilderDialog"
-            android:text="自定义参数对话框"
+            android:text="自定义Dialog.Builder"
             />
 
         <Button
@@ -79,7 +79,7 @@
             android:id="@+id/bottom_dialog02_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="customBottomDialog02"
+            android:onClick="bottomDialogInActivity"
             android:text="可手势呼出的底部对话框"
             />
 

@@ -9,7 +9,7 @@ import kale.ui.view.dialog.BaseCustomDialog;
  * @author Kale
  * @date 2017/6/26
  */
-public class BottomSheetDialog extends BaseCustomDialog {
+public class BottomDialog extends BaseCustomDialog {
 
     @Override
     protected int getLayoutResId() {
@@ -23,13 +23,15 @@ public class BottomSheetDialog extends BaseCustomDialog {
 
     @Override
     protected void setViews() {
-        findView(R.id.image_text_ll).setOnClickListener(new View.OnClickListener() {
+        TextView textView = findView(R.id.message_tv);
+
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                getDialog().cancel(); // 如果要触发cancel，必须写上这个
                 dismiss();
             }
         });
-        ((TextView) findView(R.id.message_tv)).setText(getDialogParams().message);
+        textView.setText(getDialogParams().message);
     }
 }

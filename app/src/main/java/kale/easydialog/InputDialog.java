@@ -103,7 +103,7 @@ public class InputDialog extends BaseCustomDialog {
     @Override
     public void setViews() {
         if (mBitmap != null) {
-            LinearLayout imageTextLl = findView(R.id.image_text_ll);
+            LinearLayout imageTextLl = findView(R.id.root_ll);
             imageTextLl.setVisibility(View.VISIBLE);
 
             ((ImageView) findView(R.id.image_iv)).setImageBitmap(mBitmap);

@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 })// 设置单选列表的数据和监听
+                .setPositiveButton("ok", null)
                 .build();
         dialog.setCancelable(false);
         dialog.show(getSupportFragmentManager(), TAG);
@@ -177,13 +178,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * 自定dialog的builder
+     * 自定一个dialog的builder
      */
     public void customBuilderDialog(View v) {
-        new CustomBuilderDialog.Builder(this)
-                .setSomeArg(31)
-                .setTitle("custom args dialog")
+        new NewBuilderDialog.Builder(this)
+                .setTitle("Custom Builder Dialog")
                 .setMessage("message")
+                .setName("kale")
+                .setAge(31)
                 .build()
                 .show(getSupportFragmentManager());
     }
@@ -192,13 +194,17 @@ public class MainActivity extends AppCompatActivity {
      * 从底部弹出的对话框
      */
     public void bottomDialog(View v) {
-        BottomSheetDialog.Builder builder = BottomSheetDialog.builder(this, BottomSheetDialog.class);
+        BottomDialog.Builder builder = EasyDialog.builder(this, BottomDialog.class);
         builder.setMessage("click me");
-        builder.setIsBottomDialog(true);
+
+        builder.setIsBottomDialog(true); // 设置后则会变成从底部弹出，否则为正常模式
+
         EasyDialog dialog = builder.build();
         dialog.show(getSupportFragmentManager(), "dialog");
 
-        dialog.setCancelable(false); // 如果设置了，那么底部dialog就不支持手势关闭和空白处关闭
+        // 如果设置了，那么底部dialog就不支持手势关闭和空白处关闭
+        dialog.setCancelable(false);
+
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
@@ -214,7 +220,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void customBottomDialog02(View v) {
+    /**
+     * Activity中的可以从底部拉出的dialog
+     */
+    public void bottomDialogInActivity(View v) {
         if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         } else {
