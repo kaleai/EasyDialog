@@ -121,15 +121,12 @@ public class InputDialog extends BaseCustomDialog {
 
         Button button = ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE);
         
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(mInputTextEt.getText())) {
-                    Toast.makeText(getActivity(), "请输入内容，否则不能关闭！", Toast.LENGTH_SHORT).show();
-                } else {
-                    getPositiveListener().onClick(null, AlertDialog.BUTTON_POSITIVE);
-                    dismiss();
-                }
+        button.setOnClickListener(v -> {
+            if (TextUtils.isEmpty(mInputTextEt.getText())) {
+                Toast.makeText(getActivity(), "请输入内容，否则不能关闭！", Toast.LENGTH_SHORT).show();
+            } else {
+                getPositiveListener().onClick(null, AlertDialog.BUTTON_POSITIVE);
+                dismiss();
             }
         });
 
@@ -137,16 +134,13 @@ public class InputDialog extends BaseCustomDialog {
     }
 
     public void showInputMethod(final EditText editText) {
-        editText.post(new Runnable() {
-            @Override
-            public void run() {
-                editText.setFocusable(true);
-                editText.setFocusableInTouchMode(true);
-                editText.requestFocus();
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
-                }
+        editText.post(() -> {
+            editText.setFocusable(true);
+            editText.setFocusableInTouchMode(true);
+            editText.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
             }
         });
     }

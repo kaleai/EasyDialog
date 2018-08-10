@@ -25,12 +25,9 @@ public class BottomDialog extends BaseCustomDialog {
     protected void setViews() {
         TextView textView = findView(R.id.message_tv);
 
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                getDialog().cancel(); // 如果要触发cancel，必须写上这个
-                dismiss();
-            }
+        textView.setOnClickListener(view -> {
+//                getDialog().cancel(); // 如果要触发cancel，必须手动触发
+            dismiss();
         });
         textView.setText(getDialogParams().message);
     }

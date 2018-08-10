@@ -1,6 +1,5 @@
 package kale.easydialog;
 
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -115,13 +114,11 @@ public class MainActivity extends AppCompatActivity {
     public void singleChoiceDialog(View v) {
         EasyDialog dialog = EasyDialog.builder(this)
                 .setTitle("Single Choice Dialog")
-                .setSingleChoiceItems(new String[]{"Android", "ios", "wp"}, 1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int position) {
-                        Log.d(TAG, "onItemClick pos = " + position);
-                        dialog.dismiss();
-                    }
-                })// 设置单选列表的数据和监听
+                .setSingleChoiceItems(new String[]{"Android", "ios", "wp"}, 1,
+                        (dialog1, position) -> {
+                            Log.d(TAG, "onItemClick pos = " + position);
+                            dialog1.dismiss();
+                        })// 设置单选列表的数据和监听
                 .setPositiveButton("ok", null)
                 .build();
         dialog.setCancelable(false);
@@ -134,14 +131,11 @@ public class MainActivity extends AppCompatActivity {
     public void multiChoiceDialog(View v) {
         EasyDialog.builder(this)
                 // 设置数据和默认选中的选项
-                .setMultiChoiceItems(new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true},
-                        new DialogInterface.OnMultiChoiceClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                                Log.d(TAG, "onClick pos = " + which + " , isChecked = " + isChecked);
-                            }
-                        }) // 设置监听器
-                .build().show(getSupportFragmentManager(), TAG);
+                .setMultiChoiceItems(
+                        new String[]{"Android", "ios", "wp"}, new boolean[]{true, false, true},
+                        (dialog, which, isChecked) -> showToast("onClick pos = " + which + " , isChecked = " + isChecked)) // 设置监听器
+                .build()
+                .show(getSupportFragmentManager(), TAG);
     }
 
     private InputDialog dialog;
@@ -158,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface ignore, int which) {
                         String text = dialog.getInputTextEt().getText().toString();
                         if (!TextUtils.isEmpty(text)) {
-                            Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+                            showToast(text);
                         }
                     }
                 })
@@ -205,19 +199,9 @@ public class MainActivity extends AppCompatActivity {
         // 如果设置了，那么底部dialog就不支持手势关闭和空白处关闭
         dialog.setCancelable(false);
 
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialogInterface) {
-                // 监听点空白处cancel的事件
-                Toast.makeText(MainActivity.this, "cancel", Toast.LENGTH_SHORT).show();
-            }
-        });
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                Toast.makeText(MainActivity.this, "dismiss", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // 监听点空白处cancel的事件
+        dialog.setOnCancelListener(d -> showToast("cancel"));
+        dialog.setOnDismissListener(d -> showToast("dismiss"));
     }
 
     /**
@@ -229,5 +213,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
+    }
+
+    public void showToast(String msg) {
+        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 }

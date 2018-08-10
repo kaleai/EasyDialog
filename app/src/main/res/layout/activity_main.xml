@@ -94,7 +94,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
-            android:drawableLeft="@android:drawable/arrow_down_float"
+            android:drawableLeft="@drawable/nintendoswitch"
+            android:drawableRight="@drawable/nintendoswitch"
             android:text="切换样式"
             />
 

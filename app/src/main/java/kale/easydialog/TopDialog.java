@@ -57,20 +57,17 @@ public class TopDialog extends BaseCustomDialog {
         // 可从getDialogParams()得到builder中的所有参数
         titleTv.setText(getDialogParams().title);
 
-        titleTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+        titleTv.setOnClickListener(v -> {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-                ft.remove(TopDialog.this);
-                ft.addToBackStack(null);
+            ft.remove(TopDialog.this);
+            ft.addToBackStack(null);
 
-                EasyDialog.Builder builder = EasyDialog.builder(getContext());
-                builder.setTitle("第二个对话框")
-                        .setMessage("点击“返回”后会退回到之前的dialog")
-                        .build()
-                        .show(ft, "dialog");
-            }
+            EasyDialog.builder(getContext())
+                    .setTitle("第二个对话框")
+                    .setMessage("点击“返回”后会退回到之前的dialog")
+                    .build()
+                    .show(ft, "dialog");
         });
     }
 
