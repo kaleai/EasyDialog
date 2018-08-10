@@ -1,6 +1,7 @@
 package kale.easydialog;
 
 
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -54,7 +55,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public EasyDialog easyDialog;
+
     public void simpleDialog(View v) {
+        final android.support.v4.app.FragmentTransaction ft =
+                getSupportFragmentManager().beginTransaction();
+
         EasyDialog.Builder builder = EasyDialog.builder(this);
         builder.setTitle("Title")
                 .setIcon(R.mipmap.ic_launcher)
@@ -77,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d(TAG, "onClick ok");// 设置对话框上的按钮 ok->dismiss
+
+                        ft.remove(easyDialog);
+                        ft.addToBackStack("stack ");
+
+                        CustomLayoutDialog.Builder builder = CustomLayoutDialog.builder(MainActivity.this, CustomLayoutDialog.class);
+                        builder.setTitle("Custom Dialog");
+                        builder.build().show(ft,"cusom dddd");
+                        
                     }
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -86,10 +100,13 @@ public class MainActivity extends AppCompatActivity {
                         dialog.dismiss(); // cancel -> dismiss
                     }
                 })
+                .setNeutralButton("ignore", null)
                 .setCancelable(true);
 
-        EasyDialog dialog = builder.build();
-        dialog.show(getSupportFragmentManager());
+        EasyDialog easyDialog = builder.build();
+        easyDialog.showAllowingStateLoss(getSupportFragmentManager());
+        
+//        easyDialog.show(getSupportFragmentManager());
     }
 
     public void singleChoiceDialog(View v) {
@@ -122,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CustomInputDialog dialog;
 
-    public void customDialog(View v) {
+    public void inputDialog(View v) {
         dialog = new CustomInputDialog.Builder(this)
                 .setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.kale))
                 .setInputText("", "hint")

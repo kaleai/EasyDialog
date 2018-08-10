@@ -2,6 +2,7 @@ package kale.easydialog;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,7 +17,7 @@ import kale.ui.view.dialog.EasyDialog;
 /**
  * @author Kale
  * @date 2016/11/15
- * 
+ *
  * 自定义布局的dialog
  */
 
@@ -41,6 +42,19 @@ public class CustomLayoutDialog extends BaseCustomDialog {
         setBackground();
 
         titleTv.setText(getDialogParams().title);
+
+        titleTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                ft.remove(CustomLayoutDialog.this);
+                ft.addToBackStack(null);
+
+                EasyDialog.Builder builder = EasyDialog.builder(getContext());
+                builder.setTitle("Title").build().show(ft,"title");
+            }
+        });
     }
 
     @Override

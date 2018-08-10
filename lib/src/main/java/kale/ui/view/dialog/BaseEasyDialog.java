@@ -107,6 +107,10 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
         }
     }
 
+    public void showAllowingStateLoss(FragmentManager manager) {
+        manager.beginTransaction().add(this, "kale-dialog").commitAllowingStateLoss();
+    }
+
     /**
      * @author Kale
      * @date 2016/11/22
@@ -281,7 +285,7 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
 
         private DialogParams createDialogParamsByAlertParams(AlertParams p) {
             DialogParams params = new DialogParams();
-            
+
             params.themeResId = themeResId;
 
             params.mIconId = p.mIconId;
@@ -324,5 +328,5 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
         }
 
     }
-    
+
 }

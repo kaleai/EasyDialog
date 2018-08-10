@@ -8,7 +8,9 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -110,6 +112,32 @@ public class CustomInputDialog extends BaseCustomDialog {
             }
             mInputTextEt.setHint(mInputHint);
         }
+
+        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getPositiveListener().onClick(null, AlertDialog.BUTTON_POSITIVE);
+                        dismiss();
+                    }
+                });
+
+        showInputMethod(mInputTextEt);
+    }
+
+    public void showInputMethod(final EditText editText) {
+        editText.post(new Runnable() {
+            @Override
+            public void run() {
+                editText.setFocusable(true);
+                editText.setFocusableInTouchMode(true);
+                editText.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+                }
+            }
+        });
     }
 
     public

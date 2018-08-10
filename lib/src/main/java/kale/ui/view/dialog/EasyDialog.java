@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,19 +20,24 @@ import lombok.Setter;
  */
 public class EasyDialog extends BaseEasyDialog {
 
-    @Setter(AccessLevel.PUBLIC)
+    @Getter
+    @Setter
     private DialogInterface.OnClickListener positiveListener;
 
-    @Setter(AccessLevel.PUBLIC)
+    @Getter
+    @Setter
     private DialogInterface.OnClickListener neutralListener;
 
-    @Setter(AccessLevel.PUBLIC)
+    @Getter
+    @Setter
     private DialogInterface.OnClickListener negativeListener;
 
-    @Setter(AccessLevel.PUBLIC)
+    @Getter
+    @Setter
     private DialogInterface.OnClickListener onClickListener;
 
-    @Setter(AccessLevel.PUBLIC)
+    @Getter
+    @Setter
     private DialogInterface.OnMultiChoiceClickListener onMultiChoiceClickListener;
 
     @Getter
@@ -86,6 +90,16 @@ public class EasyDialog extends BaseEasyDialog {
     }
 
     protected void bindAndSetViews(@Nullable View root) {
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        positiveListener = null;
+        negativeListener = null;
+        neutralListener = null;
+        onClickListener = null;
+        onMultiChoiceClickListener = null;
     }
 
     private Dialog createDialog(@NonNull Activity activity) {
