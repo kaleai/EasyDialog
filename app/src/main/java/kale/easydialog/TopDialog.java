@@ -1,5 +1,6 @@
 package kale.easydialog;
 
+import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -52,7 +53,7 @@ public class TopDialog extends BaseCustomDialog {
     @Override
     protected void setViews() {
         setLayout();
-        setBackground();
+//        setBackground();
 
         // 可从getDialogParams()得到builder中的所有参数
         titleTv.setText(getDialogParams().title);
@@ -81,25 +82,22 @@ public class TopDialog extends BaseCustomDialog {
     }
 
     /**
-     * 可通过attr设置：
-     * getDialog().getWindow().setAttributes(layoutParams);
-     *
      * 也可通过setLayout来设置：
      * getDialog().getWindow().setLayout(dm.widthPixels, getDialog().getWindow().getAttributes().height);
      */
     private void setLayout() {
-        final DisplayMetrics dm = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        final WindowManager.LayoutParams layoutParams = getDialog().getWindow().getAttributes();
+        Window window = getDialog().getWindow();
+        final WindowManager.LayoutParams lp = window.getAttributes();
 
         // 强制宽高
         int padding = getResources().getDimensionPixelOffset(R.dimen.dialog_padding);
-        layoutParams.width = dm.widthPixels - (padding * 2);
+        lp.width = getScreenWidth(getActivity()) - (padding * 2);
 
-        layoutParams.height = getResources().getDimensionPixelOffset(R.dimen.dialog_height);
+        lp.height = getResources().getDimensionPixelOffset(R.dimen.dialog_height);
 
-        layoutParams.gravity = Gravity.TOP; // 设置展示的位置
+        lp.gravity = Gravity.TOP; // 设置展示的位置
+
+        window.setAttributes(lp);
     }
 
     /**
@@ -110,4 +108,11 @@ public class TopDialog extends BaseCustomDialog {
 //        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0xffffffff)); // 设置白色背景
 //        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg_custom_red); // 设置背景
     }
+
+    public static int getScreenWidth(Activity activity) {
+        final DisplayMetrics dm = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        return dm.widthPixels;
+    }
+
 }

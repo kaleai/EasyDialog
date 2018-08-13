@@ -34,7 +34,7 @@
         <item name="android:backgroundDimEnabled">true</item>
 
         <!-- 背景颜色，因为windowBackground中的背景已经写死了，所以这里的设置无效 -->
-        <item name="android:colorBackground">@color/background_floating_material_light</item>
+        <item name="android:colorBackground">#ffffff</item>
 
         <!-- 着色缓存（一般不用）-->
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -92,7 +92,7 @@
         <!-- AlertController.class - line:168 -->
 
         <!-- dialog的主体布局文件，里面包含了title，message等控件 -->
-        <item name="android:layout">@layout/dialog_frame</item>
+        <item name="android:layout">@layout/dialog_main_frame</item>
         <!-- dialog中的列表布局文件，其实就是listView -->
         <item name="listLayout">@layout/dialog_list_layout</item>
         <!-- dialog中列表的item的布局 -->

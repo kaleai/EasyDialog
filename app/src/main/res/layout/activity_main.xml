@@ -44,7 +44,7 @@
             android:id="@+id/custom_dialog_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:onClick="inputDialog"
             android:text="自定义输入框"
             />
@@ -69,7 +69,7 @@
             android:id="@+id/bottom_dialog_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:onClick="bottomDialog"
             android:text="底部对话框"
             />
@@ -92,7 +92,7 @@
             android:id="@+id/jump_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="70dp"
             android:drawableLeft="@drawable/nintendoswitch"
             android:drawableRight="@drawable/nintendoswitch"
             android:text="切换样式"

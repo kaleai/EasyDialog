@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@+id/topPanel"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@android:color/transparent"
+    android:paddingTop="15dp"
+    
+    tools:background="#ff00"
+    >
+
+    <LinearLayout
+        android:id="@+id/title_template"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        >
+
+        <ImageView
+            android:id="@android:id/icon"
+            android:layout_width="120dip"
+            android:layout_height="120dip"
+            android:layout_marginRight="0dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/saber"
+            />
+
+        <android.support.v7.widget.DialogTitle
+            android:id="@+id/alertTitle"
+            style="?attr/android:windowTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textSize="25sp"
+            android:textStyle="bold"
+
+            tools:text="title"
+            />
+
+    </LinearLayout>
+    
+</FrameLayout>

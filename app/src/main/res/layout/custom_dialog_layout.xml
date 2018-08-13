@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="请点击上面的标题 ↑"
+            android:text="点上面的标题 ↑"
             android:textSize="30sp"
             />
 

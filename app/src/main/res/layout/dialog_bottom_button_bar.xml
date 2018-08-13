@@ -6,48 +6,61 @@
     android:layout_height="wrap_content"
     android:divider="@drawable/dialog_button_divider"
     android:orientation="vertical"
-    android:paddingTop="4dp"
     android:showDividers="beginning"
+    
+    tools:background="#ff0000"
     >
 
     <android.support.v7.widget.ButtonBarLayout
         android:id="@+id/buttonPanel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:divider="@drawable/dialog_button_divider"
         android:gravity="bottom"
         android:layoutDirection="locale"
         android:orientation="horizontal"
         android:showDividers="middle"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         app:allowStacking="false"
         >
 
         <Button
             android:id="@android:id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:visibility="gone"
-            tools:text="ddd"
+            android:layout_marginBottom="4dp"
+            android:background="@null"
+            android:textColor="#ffffff"
+            
+            tools:text="button 03"
             />
 
         <Button
             android:id="@android:id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="@android:color/black"
+            android:layout_marginBottom="4dp"
+            android:background="@null"
+            android:textColor="#ffffff"
 
-            tools:text="ddd02"
+            tools:text="button 02"
             />
 
         <Button
             android:id="@android:id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="@android:color/black"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:background="@null"
+            android:textColor="#ffffff"
 
-            tools:text="ddd01"
+            tools:text="button 01"
             />
 
     </android.support.v7.widget.ButtonBarLayout>

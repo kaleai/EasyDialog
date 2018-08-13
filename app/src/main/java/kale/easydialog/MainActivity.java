@@ -61,44 +61,26 @@ public class MainActivity extends AppCompatActivity {
 
         EasyDialog.Builder builder = EasyDialog.builder(this);
         builder.setTitle("Title")
-                .setIcon(R.mipmap.ic_launcher)
+                .setIcon(R.drawable.saber)
                 .setMessage(R.string.hello_world)
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        // 点空白处消失时才会触发！！！！
-                        Log.d(TAG, "onCancel"); // onCancel - > onDismiss
-                    }
-                })
-                .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        Log.d(TAG, "onDismiss");
-                    }
-                })
+                .setOnCancelListener(dialog -> Log.d(TAG, "onCancel"))
+                .setOnDismissListener(dialog -> Log.d(TAG, "onDismiss"))
 //                .setNeutralButton("know", null)
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.d(TAG, "onClick ok");// 设置对话框上的按钮 ok->dismiss
+                // 设置对话框上的按钮 ok->dismiss
+                .setPositiveButton("ok", (dialog, which) -> {
+                    Log.d(TAG, "onClick ok");
 
-                        ft.remove(easyDialog);
-                        ft.addToBackStack(null);
+                    ft.remove(easyDialog);
+                    ft.addToBackStack(null);
 
-                        EasyDialog.builder(MainActivity.this)
-                                .setTitle("Stack Dialog")
-                                .setMessage("Please press back button")
-                                .build()
-                                .show(ft, "stackDialog");
-                    }
+                    EasyDialog.builder(MainActivity.this)
+                            .setTitle("Stack Dialog")
+                            .setMessage("Please press back button")
+                            .build()
+                            .show(ft, "stackDialog");
                 })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.d(TAG, "onClick cancel");
-                        dialog.dismiss(); // cancel -> dismiss
-                    }
-                })
+                // cancel -> dismiss
+                .setNegativeButton("cancel", (dialog, which) -> dialog.dismiss())
                 .setNeutralButton("ignore", null)
                 .setCancelable(true);
 
@@ -166,8 +148,8 @@ public class MainActivity extends AppCompatActivity {
     public void topDialog(View v) {
         TopDialog.Builder builder = TopDialog.builder(this, TopDialog.class);
         builder.setTitle("标题");
-        builder.setNegativeButton("因为设置了透明背景,", null);
-        builder.setPositiveButton("所以这里是透明的", null);
+        builder.setPositiveButton("设置了宽高", null);
+        builder.setNegativeButton("位置在顶部", null);
         builder.build().show(getSupportFragmentManager());
     }
 
