@@ -7,4 +7,5 @@
     <color name="custom_dialog_bg">@android:color/holo_red_dark</color>
     <color name="dialog_bg_color">#58595a</color>
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 </resources>

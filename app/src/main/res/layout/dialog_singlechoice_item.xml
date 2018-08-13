@@ -4,11 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:drawableLeft="?android:attr/listChoiceIndicatorSingle"
+    android:drawableLeft="@drawable/button_checked_selector"
     android:drawablePadding="20dp"
-    android:drawableStart="?android:attr/listChoiceIndicatorSingle"
     android:ellipsize="marquee"
     android:gravity="center_vertical"
     android:paddingLeft="20dp"
+    android:textColor="@color/white"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:textSize="16sp"
+    
     tools:text="test"
     />

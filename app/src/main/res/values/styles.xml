@@ -44,7 +44,7 @@
         <item name="android:windowTitleBackgroundStyle">@style/Base.DialogWindowTitleBackground.AppCompat</item>
 
         <!--对话框背景(重要)  , default = abc_dialog_material_background-->
-        <item name="android:windowBackground">@drawable/dialog_bg_custom</item>
+        <item name="android:windowBackground">@drawable/dialog_main_bg</item>
 
         <!-- 动画 -->
         <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>

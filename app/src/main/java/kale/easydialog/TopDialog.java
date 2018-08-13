@@ -41,7 +41,7 @@ public class TopDialog extends BaseCustomDialog {
     protected void modifyOriginBuilder(EasyDialog.Builder builder) {
         super.modifyOriginBuilder(builder);
 
-        View titleView = LayoutInflater.from(getContext()).inflate(R.layout.custom_title_layout, null, false);
+        View titleView = LayoutInflater.from(getContext()).inflate(R.layout.custom_dialog_title_layout, null, false);
         builder.setCustomTitle(titleView); // 修改builder中的titleView
     }
 

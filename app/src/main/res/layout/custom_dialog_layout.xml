@@ -8,7 +8,7 @@
         android:id="@+id/root_ll"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#89ed89"
+        android:background="#fec93d"
         android:orientation="horizontal"
         >
 
