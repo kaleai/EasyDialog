@@ -1,109 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar" />
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    </style>
 
-    <style name="AppThemeNight" parent="Theme.AppCompat.DayNight" />
-
-    <style name="AppThemeNight.CustomDialogStyle">
-        <!-- 如果要看自定义样式的例子，可以加载此布局文件 -->
+    <style name="AppThemeNight" parent="Theme.AppCompat.DayNight">
         <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
-    </style>
-
-    <style name="Theme.Dialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="windowActionBar">false</item>
-        <!-- 没有标题栏 -->
-        <item name="windowNoTitle">true</item>
-
-        <!--边框-->
-        <item name="android:windowFrame">@null</item>
-
-        <!--是否浮现在activity之上-->
-        <item name="android:windowIsFloating">true</item>
-
-        <!-- 是否透明 -->
-        <item name="android:windowIsTranslucent">true</item>
-
-        <!--除去title-->
-        <item name="android:windowNoTitle">true</item>
-
-        <!-- 对话框是否有遮盖 -->
-        <item name="android:windowContentOverlay">@null</item>
-
-        <!-- 对话框出现时背景是否变暗 -->
-        <item name="android:backgroundDimEnabled">true</item>
-
-        <!-- 背景颜色，因为windowBackground中的背景已经写死了，所以这里的设置无效 -->
-        <item name="android:colorBackground">#ffffff</item>
-
-        <!-- 着色缓存（一般不用）-->
-        <item name="android:colorBackgroundCacheHint">@null</item>
-
-        <!-- 标题的字体样式 -->
-        <item name="android:windowTitleStyle">@style/RtlOverlay.DialogWindowTitle.AppCompat</item>
-        <item name="android:windowTitleBackgroundStyle">@style/Base.DialogWindowTitleBackground.AppCompat</item>
-
-        <!--对话框背景(重要)  , default = abc_dialog_material_background-->
-        <item name="android:windowBackground">@drawable/dialog_bg_main</item>
-
-        <!-- 动画 -->
-        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
-
-        <!-- 输入法弹出时自适应 -->
-        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
-
-        <item name="windowActionModeOverlay">true</item>
-
-        <!-- 列表部分的内边距，作用于单选、多选列表 -->
-        <item name="listPreferredItemPaddingLeft">20dip</item>
-        <item name="listPreferredItemPaddingRight">24dip</item>
-
-        <item name="android:listDivider">@null</item>
-
-        <!-- 单选、多选对话框列表文字的颜色 默认：@color/abc_primary_text_material_light -->
-        <item name="textColorAlertDialogListItem">#00ff00</item>
-
-        <!-- 单选、多选对话框的分割线 -->
-        <!-- dialog中listView的divider 默认：@null-->
-        <item name="listDividerAlertDialog">@drawable/divider</item>
-
-        <!-- 单选对话框的按钮图标 (默认不为null)-->
-        <item name="android:listChoiceIndicatorSingle">@android:drawable/btn_radio</item>
-
-        <!-- 对话框整体的内边距，但不作用于列表部分 默认：@dimen/abc_dialog_padding_material-->
-        <item name="dialogPreferredPadding">20dp</item>
-
-        <item name="alertDialogCenterButtons">true</item>
-
-        <!-- 对话框内各个布局的布局文件-->
-        <item name="alertDialogStyle">@style/AlertDialogStyle</item>
-    </style>
-
-    <!-- parent="@style/Theme.AppCompat.Light.Dialog.Alert" -->
-    <style name="Theme.Dialog.Alert">
-        <item name="windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
-        <item name="windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
-    </style>
-
-    <style name="Theme.Dialog.Alert.Custom">
-        <item name="android:windowBackground">@drawable/dialog_bg_custom</item>
-    </style>
-
-    <!-- 这里全是自定义的属性，修改后就会改变dialog的颜色等样式 -->
-    <style name="AlertDialogStyle" parent="Base.AlertDialog.AppCompat">
-
-        <!-- AlertController.class - line:168 -->
-
-        <!-- dialog的主体布局文件，里面包含了title，message等控件 -->
-        <item name="android:layout">@layout/dialog_main_frame</item>
-        <!-- dialog中的列表布局文件，其实就是listView -->
-        <item name="listLayout">@layout/dialog_list_layout</item>
-        <!-- dialog中列表的item的布局 -->
-        <item name="listItemLayout">@layout/dialog_select_item</item>
-        <!-- 多选的item的布局 -->
-        <item name="multiChoiceItemLayout">@layout/dialog_multichoice_item</item>
-        <!-- 单选的item的布局 -->
-        <item name="singleChoiceItemLayout">@layout/dialog_singlechoice_item</item>
     </style>
 
 </resources>

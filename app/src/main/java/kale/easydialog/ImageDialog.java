@@ -39,7 +39,11 @@ public class ImageDialog extends BaseCustomDialog {
     }
     
     private void showDialog(){
-        EasyDialog.Builder builder = EasyDialog.builder(getActivity(),android.R.style.Theme_Material_Dialog_Alert);
+//        TypedValue outValue = new TypedValue();
+//        getActivity().getTheme().resolveAttribute(R.attr.alertDialogTheme02, outValue, true);
+//        int var = outValue.resourceId;
+        
+        EasyDialog.Builder builder = EasyDialog.builder(getActivity(), 0);
         builder.setTitle("Dynamic Style Dialog")
                 .setIcon(R.drawable.kale)
                 .setMessage("上半部分是透明背景的样式")

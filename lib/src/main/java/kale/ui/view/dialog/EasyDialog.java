@@ -57,7 +57,7 @@ public class EasyDialog extends BaseEasyDialog {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        Dialog ignored = super.onCreateDialog(savedInstanceState);
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         }
