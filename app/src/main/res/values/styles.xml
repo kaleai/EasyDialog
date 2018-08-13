@@ -44,7 +44,7 @@
         <item name="android:windowTitleBackgroundStyle">@style/Base.DialogWindowTitleBackground.AppCompat</item>
 
         <!--对话框背景(重要)  , default = abc_dialog_material_background-->
-        <item name="android:windowBackground">@drawable/dialog_main_bg</item>
+        <item name="android:windowBackground">@drawable/dialog_bg_main</item>
 
         <!-- 动画 -->
         <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
@@ -85,6 +85,9 @@
         <item name="windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
     </style>
 
+    <style name="Theme.Dialog.Alert.Custom">
+        <item name="android:windowBackground">@drawable/dialog_bg_custom</item>
+    </style>
 
     <!-- 这里全是自定义的属性，修改后就会改变dialog的颜色等样式 -->
     <style name="AlertDialogStyle" parent="Base.AlertDialog.AppCompat">

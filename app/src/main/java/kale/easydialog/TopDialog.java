@@ -106,7 +106,7 @@ public class TopDialog extends BaseCustomDialog {
     private void setBackground() {
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable()); // 去除dialog的背景，即透明
 //        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0xffffffff)); // 设置白色背景
-//        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg_custom_red); // 设置背景
+//        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg_custom); // 设置背景
     }
 
     public static int getScreenWidth(Activity activity) {

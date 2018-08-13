@@ -2,7 +2,6 @@ package kale.ui.view.dialog;
 
 import java.lang.reflect.Field;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
@@ -18,7 +17,6 @@ import android.support.annotation.StyleRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
-import android.util.TypedValue;
 import android.view.View;
 
 import lombok.AccessLevel;
@@ -123,17 +121,6 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
 
         public Builder(@NonNull Context context) {
             super(context);
-        }
-
-        @SuppressLint("ResourceType")
-        public static int resolveDialogTheme(@NonNull Context context, @StyleRes int resid) {
-            if (resid >= 0x01000000) {   // start of real resource IDs.
-                return resid;
-            } else {
-                TypedValue outValue = new TypedValue();
-                context.getTheme().resolveAttribute(android.R.attr.alertDialogTheme, outValue, true);
-                return outValue.resourceId;
-            }
         }
 
         public Builder(@NonNull Context context, @StyleRes int themeResId) {

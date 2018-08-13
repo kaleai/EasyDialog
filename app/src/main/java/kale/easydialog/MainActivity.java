@@ -31,12 +31,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setViews() {
-        findViewById(R.id.jump_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MyStyleActivity.class));
-            }
-        });
+        findViewById(R.id.jump_btn).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, MyStyleActivity.class)));
 
         // 得到 Bottom Sheet 的视图对象所对应的 BottomSheetBehavior 对象
         behavior = BottomSheetBehavior.from(findViewById(R.id.ll_sheet_root));
@@ -144,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void imageDialog(View v) {
         EasyDialog.builder(this, ImageDialog.class)
-                .setPositiveButton("please click me", (dialog, which) -> {
+                .setPositiveButton("弹出动态设置样式的Dialog", (dialog, which) -> {
                
                 })
                 .build()

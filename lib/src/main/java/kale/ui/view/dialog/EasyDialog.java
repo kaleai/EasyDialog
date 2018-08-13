@@ -14,6 +14,8 @@ import android.view.Window;
 import lombok.Getter;
 import lombok.Setter;
 
+import static android.support.v7.app._Kale_EasyDialog_AlertDialog.resolveDialogTheme;
+
 /**
  * @author Kale
  * @date 2016/11/22
@@ -55,7 +57,7 @@ public class EasyDialog extends BaseEasyDialog {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreateDialog(savedInstanceState);
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         }
@@ -105,7 +107,7 @@ public class EasyDialog extends BaseEasyDialog {
     private Dialog createDialog(@NonNull Activity activity) {
         DialogParams p = getDialogParams(); // 得到来自父类的参数，这里将参数组装成builder对象
 
-        Builder builder = new Builder(activity)
+        Builder builder = builder(activity)
                 .setTitle(p.title)
                 .setIcon(p.mIconId)
                 .setMessage(p.message)
@@ -135,12 +137,29 @@ public class EasyDialog extends BaseEasyDialog {
     protected void modifyOriginBuilder(Builder builder) {
     }
 
+    /**
+     * 非反射的调用方式
+     */
     public static Builder builder(Context context) {
-        return new Builder(context);
+        return builder(context, resolveDialogTheme(context, 0));
+    }
+
+    public static Builder builder(Context context, int themeId) {
+        return new Builder(context, themeId) {
+            @NonNull
+            @Override
+            protected EasyDialog createDialog() {
+                return new EasyDialog();
+            }
+        };
     }
 
     public static <Dialog extends EasyDialog> Builder builder(Context context, final Class<Dialog> clz) {
-        return new Builder(context) {
+        return builder(context, resolveDialogTheme(context, 0), clz);
+    }
+
+    public static <Dialog extends EasyDialog> Builder builder(Context context, int themeId, final Class<Dialog> clz) {
+        return new Builder(context, themeId) {
             @NonNull
             @Override
             protected EasyDialog createDialog() {
@@ -155,24 +174,6 @@ public class EasyDialog extends BaseEasyDialog {
                 return dialog;
             }
         };
-    }
-
-    public static class Builder extends BaseEasyDialog.Builder<Builder> {
-
-        /**
-         * should use {@link EasyDialog#builder(Context)}
-         */
-        @Deprecated
-        public Builder(@NonNull Context context) {
-            super(context);
-        }
-
-        @NonNull
-        @Override
-        protected EasyDialog createDialog() {
-            return new EasyDialog();
-        }
-
     }
 
 }
