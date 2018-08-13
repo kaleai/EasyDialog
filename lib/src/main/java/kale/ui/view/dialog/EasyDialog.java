@@ -107,7 +107,7 @@ public class EasyDialog extends BaseEasyDialog {
     private Dialog createDialog(@NonNull Activity activity) {
         DialogParams p = getDialogParams(); // 得到来自父类的参数，这里将参数组装成builder对象
 
-        Builder builder = builder(activity)
+        Builder builder = builder(activity, p.themeResId)
                 .setTitle(p.title)
                 .setIcon(p.mIconId)
                 .setMessage(p.message)
