@@ -41,7 +41,8 @@
             android:textColor="#ffffff"
             android:textSize="25sp"
             android:textStyle="bold"
-
+            android:fontFamily="@font/sudaqishui"
+            
             tools:text="title"
             />
 

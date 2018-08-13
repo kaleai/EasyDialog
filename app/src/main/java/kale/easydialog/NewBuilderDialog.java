@@ -65,7 +65,7 @@ public class NewBuilderDialog extends BaseCustomDialog {
         super.modifyOriginBuilder(builder);
         Bundle arguments = getArguments();
         String str = "name: " + arguments.getString(KEY_NAME) + ", age: " + arguments.getInt(KEY_AGE);
-        builder.setMessage("修改后的message是：" + str);
+        builder.setMessage("修改后的message是：\n" + str);
     }
 
     @Override

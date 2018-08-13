@@ -35,6 +35,7 @@
             android:layout_marginBottom="4dp"
             android:background="@null"
             android:textColor="#ffffff"
+            android:fontFamily="@font/sudaqishui"
             
             tools:text="button 03"
             />
@@ -47,7 +48,8 @@
             android:layout_marginBottom="4dp"
             android:background="@null"
             android:textColor="#ffffff"
-
+            android:fontFamily="@font/sudaqishui"
+            
             tools:text="button 02"
             />
 
@@ -60,7 +62,8 @@
             android:layout_marginTop="4dp"
             android:background="@null"
             android:textColor="#ffffff"
-
+            android:fontFamily="@font/sudaqishui"
+            
             tools:text="button 01"
             />
 

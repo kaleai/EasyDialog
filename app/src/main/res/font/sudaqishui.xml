@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><!-- http://www.fonts.net.cn/font-35310290274.html -->
+<font-family xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    
+    <!-- 苏打汽水字体 -->
+    
+    <!-- http://www.fonts.net.cn/font-35310290274.html -->
+    
+    <font
+        android:font="@font/aasudaqishui"
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        app:font="@font/aasudaqishui"
+        app:fontStyle="normal"
+        app:fontWeight="400"
+        />
+
+    <font
+        android:font="@font/aasudaqishui"
+        android:fontStyle="italic"
+        android:fontWeight="400"
+        app:font="@font/aasudaqishui"
+        app:fontStyle="italic"
+        app:fontWeight="400"
+        />
+</font-family>

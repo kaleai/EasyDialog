@@ -57,7 +57,8 @@
                         android:paddingRight="16dp"
                         android:textColor="#ffffff"
                         android:textSize="20sp"
-
+                        android:fontFamily="@font/sudaqishui"
+                        
                         tools:text="message"
                         />
 

@@ -48,6 +48,13 @@
             android:onClick="inputDialog"
             android:text="自定义输入框"
             />
+        
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="自定义图片对话框"
+            android:onClick="imageDialog"
+            />
 
         <Button
             android:id="@+id/custom_dialog02_btn"

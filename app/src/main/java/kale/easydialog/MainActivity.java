@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -141,6 +140,15 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .build();
         dialog.show(getSupportFragmentManager()); // 一个参数的show()
+    }
+
+    public void imageDialog(View v) {
+        EasyDialog.builder(this, ImageDialog.class)
+                .setPositiveButton("please click me", (dialog, which) -> {
+               
+                })
+                .build()
+                .show(getSupportFragmentManager());
     }
 
     /**
