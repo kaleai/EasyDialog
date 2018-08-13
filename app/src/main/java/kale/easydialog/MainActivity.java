@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
      * 显示在顶部的dialog，背景透明
      */
     public void topDialog(View v) {
-        TopDialog.Builder builder = TopDialog.builder(this, TopDialog.class);
+        TopDialog.Builder builder = EasyDialog.builder(this, TopDialog.class);
         builder.setTitle("标题");
         builder.setPositiveButton("设置了宽高", null);
         builder.setNegativeButton("位置在顶部", null);

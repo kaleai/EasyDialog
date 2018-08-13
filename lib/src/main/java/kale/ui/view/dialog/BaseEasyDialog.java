@@ -24,6 +24,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import static android.support.v7.app.AlertController.AlertParams;
+import static android.support.v7.app._Kale_EasyDialog_AlertDialog.resolveDialogTheme;
 
 /**
  * @author Jack Tony
@@ -115,17 +116,17 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
      */
     public abstract static class Builder<T extends Builder> extends AlertDialog.Builder {
 
-        private int themeResId;
+        private int dialogThemeResId;
 
         private boolean isBottomDialog = false;
 
         public Builder(@NonNull Context context) {
-            super(context);
+            this(context, resolveDialogTheme(context, 0));
         }
 
         public Builder(@NonNull Context context, @StyleRes int themeResId) {
             super(context, themeResId);
-            this.themeResId = themeResId;
+            dialogThemeResId = themeResId;
         }
 
         ///////////////////////////////////////////////////////////////////////////
@@ -273,7 +274,7 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
         private DialogParams createDialogParamsByAlertParams(AlertParams p) {
             DialogParams params = new DialogParams();
 
-            params.themeResId = themeResId;
+            params.themeResId = dialogThemeResId;
 
             params.mIconId = p.mIconId;
             params.title = p.mTitle;
