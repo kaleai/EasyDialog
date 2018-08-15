@@ -11,7 +11,7 @@ import android.view.View;
  * @author Kale
  * @date 2016/11/15
  *
- * 自定义dialog的父类
+ * 自定义dialog的父类，如果是自定义的dialog则需要实现它
  */
 public abstract class BaseCustomDialog extends EasyDialog {
 
@@ -26,8 +26,8 @@ public abstract class BaseCustomDialog extends EasyDialog {
     }
 
     @Override
-    protected void modifyOriginBuilder(Builder builder) {
-        super.modifyOriginBuilder(builder);
+    protected void modifyAlertDialogBuilder(android.support.v7.app.AlertDialog.Builder builder) {
+        super.modifyAlertDialogBuilder(builder);
         if (getLayoutResId() != 0) {
             builder.setView(getLayoutResId());
         }
@@ -56,4 +56,5 @@ public abstract class BaseCustomDialog extends EasyDialog {
     protected abstract void bindViews(View root);
 
     protected abstract void setViews();
+    
 }

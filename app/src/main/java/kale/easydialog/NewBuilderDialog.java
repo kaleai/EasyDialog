@@ -3,6 +3,7 @@ package kale.easydialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Toast;
 
@@ -61,8 +62,8 @@ public class NewBuilderDialog extends BaseCustomDialog {
     }
 
     @Override
-    protected void modifyOriginBuilder(EasyDialog.Builder builder) {
-        super.modifyOriginBuilder(builder);
+    protected void modifyAlertDialogBuilder(AlertDialog.Builder builder) {
+        super.modifyAlertDialogBuilder(builder);
         Bundle arguments = getArguments();
         String str = "name: " + arguments.getString(KEY_NAME) + ", age: " + arguments.getInt(KEY_AGE);
         builder.setMessage("修改后的message是：\n" + str);

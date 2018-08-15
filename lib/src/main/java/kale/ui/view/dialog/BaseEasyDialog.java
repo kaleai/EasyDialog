@@ -18,6 +18,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.View;
+import android.view.Window;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,6 +30,8 @@ import static android.support.v7.app._Kale_EasyDialog_AlertDialog.resolveDialogT
 /**
  * @author Jack Tony
  * @date 2015/10/12
+ *
+ * 仅仅提供dialog基础的关闭监听和show方法，是极其基础的类
  */
 public abstract class BaseEasyDialog extends AppCompatDialogFragment {
 
@@ -68,12 +71,14 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
         }
     }
 
+    /**
+     * 这时dialog已经创建完毕，可以调用{@link android.app.Dialog#findViewById(int)}
+     */
     @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        if (onDismissListener != null) {
-            onDismissListener.onDismiss(dialog);
-        }
+    public void onStart() {
+        super.onStart();
+        Window window = getDialog().getWindow();
+        bindAndSetViews(window != null ? window.getDecorView() : null);
     }
 
     @Override
@@ -84,6 +89,26 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
         }
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (onDismissListener != null) {
+            onDismissListener.onDismiss(dialog);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        onCancelListener = null;
+        onDismissListener = null;
+    }
+
+    protected abstract void bindAndSetViews(View root);
+
+    /**
+     * 辅助方法，用来find对话框中的view
+     */
     protected <T extends View> T findView(@IdRes int id) {
         return getDialog().findViewById(id);
     }
@@ -292,13 +317,12 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
         }
 
         /**
-         * use {@link Builder#build()}
+         * Should use {@link Builder#build()}
          */
         @Deprecated
         @Override
-        @SuppressWarnings("unchecked")
         public AlertDialog create() {
-            return super.create();
+            throw new UnsupportedOperationException("you should use build()");
         }
 
         AlertParams getParams() {

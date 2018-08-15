@@ -1,6 +1,7 @@
 package kale.easydialog;
 
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,8 +20,8 @@ public class ImageDialog extends BaseCustomDialog {
     }
 
     @Override
-    protected void modifyOriginBuilder(Builder builder) {
-        super.modifyOriginBuilder(builder);
+    protected void modifyAlertDialogBuilder(AlertDialog.Builder builder) {
+        super.modifyAlertDialogBuilder(builder);
         builder.setPositiveButton(null, null);
     }
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -38,8 +39,8 @@ public class TopDialog extends BaseCustomDialog {
      * title的布局，title的布局会显示在自定义布局的上方
      */
     @Override
-    protected void modifyOriginBuilder(EasyDialog.Builder builder) {
-        super.modifyOriginBuilder(builder);
+    protected void modifyAlertDialogBuilder(AlertDialog.Builder builder) {
+        super.modifyAlertDialogBuilder(builder);
 
         View titleView = LayoutInflater.from(getContext()).inflate(R.layout.custom_dialog_title_layout, null, false);
         builder.setCustomTitle(titleView); // 修改builder中的titleView
