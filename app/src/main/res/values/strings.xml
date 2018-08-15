@@ -3,4 +3,35 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+
+    <string-array name="country">
+        <item>阿尔及利亚</item>
+        <item>安哥拉</item>
+        <item>贝宁</item>
+        <item>博茨瓦纳</item>
+        <item>加蓬</item>
+        <item>几内亚</item>
+        <item>厄立特里亚</item>
+        <item>肯尼亚</item>
+        <item>马拉维</item>
+        <item>马里</item>
+        <item>毛里塔尼亚</item>
+        <item>摩洛哥</item>
+        <item>卢旺达</item>
+
+        <item>南非</item>
+        <item>苏丹</item>
+        <item>突尼斯</item>
+        <item>赞比亚</item>
+        <item>柬埔寨</item>
+        <item>巴林</item>
+        <item>圣诞岛</item>
+        <item>格鲁吉亚</item>
+        <item>印度</item>
+        <item>哈萨克斯坦</item>
+        <item>吉尔吉斯斯坦</item>
+        <item>缅甸</item>
+    </string-array>
+
 </resources>

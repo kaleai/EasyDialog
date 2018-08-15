@@ -85,6 +85,16 @@ public class MainActivity extends AppCompatActivity {
 //        easyDialog.show(getSupportFragmentManager());
     }
 
+    public void listDialog(View v) {
+        //选项数组  
+        EasyDialog.builder(this)
+                .setItems(R.array.country, (dialog, which) -> showToast("click " + which))
+                .setPositiveButton("yes", null)
+                .setNegativeButton("no", null)
+                .build()
+                .show(getSupportFragmentManager());
+    }
+
     /**
      * 支持单选列表的对话框
      */
@@ -140,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
     public void imageDialog(View v) {
         EasyDialog.builder(this, ImageDialog.class)
                 .setPositiveButton("弹出动态设置样式的Dialog", (dialog, which) -> {
-               
+
                 })
                 .build()
                 .show(getSupportFragmentManager());

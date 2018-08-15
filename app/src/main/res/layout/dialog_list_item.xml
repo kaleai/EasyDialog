@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
-    android:gravity="center_vertical"
-    android:minHeight="?attr/listPreferredItemHeightSmall"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
-    android:paddingRight="?attr/listPreferredItemPaddingRight"
+    android:fontFamily="@font/sudaqishui"
+
+    android:gravity="center_horizontal"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
     android:textColor="@color/white"
-    
+    android:textSize="18sp"
+
     tools:text="test"
     />

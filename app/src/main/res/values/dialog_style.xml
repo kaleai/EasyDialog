@@ -80,7 +80,7 @@
         <!-- dialog中的列表布局文件，其实就是listView -->
         <item name="listLayout">@layout/dialog_list_layout</item>
         <!-- dialog中列表的item的布局 -->
-        <item name="listItemLayout">@layout/dialog_select_item</item>
+        <item name="listItemLayout">@layout/dialog_list_item</item>
         <!-- 多选的item的布局 -->
         <item name="multiChoiceItemLayout">@layout/dialog_multi_choice_item</item>
         <!-- 单选的item的布局 -->

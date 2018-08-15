@@ -25,6 +25,13 @@
             />
 
         <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="列表对话框"
+            android:onClick="listDialog"
+            />
+        
+        <Button
             android:id="@+id/single_dialog_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
