@@ -27,6 +27,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="列表对话框"
             android:onClick="listDialog"
             />
@@ -102,18 +103,19 @@
             android:layout_weight="1"
             />
 
-        <Button
-            android:id="@+id/jump_btn"
-            android:layout_width="match_parent"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/dayNight_btn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:drawableLeft="@drawable/nintendoswitch"
-            android:drawableRight="@drawable/nintendoswitch"
-            android:text="切换样式"
+            android:layout_gravity="right"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="50dp"
+            android:src="@drawable/nintendoswitch"
             />
-
+        
     </LinearLayout>
 
     <include layout="@layout/content_bottom_sheet" />
-
+   
 </android.support.design.widget.CoordinatorLayout>

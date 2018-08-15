@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setViews() {
-        findViewById(R.id.jump_btn).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, MyStyleActivity.class)));
+        findViewById(R.id.dayNight_btn).setOnClickListener(
+                v -> startActivity(new Intent(this, MyStyleActivity.class)));
 
         // 得到 Bottom Sheet 的视图对象所对应的 BottomSheetBehavior 对象
         behavior = BottomSheetBehavior.from(findViewById(R.id.ll_sheet_root));

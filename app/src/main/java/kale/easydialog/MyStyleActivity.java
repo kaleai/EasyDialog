@@ -3,7 +3,6 @@ package kale.easydialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
-import android.widget.TextView;
 
 /**
  * @author Kale
@@ -18,8 +17,8 @@ public class MyStyleActivity extends MainActivity {
         
         super.onCreate(savedInstanceState);
 
-        TextView view = findViewById(R.id.jump_btn);
-        view.setOnClickListener(v -> startActivity(new Intent(this, MainActivity.class)));
+        findViewById(R.id.dayNight_btn).setOnClickListener(
+                v -> startActivity(new Intent(this, MainActivity.class)));
     }
     
 }
