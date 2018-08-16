@@ -84,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
         easyDialog.showAllowingStateLoss(getSupportFragmentManager());
 
 //        easyDialog.show(getSupportFragmentManager());
+        
+//        findViewById(R.id.coordinatorlayout).setVisibility(View.INVISIBLE);
     }
 
     public void listDialog(View v) {

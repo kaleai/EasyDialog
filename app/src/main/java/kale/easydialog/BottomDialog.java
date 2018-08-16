@@ -1,6 +1,8 @@
 package kale.easydialog;
 
+import android.support.design.widget.BottomSheetBehavior;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import kale.ui.view.dialog.BaseCustomDialog;
@@ -11,6 +13,8 @@ import kale.ui.view.dialog.BaseCustomDialog;
  */
 public class BottomDialog extends BaseCustomDialog {
 
+    private BottomSheetBehavior mBehavior;
+    
     @Override
     protected int getLayoutResId() {
         return R.layout.custom_dialog_layout;
@@ -18,7 +22,8 @@ public class BottomDialog extends BaseCustomDialog {
 
     @Override
     protected void bindViews(View root) {
-
+        FrameLayout bottomSheet = root.findViewById(android.support.design.R.id.design_bottom_sheet);
+        mBehavior = BottomSheetBehavior.from(bottomSheet);
     }
 
     @Override

@@ -40,7 +40,7 @@ public class ImageDialog extends BaseCustomDialog {
     }
     
     private void showDialog(){
-        EasyDialog.Builder builder = EasyDialog.builder(getActivity(), R.style.Theme_Dialog_Alert_AlphaBg);
+        EasyDialog.Builder builder = EasyDialog.builder(getActivity(), R.style.Theme_Dialog_Alert_Kale);
         
         builder.setTitle("Dynamic Style Dialog")
                 .setIcon(R.drawable.kale)

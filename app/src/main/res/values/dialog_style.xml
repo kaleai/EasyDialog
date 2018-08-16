@@ -38,7 +38,7 @@
         <item name="android:windowBackground">@drawable/dialog_bg_main</item>
 
         <!-- 动画 -->
-        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
+        <item name="android:windowAnimationStyle">@style/AlertDialogAnimation</item>
 
         <!-- 输入法弹出时自适应 -->
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
@@ -70,6 +70,11 @@
         <item name="alertDialogStyle">@style/AlertDialogStyle</item>
     </style>
 
+    <style name="AlertDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_out</item>
+    </style>
+    
     <!-- 这里自定义布局 -->
     <style name="AlertDialogStyle" parent="Base.AlertDialog.AppCompat">
 
@@ -93,7 +98,7 @@
         <item name="windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
     </style>
 
-    <style name="Theme.Dialog.Alert.AlphaBg">
+    <style name="Theme.Dialog.Alert.Kale">
         <item name="android:windowBackground">@drawable/dialog_bg_custom</item>
     </style>
 

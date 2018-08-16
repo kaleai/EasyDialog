@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     
-    tools:background="#ff00"
+    tools:background="@drawable/dialog_bg_main"
     >
 
     <include layout="@layout/dialog_top_bar_layout" />
