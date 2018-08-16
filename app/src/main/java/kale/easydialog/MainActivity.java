@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void listDialog(View v) {
-        //选项数组  
         EasyDialog.builder(this)
                 .setItems(R.array.country, (dialog, which) -> showToast("click " + which))
                 .setPositiveButton("yes", null)
@@ -171,8 +170,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 自定一个dialog的builder
      */
-    public void customBuilderDialog(View v) {
-        new NewBuilderDialog.Builder(this)
+    public void myBuilderDialog(View v) {
+        new MyBuilderDialog.Builder(this)
                 .setTitle("Custom Builder Dialog")
                 .setMessage("message")
                 .setName("kale")

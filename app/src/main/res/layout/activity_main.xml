@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
     <LinearLayout
@@ -76,7 +77,7 @@
             android:id="@+id/custom_dialog03_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="customBuilderDialog"
+            android:onClick="myBuilderDialog"
             android:text="自定义Dialog.Builder"
             />
 

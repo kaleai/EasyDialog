@@ -17,9 +17,9 @@ import kale.ui.view.dialog.EasyDialog;
  *
  * 自定义builder的dialog
  */
-public class NewBuilderDialog extends BaseCustomDialog {
+public class MyBuilderDialog extends BaseCustomDialog {
 
-    public static final String KEY_AGE = "KEY_AGE",KEY_NAME="KEY_NAME";
+    public static final String KEY_AGE = "KEY_AGE", KEY_NAME = "KEY_NAME";
 
     /**
      * 继承自{@link EasyDialog.Builder}以扩展builder
@@ -45,7 +45,7 @@ public class NewBuilderDialog extends BaseCustomDialog {
         @NonNull
         @Override
         protected EasyDialog createDialog() {
-            NewBuilderDialog dialog = new NewBuilderDialog();
+            MyBuilderDialog dialog = new MyBuilderDialog();
             dialog.setArguments(bundle); // 增加自己的bundle
             return dialog;
         }
@@ -65,8 +65,14 @@ public class NewBuilderDialog extends BaseCustomDialog {
     protected void modifyAlertDialogBuilder(AlertDialog.Builder builder) {
         super.modifyAlertDialogBuilder(builder);
         Bundle arguments = getArguments();
-        String str = "name: " + arguments.getString(KEY_NAME) + ", age: " + arguments.getInt(KEY_AGE);
-        builder.setMessage("修改后的message是：\n" + str);
+
+        String name = arguments.getString(KEY_NAME);
+        int age = arguments.getInt(KEY_AGE);
+
+        String str = "name: " + name + ", age: " + age;
+
+        // 修改builder对象
+        builder.setMessage("修改后的message是：\n\n" + str);
     }
 
     @Override

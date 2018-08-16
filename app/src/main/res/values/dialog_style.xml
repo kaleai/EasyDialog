@@ -3,10 +3,10 @@
 
     <style name="Theme.Dialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="windowActionBar">false</item>
-        <!-- 没有标题栏 -->
+        <!-- 有无标题栏 -->
         <item name="windowNoTitle">true</item>
 
-        <!--边框-->
+        <!--对话框的边框，一般不进行设置-->
         <item name="android:windowFrame">@null</item>
 
         <!--是否浮现在activity之上-->
@@ -34,7 +34,7 @@
         <item name="android:windowTitleStyle">@style/RtlOverlay.DialogWindowTitle.AppCompat</item>
         <item name="android:windowTitleBackgroundStyle">@style/Base.DialogWindowTitleBackground.AppCompat</item>
 
-        <!--对话框背景(重要)  , default = abc_dialog_material_background-->
+        <!--对话框背景(重要)，默认是@drawable/abc_dialog_material_background-->
         <item name="android:windowBackground">@drawable/dialog_bg_main</item>
 
         <!-- 动画 -->
@@ -51,7 +51,7 @@
 
         <item name="android:listDivider">@null</item>
 
-        <!-- 单选、多选对话框列表文字的颜色 默认：@color/abc_primary_text_material_light -->
+        <!-- 单选、多选对话框列表区域文字的颜色 默认是@color/abc_primary_text_material_light -->
         <item name="textColorAlertDialogListItem">#00ff00</item>
 
         <!-- 单选、多选对话框的分割线 -->
@@ -66,11 +66,11 @@
 
         <item name="alertDialogCenterButtons">true</item>
 
-        <!-- 对话框内各个布局的布局文件-->
+        <!-- 对话框内各个布局的布局文件，默认是@style/Base.AlertDialog.AppCompat -->
         <item name="alertDialogStyle">@style/AlertDialogStyle</item>
     </style>
 
-    <!-- 这里全是自定义的属性，修改后就会改变dialog的颜色等样式 -->
+    <!-- 这里自定义布局 -->
     <style name="AlertDialogStyle" parent="Base.AlertDialog.AppCompat">
 
         <!-- AlertController.class - line:168 -->

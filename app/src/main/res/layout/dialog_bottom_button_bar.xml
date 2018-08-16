@@ -7,7 +7,6 @@
     android:divider="@drawable/dialog_button_divider"
     android:orientation="vertical"
     android:showDividers="beginning"
-    android:layout_marginTop="5dp"
     
     tools:background="#ff0000"
     >

@@ -4,8 +4,10 @@
     android:insetRight="26dp"
     android:insetTop="16dp"
     >
+    
     <shape android:shape="rectangle">
         <corners android:radius="15dp" />
         <solid android:color="@color/dialog_bg_color" />
     </shape>
+    
 </inset>

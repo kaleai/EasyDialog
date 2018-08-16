@@ -6,6 +6,7 @@
     >
 
     <layer-list>
+        
         <item>
             <color android:color="#00E4007F" />
         </item>
@@ -18,4 +19,5 @@
         </item>
 
     </layer-list>
+    
 </inset>
