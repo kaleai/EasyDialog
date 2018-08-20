@@ -1,6 +1,5 @@
 package kale.ui.view.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,11 +8,12 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
+import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author Kale
@@ -21,70 +21,57 @@ import lombok.Setter;
  */
 public class EasyDialog extends BaseEasyDialog {
 
-    @Getter
-    @Setter
-    private DialogInterface.OnClickListener positiveListener;
+    @Getter(AccessLevel.PROTECTED)
+    DialogInterface.OnClickListener positiveListener;
 
-    @Getter
-    @Setter
-    private DialogInterface.OnClickListener neutralListener;
+    @Getter(AccessLevel.PROTECTED)
+    DialogInterface.OnClickListener neutralListener;
 
-    @Getter
-    @Setter
-    private DialogInterface.OnClickListener negativeListener;
+    @Getter(AccessLevel.PROTECTED)
+    DialogInterface.OnClickListener negativeListener;
 
-    @Getter
-    @Setter
-    private DialogInterface.OnClickListener onClickListener;
+    @Getter(AccessLevel.PROTECTED)
+    DialogInterface.OnClickListener clickListener;
 
-    @Getter
-    @Setter
-    private DialogInterface.OnMultiChoiceClickListener onMultiChoiceClickListener;
+    @Getter(AccessLevel.PROTECTED)
+    DialogInterface.OnMultiChoiceClickListener multiClickListener;
 
-    @Getter
-    private boolean isRestored = false;
+    @Getter(AccessLevel.PROTECTED)
+    DialogInterface.OnDismissListener dismissListener;
+
+    @Getter(AccessLevel.PROTECTED)
+    DialogInterface.OnCancelListener cancelListener;
 
     /**
-     * 这里千万不要做{@link Dialog#findViewById(int)}的操作
-     */
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog ignored = super.onCreateDialog(savedInstanceState);
-        if (savedInstanceState != null) {
-            onRestoreInstanceState(savedInstanceState);
-        }
-        return createDialog(getActivity());
-    }
-
-    /**
-     * 复写来保存参数
+     * 保存参数
      */
     @CallSuper
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        EasyDialogListeners.saveListenersIfActivity(this);
     }
 
     /**
-     * 复写来恢复参数
+     * 恢复参数
      */
     @CallSuper
+    @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        isRestored = true;
+        EasyDialogListeners.restoreListenersIfActivity(this, getActivity());
     }
 
+    /**
+     * 清理参数
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        positiveListener = null;
-        negativeListener = null;
-        neutralListener = null;
-        onClickListener = null;
-        onMultiChoiceClickListener = null;
+        EasyDialogListeners.destroyListeners(this);
     }
 
-    private Dialog createDialog(@NonNull Activity activity) {
+    @Override
+    protected Dialog createDialog(@NonNull FragmentActivity activity) {
         DialogParams p = getDialogParams(); // 得到来自父类的参数，这里将参数组装成builder对象
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity, p.themeResId)
@@ -97,11 +84,11 @@ public class EasyDialog extends BaseEasyDialog {
 
         if (p.items != null) {
             if (p.isMultiChoice) {
-                builder.setMultiChoiceItems(p.items, p.checkedItems, onMultiChoiceClickListener);
+                builder.setMultiChoiceItems(p.items, p.checkedItems, multiClickListener);
             } else if (p.isSingleChoice) {
-                builder.setSingleChoiceItems(p.items, p.checkedItem, onClickListener);
+                builder.setSingleChoiceItems(p.items, p.checkedItem, clickListener);
             } else {
-                builder.setItems(p.items, onClickListener);
+                builder.setItems(p.items, clickListener);
             }
         }
 
@@ -109,6 +96,22 @@ public class EasyDialog extends BaseEasyDialog {
         modifyAlertDialogBuilder(builder);
 
         return builder.create();
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        super.onCancel(dialog);
+        if (cancelListener != null) {
+            cancelListener.onCancel(dialog);
+        }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (dismissListener != null) {
+            dismissListener.onDismiss(dialog);
+        }
     }
 
     /**
@@ -122,20 +125,54 @@ public class EasyDialog extends BaseEasyDialog {
     protected void bindAndSetViews(@Nullable View root) {
     }
 
-    public static Builder builder(Context context) {
+    public static Builder builder(@NonNull Context context) {
         return builder(context, 0);
     }
 
-    public static Builder builder(Context context, @StyleRes int themeResId) {
+    public static Builder builder(@NonNull Context context, @StyleRes int themeResId) {
         return builder(context, themeResId, null);
     }
 
-    public static <Dialog extends EasyDialog> Builder builder(Context context, final Class<Dialog> clz) {
+    public static <Dialog extends EasyDialog> Builder builder(@NonNull Context context, final Class<Dialog> clz) {
         return builder(context, 0, clz);
     }
 
-    public static <Dialog extends EasyDialog> Builder builder(Context context, @StyleRes int themeResId, final Class<Dialog> clz) {
-        return DialogBuilderFactory.getBuilder(context, themeResId, clz);
+    public static <Dialog extends EasyDialog> Builder builder(@NonNull Context context, @StyleRes int themeResId, final Class<Dialog> clz) {
+        if (themeResId == 0) {
+            return new BaseEasyDialog.Builder(context) {
+                @NonNull
+                @Override
+                protected EasyDialog createDialog() {
+                    return getEasyDialog(clz);
+                }
+            };
+        } else {
+            return new BaseEasyDialog.Builder(context, themeResId) {
+                @NonNull
+                @Override
+                protected EasyDialog createDialog() {
+                    return getEasyDialog(clz);
+                }
+            };
+        }
     }
 
+    @Nullable
+    private static <Dialog extends EasyDialog> EasyDialog getEasyDialog(Class<Dialog> clz) {
+        if (clz == null) {
+            return new EasyDialog();
+        }
+
+        // 如果有class对象，那么则反射出一个实例
+        Dialog dialog = null;
+        try {
+            dialog = clz.newInstance();
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return dialog;
+    }
+    
 }

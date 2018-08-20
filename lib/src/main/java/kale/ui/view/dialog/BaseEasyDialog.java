@@ -2,6 +2,7 @@ package kale.ui.view.dialog;
 
 import java.lang.reflect.Field;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
@@ -14,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -22,7 +24,6 @@ import android.view.Window;
 
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
 
 import static android.support.v7.app.AlertController.AlertParams;
 import static android.support.v7.app._Kale_EasyDialog_AlertDialog.resolveDialogTheme;
@@ -31,25 +32,26 @@ import static android.support.v7.app._Kale_EasyDialog_AlertDialog.resolveDialogT
  * @author Jack Tony
  * @date 2015/10/12
  *
- * 仅仅提供dialog基础的关闭监听和show方法，是极其基础的类
+ * 仅仅提供dialog基础的功能，主要处理处理传参相关的工作
  */
 public abstract class BaseEasyDialog extends AppCompatDialogFragment {
+
+    public static final String DIALOG_TAG = "KALE-EASY-DIALOG";
 
     private static final String KEY_DIALOG_PARAMS = "key_dialog_params";
 
     private static final String KEY_IS_BOTTOM_DIALOG = "key_is_bottom_dialog";
 
-    @Setter(AccessLevel.PUBLIC)
-    private DialogInterface.OnDismissListener onDismissListener;
-
-    @Setter(AccessLevel.PUBLIC)
-    private DialogInterface.OnCancelListener onCancelListener;
+    private static final String KEY_IS_RETAIN_INSTANCE = "key_is_retain_instance";
 
     @Getter(AccessLevel.PROTECTED)
     private boolean isBottomDialog;
 
     @Getter(AccessLevel.PROTECTED)
     private DialogParams dialogParams;
+
+    @Getter
+    private boolean isRestored = false;
 
     @Override
     public void setArguments(Bundle args) {
@@ -67,8 +69,26 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             dialogParams = (DialogParams) bundle.getSerializable(KEY_DIALOG_PARAMS);
+
             isBottomDialog = bundle.getBoolean(KEY_IS_BOTTOM_DIALOG, false);
+
+            boolean isRetainInstance = bundle.getBoolean(KEY_IS_RETAIN_INSTANCE, false);
+            setRetainInstance(isRetainInstance);
         }
+    }
+
+    /**
+     * 这里千万不要做{@link Dialog#findViewById(int)}的操作
+     */
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog ignored = super.onCreateDialog(savedInstanceState);
+        if (savedInstanceState != null) {
+            isRestored = true;
+            onRestoreInstanceState(savedInstanceState);
+        }
+        return createDialog(getActivity());
     }
 
     /**
@@ -82,29 +102,21 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
     }
 
     @Override
-    public void onCancel(DialogInterface dialog) {
-        super.onCancel(dialog);
-        if (onCancelListener != null) {
-            onCancelListener.onCancel(dialog);
-        }
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        if (onDismissListener != null) {
-            onDismissListener.onDismiss(dialog);
-        }
-    }
-
-    @Override
     public void onDestroyView() {
+        Dialog dialog = getDialog();
+
+        // Work around bug: http://code.google.com/p/android/issues/detail?id=17423
+        if (dialog != null && getRetainInstance()) {
+            dialog.setDismissMessage(null);
+        }
         super.onDestroyView();
-        onCancelListener = null;
-        onDismissListener = null;
     }
+
+    protected abstract void onRestoreInstanceState(Bundle savedInstanceState);
 
     protected abstract void bindAndSetViews(View root);
+
+    protected abstract Dialog createDialog(FragmentActivity activity);
 
     /**
      * 辅助方法，用来find对话框中的view
@@ -114,9 +126,10 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
     }
 
     public void show(FragmentManager manager) {
-        show(manager, "kale-easy-dialog");
+        show(manager, DIALOG_TAG);
     }
 
+    @Override
     public void show(FragmentManager manager, String tag) {
         if (manager == null || manager.isDestroyed() || manager.isStateSaved()) {
             // do nothing!!!
@@ -132,7 +145,11 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
     }
 
     public void showAllowingStateLoss(FragmentManager manager) {
-        manager.beginTransaction().add(this, "kale-dialog").commitAllowingStateLoss();
+        showAllowingStateLoss(manager, DIALOG_TAG);
+    }
+
+    public void showAllowingStateLoss(FragmentManager manager, String tag) {
+        manager.beginTransaction().add(this, tag).commitAllowingStateLoss();
     }
 
     /**
@@ -144,6 +161,8 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
         private int dialogThemeResId;
 
         private boolean isBottomDialog = false;
+
+        private boolean isRetainInstance = false;
 
         public Builder(@NonNull Context context) {
             this(context, resolveDialogTheme(context, 0));
@@ -262,8 +281,13 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
             return (T) super.setMultiChoiceItems(items, checkedItems, listener);
         }
 
-        public T setIsBottomDialog(boolean b) {
-            this.isBottomDialog = b;
+        public T setIsBottomDialog(boolean inBottom) {
+            isBottomDialog = inBottom;
+            return (T) this;
+        }
+
+        public T setRetainInstance(boolean retain) {
+            isRetainInstance = retain;
             return (T) this;
         }
 
@@ -278,16 +302,17 @@ public abstract class BaseEasyDialog extends AppCompatDialogFragment {
             Bundle bundle = new Bundle();
             bundle.putSerializable(KEY_DIALOG_PARAMS, createDialogParamsByAlertParams(p));
             bundle.putBoolean(KEY_IS_BOTTOM_DIALOG, isBottomDialog);
+            bundle.putBoolean(KEY_IS_RETAIN_INSTANCE, isRetainInstance);
             dialog.setArguments(bundle);
 
-            dialog.setOnCancelListener(p.mOnCancelListener);
-            dialog.setOnDismissListener(p.mOnDismissListener);
+            dialog.cancelListener = p.mOnCancelListener;
+            dialog.dismissListener = p.mOnDismissListener;
 
-            dialog.setPositiveListener(p.mPositiveButtonListener);
-            dialog.setNeutralListener(p.mNeutralButtonListener);
-            dialog.setNegativeListener(p.mNegativeButtonListener);
-            dialog.setOnClickListener(p.mOnClickListener);
-            dialog.setOnMultiChoiceClickListener(p.mOnCheckboxClickListener);
+            dialog.positiveListener = p.mPositiveButtonListener;
+            dialog.neutralListener = p.mNeutralButtonListener;
+            dialog.negativeListener = p.mNegativeButtonListener;
+            dialog.clickListener = p.mOnClickListener;
+            dialog.multiClickListener = p.mOnCheckboxClickListener;
 
             dialog.setCancelable(p.mCancelable);
             return (D) dialog;
