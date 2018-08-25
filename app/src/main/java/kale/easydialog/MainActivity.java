@@ -17,7 +17,7 @@ import kale.ui.view.dialog.EasyDialog;
 /**
  * 关于更多对话框的设置请参考：http://www.cnblogs.com/tianzhijiexian/p/3867731.html
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener {
 
     public final String TAG = getClass().getSimpleName();
 
@@ -28,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setViews();
+
+
+//        new Handler().postDelayed(() -> ((App) getApplication()).showDialog("全局弹窗", "可在任意时机弹出一个dialog"), 5000);
+
     }
 
     private void setViews() {
@@ -77,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 })
                 // cancel -> dismiss
                 .setNegativeButton("cancel", (dialog, which) -> dialog.dismiss())
-                .setNeutralButton("ignore", null)
+                .setNeutralButton("ignore", this)
                 .setCancelable(true);
 
         easyDialog = builder.build();
@@ -91,8 +95,9 @@ public class MainActivity extends AppCompatActivity {
     public void listDialog(View v) {
         EasyDialog.builder(this)
                 .setItems(R.array.country, (dialog, which) -> showToast("click " + which))
-                .setPositiveButton("yes", null)
-                .setNegativeButton("no", null)
+                .setRetainInstance(true)
+                .setPositiveButton("yes", (dialog, which) -> showToast("yes"))
+                .setNegativeButton("no", this)
                 .build()
                 .show(getSupportFragmentManager());
     }
@@ -191,15 +196,15 @@ public class MainActivity extends AppCompatActivity {
 
         builder.setIsBottomDialog(true); // 设置后则会变成从底部弹出，否则为正常模式
 
+        // 监听点空白处cancel的事件
+        builder.setOnCancelListener(d -> showToast("cancel"));
+        builder.setOnDismissListener(d -> showToast("dismiss"));
+
         EasyDialog dialog = builder.build();
         dialog.show(getSupportFragmentManager(), "dialog");
 
         // 如果设置了，那么底部dialog就不支持手势关闭和空白处关闭
         dialog.setCancelable(false);
-
-        // 监听点空白处cancel的事件
-        dialog.setOnCancelListener(d -> showToast("cancel"));
-        dialog.setOnDismissListener(d -> showToast("dismiss"));
     }
 
     /**
@@ -215,5 +220,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void showToast(String msg) {
         Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        if (this != ((App) getApplication()).getCurActivity()) {
+            throw new RuntimeException("leak");
+        }
+        showToast("handle event in activity, is finish ? " + isDestroyed());
     }
 }

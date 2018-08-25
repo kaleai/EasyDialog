@@ -79,7 +79,7 @@ public class TopDialog extends BaseCustomDialog {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+//        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
     }
 
     /**
